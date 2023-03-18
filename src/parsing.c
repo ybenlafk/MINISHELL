@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 15:17:52 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:43:40 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 	if (!output[0])
 		return (0);
 	vars.i = 0;
+	int fd = 0;
 	(void)env;
 	cmd = NULL;
 	list = NULL;
@@ -57,14 +58,14 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 	if (syn)
 		return (error(syn), 1);
 	cmd = redire_heredoc(cmd);
-	cmd = redire_in(cmd, &list);
-	cmd = redire_out(cmd, &list);
-	cmd = redire_append(cmd, &list);
+	cmd = redire_in(cmd, &list , &fd);
+	cmd = redire_out(cmd, &list, &fd);
+	cmd = redire_append(cmd, &list, &fd);
 	cmd = two_to_one(cmd);
 	while (cmd)
 	{
 		printf("|%s|\n", cmd->str);
-		// printf("|%d|\n", cmd->is_added);
+		printf("|%d|\n", cmd->is_added);
 		cmd = cmd->next;
 	}
 	printf("=================================\n");
@@ -77,5 +78,6 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 		list = list->next;
 	}
 	list_free(&cmd, ft_lstsize(cmd));
+	close(fd);
 	return (0);
 }

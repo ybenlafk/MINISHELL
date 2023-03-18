@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 15:54:53 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:43:09 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ static int    add_to_list(t_list **list, t_cmd *cmd, int stat)
         fd = open(cmd->next->next->str, O_CREAT | O_APPEND | O_RDWR, 0777);
     else
         fd = open(cmd->next->str, O_CREAT | O_APPEND | O_RDWR , 0777);
-    close (fd);
     return (fd);
 }
 
-t_cmd	*redire_append(t_cmd *cmd, t_list **list)
+t_cmd	*redire_append(t_cmd *cmd, t_list **list, int *fd)
 {
 	t_var p;
 	t_cmd *res;
@@ -41,8 +40,8 @@ t_cmd	*redire_append(t_cmd *cmd, t_list **list)
 		if (p.tmp->type == APPEND)
 		{
 			p.j = 1;
-            p.fd = fill_list(&p, list, add_to_list);
-            if (p.fd < 0)
+            *fd = fill_list(&p, list, add_to_list);
+            if (*fd < 0)
                 return (NULL);
 		}
 		else
@@ -51,6 +50,8 @@ t_cmd	*redire_append(t_cmd *cmd, t_list **list)
 			p.tmp = p.tmp->next;
 		}
 	}
+	if(p.j)
+        ft_lstadd_back_list(list, lst_new_list(NULL, NULL, 0, *fd));
 	list_free(&cmd, ft_lstsize(cmd));
 	return (res);
 }

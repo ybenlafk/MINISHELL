@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 14:10:34 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:43:23 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ t_exp			*ft_lstlast_exp(t_exp *lst);
 t_exp			*lst_new_exp(char *value, int stat);
 t_cmd			*ft_lstlast_cmd(t_cmd *lst);
 t_list			*lst_new_list(char *cmd, char **args, int in, int out);
-t_cmd    		*redire_in(t_cmd *cmd, t_list **list);
-t_cmd    		*redire_out(t_cmd *cmd, t_list **list);
-t_cmd    		*redire_append(t_cmd *cmd, t_list **list);
+t_cmd    		*redire_in(t_cmd *cmd, t_list **list, int *fd);
+t_cmd    		*redire_out(t_cmd *cmd, t_list **list, int *fd);
+t_cmd    		*redire_append(t_cmd *cmd, t_list **list, int *fd);
 t_cmd			*two_to_one(t_cmd *cmd);
 void			ft_lstadd_back_exp(t_exp **lst, t_exp *new);
 void			free_env(t_env **philos, int len);
