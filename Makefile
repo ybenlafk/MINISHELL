@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/03/11 11:52:19 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/03/17 13:29:37 by ybenlafk         ###   ########.fr        #
+#    Created: 2023/03/18 15:28:07 by ybenlafk          #+#    #+#              #
+#    Updated: 2023/03/18 15:28:22 by ybenlafk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,15 @@ NAME= minishell
 
 HEADER= minishell.h
 
-SRCS= utils/utils.c\
+SRCS= tools/utils.c\
 	src/lst_funs.c\
 	src/parsing.c\
-	utils/libft.c\
-	utils/expanding_utils_1.c\
-	utils/parsing_utils_1.c\
-	utils/parsing_utils_2.c\
-	utils/expanding_utils.c\
-	utils/parsing_utils.c\
+	tools/libft.c\
+	tools/expanding_utils_1.c\
+	tools/parsing_utils_1.c\
+	tools/parsing_utils_2.c\
+	tools/expanding_utils.c\
+	tools/parsing_utils.c\
 	redirections/in.c\
 	redirections/out.c\
 	redirections/append.c\

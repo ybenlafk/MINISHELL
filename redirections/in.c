@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:00:51 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 01:22:38 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/18 15:52:16 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,11 @@ static int    add_to_list(t_list **list, t_cmd *cmd, int stat)
     int fd;
 
     if (!stat)
-    {
-        fd = open(cmd->next->next->str, O_RDWR | O_TRUNC);
-        if (fd < 0)
-            return (1);
-        ft_lstadd_back_list(list, lst_new_list(NULL, NULL, fd, 1));
-    }
+        fd = open(cmd->next->next->str, O_RDWR);
     else
-    {
-        fd = open(cmd->next->str, O_RDONLY | O_TRUNC);
-        if (fd < 0)
-            return (1);
-        ft_lstadd_back_list(list, lst_new_list(NULL, NULL, fd, 1));
-    }
-    return (0);
+        fd = open(cmd->next->str, O_WRONLY);
+    close (fd);
+    return (fd);
 }
 
 t_cmd    *redire_in(t_cmd *cmd, t_list **list)
@@ -41,20 +32,30 @@ t_cmd    *redire_in(t_cmd *cmd, t_list **list)
     if (!cmd)
 		return (NULL);
     p.i = 0;
+    p.j = 0;
+    p.l = 0;
     res = NULL;
     p.tmp = cmd;
     while (p.tmp)
     {
+        is(&p, &p.tmp, OUT);
         if (p.tmp->type == IN)
         {
-            if (fill_list(&p, list, add_to_list))
+            p.j = 1;
+            p.fd = fill_list(&p, list, add_to_list);
+            if (p.fd < 0)
                 return (NULL);
         }
         else
         {
-            ft_lstadd_back_cmd(&res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
+            ft_lstadd_back_cmd(&res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote, p.tmp->is_added));
             p.tmp = p.tmp->next;
         }
+    }
+    if(p.j)
+    {
+        ft_lstadd_back_list(list, lst_new_list(NULL, NULL, 0, p.fd));
+        close (p.fd); 
     }
     list_free(&cmd, ft_lstsize(cmd));
     return (res);

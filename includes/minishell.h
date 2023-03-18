@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/17 18:39:01 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:10:34 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <unistd.h>
 #include <fcntl.h>
 
+# define FALSE 0
+# define TRUE 1
 # define WORD 0
 # define HEREDOC 1
 # define APPEND 2
@@ -34,6 +36,7 @@ typedef struct list
 	char		*str;
 	int			type;
 	int			quote;
+	int			is_added;
 	struct list	*next;
 }				t_cmd;
 
@@ -76,8 +79,8 @@ typedef struct array
 	struct array *next;
 }	t_list;
 
-t_cmd    *redire_heredoc(t_cmd *cmd, t_list **list);
-t_cmd			*lst_new_cmd(char *cmd, int type, int quote);
+t_cmd			*redire_heredoc(t_cmd *cmd);
+t_cmd			*lst_new_cmd(char *cmd, int type, int quote, int is_added);
 t_env			*lst_new_env(char *e);
 t_exp			*ft_lstlast_exp(t_exp *lst);
 t_exp			*lst_new_exp(char *value, int stat);
@@ -104,8 +107,8 @@ void			error(char *e);
 void			ft_lstadd_back_list(t_list **lst, t_list *new);
 char			*ft_strdup(char *s);
 char			*char_to_str(char c);
-char			*quote_trim(char *str);
-char			*quote_trim(char *str);
+char			*s_quote_trim(char *str);
+char			*d_quote_trim(char *str);
 char			*char_to_str(char c);
 char			*is_quotes(char *s, int *i, int stat);
 char			*char_join(char *str, char c);
@@ -127,5 +130,6 @@ int				sps_skiper(char *s, int *i);
 int				redires_checker(t_cmd **list_cmd, char c1, char c2, int *i);
 int				env_size(t_env *lst);
 int				fill_list(t_var *p, t_list **list, int(*add)(t_list **, t_cmd *, int));
+int    			is(t_var *p, t_cmd **cmd, int type);
 
 #endif

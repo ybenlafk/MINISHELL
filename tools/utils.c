@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/17 13:15:37 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/18 15:17:17 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,24 +111,27 @@ int	env_size(t_env *lst)
 
 int	fill_list(t_var *p, t_list **list, int (*add)(t_list **, t_cmd *, int))
 {
+	int	fd;
+
 	if (p->tmp->next->type == SPACE)
 	{
-		if (add(list, p->tmp, 0))
+		fd = add(list, p->tmp, 0);
+		if (fd < 0)
 			return (printf("%s : no such file or directory\n",
-							p->tmp->next->next->str),
-					1);
+						p->tmp->next->next->str), -1);
 		if (p->tmp->next->next)
 			p->tmp = p->tmp->next->next->next;
 	}
 	else
 	{
-		if (add(list, p->tmp, 1))
+		fd = add(list, p->tmp, 1);
+		if (fd < 0)
 			return (printf("%s : no such file or directory\n",
-							p->tmp->next->str), 1);
+						p->tmp->next->str), -1);
 		if (p->tmp->next)
 			p->tmp = p->tmp->next->next;
 	}
-	return (0);
+	return (fd);
 }
 
 void	add_new(t_var *p, t_cmd **res)
@@ -142,14 +145,14 @@ void	add_new(t_var *p, t_cmd **res)
 			else
 			{
 				ft_lstadd_back_cmd(res, lst_new_cmd(p->tmp->str, p->tmp->type,
-							p->tmp->quote));
+							p->tmp->quote, p->tmp->is_added));
 				p->tmp = p->tmp->next;
 			}
 		}
 		else
 		{
 			ft_lstadd_back_cmd(res, lst_new_cmd(p->tmp->str, p->tmp->type,
-						p->tmp->quote));
+						p->tmp->quote, p->tmp->is_added));
 			p->tmp = p->tmp->next;
 		}
 	}
@@ -167,4 +170,20 @@ t_cmd	*two_to_one(t_cmd *cmd)
 	add_new(&p, &res);
 	list_free(&cmd, ft_lstsize(cmd));
 	return (res);
+}
+
+int    is(t_var *p, t_cmd **cmd, int type)
+{
+    if (!(*cmd)->next)
+        return (1);
+    if (!(*cmd)->next->next)
+        return (1);
+    if ((*cmd)->next->next->type == type)
+    {
+        (*cmd)->is_added = TRUE;
+        p->l = 1;
+    }
+    else if ((*cmd)->next->type == type && !p->l)
+        (*cmd)->is_added = TRUE;
+    return (0);
 }

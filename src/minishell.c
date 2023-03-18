@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:59:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 00:40:27 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:01:31 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	main(int ac, char **av, char **e)
 			return (0);
 		add_history(output);
 		parsing(&cmd, output, env, &list);
+        // close (3);
 		free(output);
 	}
 	unlink("/tmp/test");

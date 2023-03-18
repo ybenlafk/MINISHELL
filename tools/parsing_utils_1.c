@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/13 18:05:52 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/18 13:36:03 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ int	redires_checker(t_cmd **list_cmd, char c1, char c2, int *i)
 {
 	if (c1 == '<' && c2 == '<')
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<<", HEREDOC, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<<", HEREDOC, 0, FALSE));
 		*i += 2;
 		return (0);
 	}
 	if (c1 == '>' && c2 == '>')
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(">>", APPEND, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(">>", APPEND, 0, FALSE));
 		*i += 2;
 		return (0);
 	}

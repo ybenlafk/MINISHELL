@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 01:18:26 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/18 15:17:52 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 	{
 		p->s = NULL;
 		if (sps_skiper(s, &p->i))
-			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
+			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0, FALSE));
 		if (quotes_checker(list_cmd, s, p))
 			return (list_free(list_cmd, ft_lstsize(*list_cmd)), 1);
 		if (sps_skiper(s, &p->i))
-			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
+			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0, FALSE));
 		redires_checker(list_cmd, s[p->i], s[p->i + 1], &p->i);
 		if (sps_skiper(s, &p->i))
-			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
+			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0, FALSE));
 		add_special_char(s[p->i], s[p->i + 1], list_cmd, p);
 		if (sps_skiper(s, &p->i))
-			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
+			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0, FALSE));
 		words_checker(p, list_cmd, s);
 		vars_checker(p, list_cmd, s);
 	}
@@ -56,7 +56,7 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 	syn = syntax_checker(cmd, output);
 	if (syn)
 		return (error(syn), 1);
-	cmd = redire_heredoc(cmd, &list);
+	cmd = redire_heredoc(cmd);
 	cmd = redire_in(cmd, &list);
 	cmd = redire_out(cmd, &list);
 	cmd = redire_append(cmd, &list);
@@ -64,6 +64,7 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 	while (cmd)
 	{
 		printf("|%s|\n", cmd->str);
+		// printf("|%d|\n", cmd->is_added);
 		cmd = cmd->next;
 	}
 	printf("=================================\n");
