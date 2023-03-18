@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/15 12:10:16 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:17:58 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,12 @@ void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
 	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && s[p->i] != ' '
 		&& !is_special_char(s[p->i]))
 	{
+		if (s[p->i] == '$' && !s[p->i + 1])
+		{
+			p->s = ft_strdup("$");
+			p->i++;
+			break ;	
+		}
 		if (s[p->i] == '$')
 		{
 			if (ft_isalpha(s[p->i + 1]) || s[p->i + 1] == '_')
@@ -117,7 +123,7 @@ void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
 		if (!p->l)
 		{
 			p->i += 2;
-			return ;
+			break;
 		}
 		if (len(p->s) >= 2 && !ft_isalnum(s[p->i]))
 			break;

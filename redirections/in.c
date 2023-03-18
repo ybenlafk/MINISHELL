@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:00:51 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/17 14:25:50 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/18 01:22:38 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static int    add_to_list(t_list **list, t_cmd *cmd, int stat)
 
     if (!stat)
     {
-        fd = open(cmd->next->next->str, O_RDWR);
+        fd = open(cmd->next->next->str, O_RDWR | O_TRUNC);
         if (fd < 0)
             return (1);
         ft_lstadd_back_list(list, lst_new_list(NULL, NULL, fd, 1));
     }
     else
     {
-        fd = open(cmd->next->str, O_RDONLY);
+        fd = open(cmd->next->str, O_RDONLY | O_TRUNC);
         if (fd < 0)
             return (1);
         ft_lstadd_back_list(list, lst_new_list(NULL, NULL, fd, 1));
