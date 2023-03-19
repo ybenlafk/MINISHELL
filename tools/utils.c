@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/19 10:57:17 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/19 15:23:51 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,19 +172,21 @@ t_cmd	*two_to_one(t_cmd *cmd)
 	return (res);
 }
 
-int    is(t_var *p, t_cmd **cmd, int type)
+int    is(t_var *p, t_cmd **cmd)
 {
     if (!(*cmd)->next)
         return (1);
     if (!(*cmd)->next->next)
         return (1);
-    if ((*cmd)->next->next->type == type)
+    if ((*cmd)->next->next->type == OUT || (*cmd)->next->next->type == IN
+		|| (*cmd)->next->next->type == APPEND)
     {
 		if ((*cmd)->type == WORD || (*cmd)->type == VAR)
         	(*cmd)->is_added = TRUE;
         p->l = 1;
     }
-    else if ((*cmd)->next->type == type && !p->l)
+    else if (((*cmd)->next->next->type == OUT || (*cmd)->next->next->type == IN
+		|| (*cmd)->next->next->type == APPEND) && !p->l)
         if ((*cmd)->type == WORD || (*cmd)->type == VAR)
         	(*cmd)->is_added = TRUE;
     return (0);
@@ -231,7 +233,7 @@ int	set_util(t_cmd *res)
 	return (0);
 }
 
-int    set(t_cmd **cmd, int type)
+int    set(t_cmd **cmd)
 {
     t_cmd 	*res;
 	int		i;
@@ -245,7 +247,7 @@ int    set(t_cmd **cmd, int type)
         res = res->next;
     if (!res)
         return (1);
-    if (res->type == type)
+    if (res->type == OUT || res->type == IN || res->type == APPEND)
     {
 		i = set_util(res);
         if (i == -1)

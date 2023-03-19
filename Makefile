@@ -6,7 +6,7 @@
 #    By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 09:22:41 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/03/19 09:22:43 by ybenlafk         ###   ########.fr        #
+#    Updated: 2023/03/19 15:27:47 by ybenlafk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,10 @@ SRCS= tools/utils.c\
 	tools/parsing_utils_2.c\
 	tools/expanding_utils.c\
 	tools/parsing_utils.c\
-	redirections/in.c\
-	redirections/out.c\
-	redirections/append.c\
+	redirections/all.c\
 	redirections/heredoc.c\
 	src/syntax.c\
+	src/parser.c\
 	src/expanding.c\
 	src/minishell.c\
 

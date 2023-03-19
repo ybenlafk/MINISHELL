@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/19 10:57:10 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/19 16:32:30 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,40 @@ int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 	return (0);
 }
 
+t_list *fin(t_list **list, t_cmd *cmd)
+{
+	t_list *res;
+	t_list *p;
+	t_cmd *tmp;
+	int i = 0;
+
+	res = NULL;
+	tmp = cmd;
+	p = *list;
+	while (tmp)
+	{
+		i = 0;
+		while (tmp && tmp->type != PIPE)
+		{
+			if (tmp->type == APPEND || tmp->type == IN
+				|| tmp->type == OUT || tmp->type == HEREDOC)
+				i++;
+			tmp = tmp->next;
+		}
+		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, p->in, p->out));
+		while (i--)
+			p = p->next;
+		if (!tmp)
+			break ;
+		tmp = tmp->next;
+	}
+	return (res);
+}
+
 int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 {
 	t_var vars;
-	t_list *tmp;
+	t_cmd *tmp;
 	char 	*syn;
 
 	if (!output[0])
@@ -57,11 +87,12 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 	syn = syntax_checker(cmd, output);
 	if (syn)
 		return (error(syn), 1);
+	tmp = lst_dup(cmd);
 	cmd = redire_heredoc(cmd);
-	cmd = redire_in(cmd, &list , &fd);
-	cmd = redire_out(cmd, &list, &fd);
-	cmd = redire_append(cmd, &list, &fd);
+	cmd = all(cmd, &list, &fd);
 	cmd = two_to_one(cmd);
+	list = fin(&list, tmp);
+	list = parser(cmd, &list);
 	while (cmd)
 	{
 		printf("|%s|\n", cmd->str);
@@ -69,14 +100,16 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 		cmd = cmd->next;
 	}
 	printf("=================================\n");
-	while (list)
-	{
-		printf("|%s|\n", list->cmd);
-		printf("|%p|\n", list->args);
-		printf("|%d|\n", list->in);
-		printf("|%d|\n", list->out);
-		list = list->next;
-	}
+	// while (list)
+	// {
+	// 	int i = 0;
+	// 	printf("|%s|\n", list->cmd);
+	// 	while (list->args[i])
+	// 		printf("{%s}\n", list->args[i++]);
+	// 	printf("|%d|\n", list->in);
+	// 	printf("|%d|\n", list->out);
+	// 	list = list->next;
+	// }
 	list_free(&cmd, ft_lstsize(cmd));
 	close(fd);
 	return (0);

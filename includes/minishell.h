@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/19 09:45:12 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/19 15:34:24 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ typedef struct array
 	struct array *next;
 }	t_list;
 
+t_list    *parser(t_cmd *cmd, t_list **list);
+t_cmd    *all(t_cmd *cmd, t_list **list, int *fd);
 t_cmd			*redire_heredoc(t_cmd *cmd);
 t_cmd			*lst_new_cmd(char *cmd, int type, int quote, int is_added);
 t_env			*lst_new_env(char *e);
@@ -86,10 +88,8 @@ t_exp			*ft_lstlast_exp(t_exp *lst);
 t_exp			*lst_new_exp(char *value, int stat);
 t_cmd			*ft_lstlast_cmd(t_cmd *lst);
 t_list			*lst_new_list(char *cmd, char **args, int in, int out);
-t_cmd    		*redire_in(t_cmd *cmd, t_list **list, int *fd);
-t_cmd    		*redire_out(t_cmd *cmd, t_list **list, int *fd);
-t_cmd    		*redire_append(t_cmd *cmd, t_list **list, int *fd);
 t_cmd			*two_to_one(t_cmd *cmd);
+t_cmd			*lst_dup(t_cmd *cmd);
 void			ft_lstadd_back_exp(t_exp **lst, t_exp *new);
 void			free_env(t_env **philos, int len);
 void			expanding(t_env *env, t_cmd *cmd);
@@ -99,8 +99,6 @@ void			ft_lstadd_back_env(t_env **lst, t_env *new);
 void			add_special_char(char c1, char c2, t_cmd **list_cmd, t_var *p);
 void			vars_checker(t_var *p, t_cmd **list_cmd, char *s);
 void			words_checker(t_var *p, t_cmd **list_cmd, char *s);
-void			*ft_memmove(void *dst, void *src, size_t len);
-void			*ft_memcpy(void *dest, void *src, size_t n);
 void			quotes_expander(t_var *p, t_cmd *cmd, t_env *env);
 void			lexer_pro_max(t_exp **exp, char *s, t_var *p);
 void			error(char *e);
@@ -112,10 +110,10 @@ char			*d_quote_trim(char *str);
 char			*char_to_str(char c);
 char			*is_quotes(char *s, int *i, int stat);
 char			*char_join(char *str, char c);
-char			*ft_strstr(char *str, char *sub);
 char			*set_value(t_env *env, char *rep);
 char			*ft_strjoin(char *s1, char *s2);
 char    		*syntax_checker(t_cmd *cmd, char *str);
+char	**ft_split(char const	*s, char c);
 int				ft_strcmp(char *s1, char *s2);
 int				ft_lstsize(t_cmd *lst);
 int				parsing(t_cmd *cmd, char *output, t_env *env, t_list *list);
@@ -130,7 +128,7 @@ int				sps_skiper(char *s, int *i);
 int				redires_checker(t_cmd **list_cmd, char c1, char c2, int *i);
 int				env_size(t_env *lst);
 int				fill_list(t_var *p, int (*add)(t_cmd *, int));
-int    			is(t_var *p, t_cmd **cmd, int type);
-int    			set(t_cmd **cmd, int type);
+int    			is(t_var *p, t_cmd **cmd);
+int    			set(t_cmd **cmd);
 
 #endif
