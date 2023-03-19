@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 16:13:03 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/19 10:57:17 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ int	env_size(t_env *lst)
 	return (len);
 }
 
-int	fill_list(t_var *p, t_list **list, int (*add)(t_list **, t_cmd *, int))
+int	fill_list(t_var *p, int (*add)(t_cmd *, int))
 {
 	int	fd;
 
 	if (p->tmp->next->type == SPACE)
 	{
-		fd = add(list, p->tmp, 0);
+		fd = add(p->tmp, 0);
 		if (fd < 0)
 			return (printf("%s : no such file or directory\n",
 						p->tmp->next->next->str), -1);
@@ -124,7 +124,7 @@ int	fill_list(t_var *p, t_list **list, int (*add)(t_list **, t_cmd *, int))
 	}
 	else
 	{
-		fd = add(list, p->tmp, 1);
+		fd = add(p->tmp, 1);
 		if (fd < 0)
 			return (printf("%s : no such file or directory\n",
 						p->tmp->next->str), -1);
@@ -180,10 +180,78 @@ int    is(t_var *p, t_cmd **cmd, int type)
         return (1);
     if ((*cmd)->next->next->type == type)
     {
-        (*cmd)->is_added = TRUE;
+		if ((*cmd)->type == WORD || (*cmd)->type == VAR)
+        	(*cmd)->is_added = TRUE;
         p->l = 1;
     }
     else if ((*cmd)->next->type == type && !p->l)
-        (*cmd)->is_added = TRUE;
+        if ((*cmd)->type == WORD || (*cmd)->type == VAR)
+        	(*cmd)->is_added = TRUE;
+    return (0);
+}
+
+t_cmd	*lst_dup(t_cmd *cmd)
+{
+	t_cmd *res;
+
+    res = NULL;
+    while (cmd)
+    {
+        ft_lstadd_back_cmd(&res, lst_new_cmd(cmd->str, cmd->type, cmd->quote, cmd->is_added));
+        cmd = cmd->next;
+    }
+    return (res);
+}
+
+int	set_util(t_cmd *res)
+{
+	res = res->next;
+    if (!res)
+        return (1);
+    if (res->type == SPACE)
+        res = res->next;
+    if (!res)
+        return (1);
+    if (res->type == WORD || res->type == VAR)
+        res = res->next;
+    if (!res)
+        return(-1);
+    if (res->type == SPACE)
+    {
+        res = res->next;
+        if (!res)
+            return(-1);
+        if (res->type == WORD || res->type == VAR)
+            res->is_added = TRUE;
+		else
+			return (-1);
+    }
+	else
+		return (-1);
+	return (0);
+}
+
+int    set(t_cmd **cmd, int type)
+{
+    t_cmd 	*res;
+	int		i;
+
+    res = *cmd;
+    if (!ft_lstsize(res))
+        return (1);
+    if (!res->next)
+        return (1);
+    if (res->type == SPACE)
+        res = res->next;
+    if (!res)
+        return (1);
+    if (res->type == type)
+    {
+		i = set_util(res);
+        if (i == -1)
+			return (-1);
+		else if (i)
+			return (1);
+    }
     return (0);
 }

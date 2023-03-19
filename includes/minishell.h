@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 18:43:23 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/19 09:45:12 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ int				quotes_checker(t_cmd **list_cmd, char *s, t_var *p);
 int				sps_skiper(char *s, int *i);
 int				redires_checker(t_cmd **list_cmd, char c1, char c2, int *i);
 int				env_size(t_env *lst);
-int				fill_list(t_var *p, t_list **list, int(*add)(t_list **, t_cmd *, int));
+int				fill_list(t_var *p, int (*add)(t_cmd *, int));
 int    			is(t_var *p, t_cmd **cmd, int type);
+int    			set(t_cmd **cmd, int type);
 
 #endif

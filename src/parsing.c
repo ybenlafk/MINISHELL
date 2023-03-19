@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 18:43:40 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/19 10:57:10 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 	if (!output[0])
 		return (0);
 	vars.i = 0;
-	int fd = 0;
+	int fd = -1;
 	(void)env;
 	cmd = NULL;
 	list = NULL;
