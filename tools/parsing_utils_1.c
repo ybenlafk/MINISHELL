@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 13:36:03 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:13:25 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //print error.
 void	error(char *e)
 {
-	printf("%s : syntax error\n", e);
+	printf("Minishell: syntax error near unexpected token `%s'\n", e);
 }
 // skip the spaces and return 1 if there is a spaces else return 0.
 int	sps_skiper(char *s, int *i)

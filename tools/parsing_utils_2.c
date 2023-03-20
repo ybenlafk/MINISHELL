@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 15:12:10 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:08:15 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,8 @@ t_cmd	*lst_join(t_cmd *cmd)
 	p.j = 0;
 	p.l = 0;
 	p.s = ft_strdup("");
+	if (!cmd)
+		return (NULL);
 	while (tmp->next)
 	{
 		if (tmp->type == WORD && (tmp->next->type == WORD || tmp->next->type == VAR))

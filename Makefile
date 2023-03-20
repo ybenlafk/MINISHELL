@@ -6,7 +6,7 @@
 #    By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 09:22:41 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/03/19 15:27:47 by ybenlafk         ###   ########.fr        #
+#    Updated: 2023/03/20 19:02:35 by ybenlafk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS= tools/utils.c\
 OBGJ= $(SRCS:.c=.o)
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g
 LDFLAGS = -lreadline
 FRM = rm -rf
 

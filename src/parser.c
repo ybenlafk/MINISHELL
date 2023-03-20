@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:26:18 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/19 18:18:57 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:05:36 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_list    *parser(t_cmd *cmd, t_list *list)
     if (!tmp)
         return (list);
     s = ft_split(join_args(tmp), ' ');
+    if (!s)
+        return (NULL);
     if (tmp->is_added)
     {
         ft_lstadd_back_list(&res, lst_new_list(s[0], s, list->in, list->out));

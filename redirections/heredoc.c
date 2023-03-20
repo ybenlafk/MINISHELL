@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:00:55 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/19 18:51:07 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:23:56 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int take_in(t_var *p, t_env *env , int stat)
         p->s1 = p->tmp->next->next->str;
     else
         p->s1 = p->tmp->next->str;
-    p->fd = open("/tmp/test", O_CREAT | O_RDWR | O_APPEND , 0777);
+    p->fd = open(p->file, O_CREAT | O_RDWR | O_APPEND, 0777);
     if (p->fd < 0)
         return (1);
     while (1)
@@ -32,28 +32,28 @@ int take_in(t_var *p, t_env *env , int stat)
             return (1);
         if (!ft_strcmp(p->s, p->s1))
             break ;
-        lexer_pro_max(&exp, p->s, &var);
-        p->s = check_set(exp, env);
+        // lexer_pro_max(&exp, p->s, &var);
+        // p->s = check_set(exp, env);
         p->s = char_join(p->s, '\n');
         write (p->fd, p->s, len(p->s) + 1);
         free(p->s);
         p->s = NULL;
-        printf ("%s+++\n", p->s);
     }
 	p->tmp->str = "<";
 	p->tmp->type = IN;
     if (!stat)
-        p->tmp->next->next->str = "/tmp/test";
+        p->tmp->next->next->str = p->file;
     else
-        p->tmp->next->str = "/tmp/test";
+        p->tmp->next->str = p->file;
     return (0);
 }
 
-t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env)
+t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env, char *file)
 {
     t_var p;
     t_cmd *res;
 
+    p.file = file;
     if (!cmd)
 		return (NULL);
     p.i = 0;
@@ -80,3 +80,4 @@ t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env)
     list_free(&cmd, ft_lstsize(cmd));
     return (res);
 }
+// 0ePOmn 

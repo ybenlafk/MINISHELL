@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 15:12:24 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:24:09 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 	if (!output[0])
 		return (0);
 	vars.i = 0;
+	vars.file = generate_name();
 	int fd = -1;
 	(void)env;
 	cmd = NULL;
@@ -90,7 +91,7 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 	if (syn)
 		return (error(syn), 1);
 	tmp = lst_dup(cmd);
-	cmd = redire_heredoc(cmd, env);
+	cmd = redire_heredoc(cmd, env, vars.file);
 	cmd = all(cmd, &list, &fd);
 	cmd = two_to_one(cmd);
 	list = fin(&list, tmp);

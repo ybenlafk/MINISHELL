@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/19 15:23:51 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:29:59 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,4 +256,19 @@ int    set(t_cmd **cmd)
 			return (1);
     }
     return (0);
+}
+
+char	*generate_name(void)
+{
+    int *nb;
+
+    nb = malloc(4);
+    if (!nb)
+        return ("/tmp/tmp-2343");
+    int fd = open("/dev/urandom", O_RDONLY);
+    read(fd, &nb[0], 1);
+    read(fd, &nb[1], 1);
+    read(fd, &nb[2], 1);
+    read(fd, &nb[3], 1);
+    return (ft_strjoin(ft_strdup("/tmp/tmp-"), ft_itoa(*nb)));
 }
