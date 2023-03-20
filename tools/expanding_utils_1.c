@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:18:21 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/15 12:18:15 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/20 12:25:11 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	j = 0;
 	if (!s1 || !s2)
-		return (0);
+		return (NULL);
 	p = (char *)malloc(len(s1) + len(s2) + 1);
 	if (!p)
-		return (0);
+		return (NULL);
 	while (s1[i])
 	{
 		p[i] = s1[i];

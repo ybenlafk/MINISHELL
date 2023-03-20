@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:03:19 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/16 12:04:38 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/20 12:31:35 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ void	expanding(t_env *env, t_cmd *cmd)
 		if (p.tmp->type == VAR)
 			get_var(&p);
 		if (p.s)
-			p.tmp->str = set_value(env, p.s);
+			p.tmp->str = getenv(p.s);
+		// if (p.s)
+		// 	p.tmp->str = set_value(env, p.s);
 		p.tmp = p.tmp->next;
 	}
 	p.tmp = cmd;
