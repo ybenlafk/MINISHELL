@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/19 15:34:24 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:30:08 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct var
 	int			stat;
 	char		*s;
 	char		*s1;
+	char		*ch;
 	char		**str;
 	t_cmd		*tmp;
 	t_exp		*exp;
@@ -79,9 +80,9 @@ typedef struct array
 	struct array *next;
 }	t_list;
 
-t_list    *parser(t_cmd *cmd, t_list **list);
-t_cmd    *all(t_cmd *cmd, t_list **list, int *fd);
-t_cmd			*redire_heredoc(t_cmd *cmd);
+t_list    		*parser(t_cmd *cmd, t_list *list);
+t_cmd    		*all(t_cmd *cmd, t_list **list, int *fd);
+t_cmd    		*redire_heredoc(t_cmd *cmd, t_env *env);
 t_cmd			*lst_new_cmd(char *cmd, int type, int quote, int is_added);
 t_env			*lst_new_env(char *e);
 t_exp			*ft_lstlast_exp(t_exp *lst);
@@ -90,6 +91,7 @@ t_cmd			*ft_lstlast_cmd(t_cmd *lst);
 t_list			*lst_new_list(char *cmd, char **args, int in, int out);
 t_cmd			*two_to_one(t_cmd *cmd);
 t_cmd			*lst_dup(t_cmd *cmd);
+t_cmd			*lst_join(t_cmd *cmd);
 void			ft_lstadd_back_exp(t_exp **lst, t_exp *new);
 void			free_env(t_env **philos, int len);
 void			expanding(t_env *env, t_cmd *cmd);
@@ -112,8 +114,9 @@ char			*is_quotes(char *s, int *i, int stat);
 char			*char_join(char *str, char c);
 char			*set_value(t_env *env, char *rep);
 char			*ft_strjoin(char *s1, char *s2);
+char			*check_set(t_exp *exp, t_env *env);
 char    		*syntax_checker(t_cmd *cmd, char *str);
-char	**ft_split(char const	*s, char c);
+char			**ft_split(char const	*s, char c);
 int				ft_strcmp(char *s1, char *s2);
 int				ft_lstsize(t_cmd *lst);
 int				parsing(t_cmd *cmd, char *output, t_env *env, t_list *list);

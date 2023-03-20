@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 13:55:08 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:12:10 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,4 +150,83 @@ void	words_checker(t_var *p, t_cmd **list_cmd, char *s)
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0, FALSE));
 		p->j = 0;
 	}
+}
+
+char	*jwan(char *s1, char *s2, char *s3)
+{
+	char	*s;
+	t_var p;
+
+	p.i = 0;
+	p.j = 0;
+	p.l = 0;
+	if (!s1 || !s2 || !s3)
+		return (NULL);
+	s = (char *)malloc(len(s1) + len(s2) + len(s3) + 1);
+	if (!s)
+		return (NULL);
+	while (s1[p.i])
+	{
+		s[p.i] = s1[p.i];
+		p.i++;
+	}
+	while (s2[p.j])
+		s[p.i++] = s2[p.j++];
+	while (s3[p.l])
+		s[p.i++] = s3[p.l++];
+	s[p.i] = '\0';
+	return (s);
+}
+
+t_cmd	*lst_join(t_cmd *cmd)
+{
+	t_cmd	*res;
+	t_cmd	*tmp;
+	t_var	p;
+
+	res = NULL;
+	tmp = cmd;
+	p.i = 0;
+	p.j = 0;
+	p.l = 0;
+	p.s = ft_strdup("");
+	while (tmp->next)
+	{
+		if (tmp->type == WORD && (tmp->next->type == WORD || tmp->next->type == VAR))
+		{
+			while (tmp->next && (tmp->type == VAR || tmp->type == WORD) && (tmp->next->type == WORD || tmp->next->type == VAR))
+			{
+				p.s = jwan(p.s, tmp->str, tmp->next->str);
+				if (tmp->quote == 1 || tmp->next->quote == 1)
+					p.j = 1;
+				else if (tmp->quote == 2 || tmp->next->quote == 2)
+					p.j = 2;
+				if (tmp->next->next)
+				{
+					tmp = tmp->next->next;
+					p.l = 1;
+				}
+				else
+				{
+					tmp = tmp->next;
+					p.l = 2;
+				}
+			}
+			if (p.l == 1)
+				p.s = ft_strjoin(p.s, tmp->str);
+			ft_lstadd_back_cmd(&res, lst_new_cmd(p.s, WORD, p.j, FALSE));
+			p.i = 1;
+		}
+		else
+		{
+			p.s = ft_strdup("");
+			ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote, FALSE));
+			p.i = 0;
+			tmp = tmp->next;
+		}
+	}
+	if (!p.i)
+		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote, FALSE));
+	list_free(&cmd, ft_lstsize(cmd));
+	return (res);
 }

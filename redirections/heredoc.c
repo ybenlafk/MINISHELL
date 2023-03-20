@@ -6,19 +6,23 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:00:55 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 13:38:28 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:51:07 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int take_in(t_var *p, int stat)
+int take_in(t_var *p, t_env *env , int stat)
 {
+    t_exp *exp;
+    t_var var;
+
+    exp = NULL;
     if (!stat)
         p->s1 = p->tmp->next->next->str;
     else
         p->s1 = p->tmp->next->str;
-    p->fd = open("/tmp/test", O_CREAT | O_RDWR | O_APPEND | O_TRUNC, 0777);
+    p->fd = open("/tmp/test", O_CREAT | O_RDWR | O_APPEND , 0777);
     if (p->fd < 0)
         return (1);
     while (1)
@@ -28,8 +32,13 @@ int take_in(t_var *p, int stat)
             return (1);
         if (!ft_strcmp(p->s, p->s1))
             break ;
-        write (p->fd, char_join(p->s, '\n'), len(p->s) + 1);
+        lexer_pro_max(&exp, p->s, &var);
+        p->s = check_set(exp, env);
+        p->s = char_join(p->s, '\n');
+        write (p->fd, p->s, len(p->s) + 1);
         free(p->s);
+        p->s = NULL;
+        printf ("%s+++\n", p->s);
     }
 	p->tmp->str = "<";
 	p->tmp->type = IN;
@@ -40,7 +49,7 @@ int take_in(t_var *p, int stat)
     return (0);
 }
 
-t_cmd    *redire_heredoc(t_cmd *cmd)
+t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env)
 {
     t_var p;
     t_cmd *res;
@@ -56,12 +65,12 @@ t_cmd    *redire_heredoc(t_cmd *cmd)
         {
             if (p.tmp->next->type == SPACE)
             {
-                if(take_in(&p, 0))
+                if(take_in(&p, env, 0))
                     return (NULL);
             }
             else
             {
-                if(take_in(&p, 1))
+                if(take_in(&p, env, 1))
                     return (NULL);
             }
         }
