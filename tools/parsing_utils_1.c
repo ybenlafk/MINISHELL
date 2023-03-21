@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 18:13:25 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/21 10:44:56 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char	*char_join(char *str, char c)
 // check the redirections.
 int	redires_checker(t_cmd **list_cmd, char c1, char c2, int *i)
 {
+	if (!c1 || !c2)
+		return (1);
 	if (c1 == '<' && c2 == '<')
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<<", HEREDOC, 0, FALSE));

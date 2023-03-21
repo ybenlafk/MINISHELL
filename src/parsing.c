@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 18:24:09 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/21 21:52:02 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_list *fin(t_list **list, t_cmd *cmd)
 		}
 
 		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, p->in, p->out));
-		while (i--)
+		while (i-- && p)
 			p = p->next;
 		if (!tmp)
 			break ;
@@ -96,12 +96,14 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 	cmd = two_to_one(cmd);
 	list = fin(&list, tmp);
 	list = parser(cmd, list);
+	list = unused_clear(list);
 	printf("<-------------------tokens-list---------------------->\n");
 	while (cmd)
 	{
 		printf("value : |%s|\n", cmd->str);
 		// printf("type : |%d|\n", cmd->type);
 		// printf("quotes : |%d|\n", cmd->quote);
+		printf("is added : |%d|\n", cmd->is_added);
 		cmd = cmd->next;
 	}
 	printf("<-------------------cmds-list------------------------>\n");

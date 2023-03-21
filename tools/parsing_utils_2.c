@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 19:08:15 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/21 10:46:39 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
 	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && s[p->i] != ' '
 		&& !is_special_char(s[p->i]))
 	{
-		if (s[p->i] == '$' && !s[p->i + 1])
+		if (s[p->i] == '$' && (!s[p->i + 1] || s[p->i + 1] == ' '))
 		{
 			p->s = ft_strdup("$");
 			p->i++;

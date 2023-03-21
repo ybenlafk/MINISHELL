@@ -6,11 +6,20 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:59:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 19:00:42 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/21 22:25:18 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// void	c_hanndler()
+// {
+// 	// rl_catch_signals = 0;
+// 	printf("\n");
+// 	rl_on_new_line();
+// 	rl_replace_line("", 0);
+// 	rl_redisplay();
+// }
 
 void	fill_env(t_env **env, char **e)
 {
@@ -43,15 +52,20 @@ int	main(int ac, char **av, char **e)
 	(void)ac;
 	(void)av;
 	env = NULL;
-	int fd = open("/dev/urandom", O_RDONLY);
-	dup2(fd, 0);
+	// int fd = open("/dev/urandom", O_RDONLY);
+	// dup2(fd, 0);
 	fill_env(&env, e);
 	while (1)
 	{
+		// signal(SIGINT, c_hanndler);
+		signal(SIGQUIT, SIG_IGN);
 		output = NULL;
 		output = readline("\033[0;34mMinishell>$ ");
 		if (!output)
-			return (0);
+		{
+			printf("exit");
+			break;
+		}
 		add_history(output);
 		parsing(&cmd, output, env, &list);
 		free(output);

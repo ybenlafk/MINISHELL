@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:26:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/19 18:15:13 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/21 20:27:14 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ int redire_checker(t_cmd **cmd, int type)
         if ((*cmd)->next->next->type != WORD && (*cmd)->next->next->type != VAR)
             return (1);
     }
-    else if ((*cmd)->type == IN && (*cmd)->next->type == OUT)
-    {
-        (*cmd) = (*cmd)->next->next;
-        return (0);
-    }
     else if ((*cmd)->type == type && (*cmd)->next->type != WORD && (*cmd)->next->type != VAR)
         return (1);
     return (0);
@@ -38,6 +33,8 @@ int pipe_checker(t_cmd *cmd)
     t_var p;
 
     p.tmp = cmd;
+    if (!cmd)
+        return (0);
     if (p.tmp->next)
     {
         if (p.tmp->type == PIPE || (p.tmp->type == SPACE && p.tmp->next->type == PIPE))

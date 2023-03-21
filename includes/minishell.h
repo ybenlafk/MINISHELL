@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 18:23:29 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/21 20:25:36 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # define MINISHELL_H
 
 # include <fcntl.h>
-# include <readline/history.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+#include <signal.h>
 
 # define FALSE 0
 # define TRUE 1
@@ -82,17 +83,18 @@ typedef struct array
 }					t_list;
 
 t_list				*parser(t_cmd *cmd, t_list *list);
+t_list				*unused_clear(t_list *list);
+t_list				*lst_new_list(char *cmd, char **args, int in, int out);
 t_cmd				*all(t_cmd *cmd, t_list **list, int *fd);
 t_cmd				*redire_heredoc(t_cmd *cmd, t_env *env, char *file);
-t_cmd				*lst_new_cmd(char *cmd, int type, int quote, int is_added);
-t_env				*lst_new_env(char *e);
-t_exp				*ft_lstlast_exp(t_exp *lst);
-t_exp				*lst_new_exp(char *value, int stat);
 t_cmd				*ft_lstlast_cmd(t_cmd *lst);
-t_list				*lst_new_list(char *cmd, char **args, int in, int out);
 t_cmd				*two_to_one(t_cmd *cmd);
 t_cmd				*lst_dup(t_cmd *cmd);
 t_cmd				*lst_join(t_cmd *cmd);
+t_cmd				*lst_new_cmd(char *cmd, int type, int quote, int is_added);
+t_exp				*lst_new_exp(char *value, int stat);
+t_exp				*ft_lstlast_exp(t_exp *lst);
+t_env				*lst_new_env(char *e);
 void				ft_lstadd_back_exp(t_exp **lst, t_exp *new);
 void				free_env(t_env **philos, int len);
 void				expanding(t_env *env, t_cmd *cmd);
