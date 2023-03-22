@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 18:29:59 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/21 22:14:45 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,7 @@ int    set(t_cmd **cmd)
         return (1);
     if (res->type == SPACE)
         res = res->next;
+	// printf("---%s\n", res->str);
     if (!res)
         return (1);
     if (res->type == OUT || res->type == IN || res->type == APPEND)
@@ -271,4 +272,20 @@ char	*generate_name(void)
     read(fd, &nb[2], 1);
     read(fd, &nb[3], 1);
     return (ft_strjoin(ft_strdup("/tmp/tmp-"), ft_itoa(*nb)));
+}
+
+t_list	*unused_clear(t_list *list)
+{
+	t_list 	*res;
+	t_list 	*tmp;
+
+	res = NULL;
+	tmp = list;
+	while (tmp)
+	{
+		if (tmp->cmd && tmp->args)
+			ft_lstadd_back_list(&res, lst_new_list(tmp->cmd, tmp->args, tmp->in, tmp->out));
+		tmp = tmp->next;
+	}
+	return (res);
 }

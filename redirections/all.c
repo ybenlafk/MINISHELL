@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 14:49:05 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/19 15:25:35 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/21 22:00:06 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,54 @@
 int    in(t_cmd *cmd, int stat)
 {
     int fd;
-
+    char *s = ft_strdup("");
+    
     if (!stat)
-        fd = open(cmd->next->next->str, O_RDWR);
+    {
+        s = ft_strjoin(s, cmd->next->next->str);
+        fd = open(s, O_RDWR);
+    }
     else
-        fd = open(cmd->next->str, O_WRONLY);
+    {
+        s = ft_strjoin(s, cmd->next->str);
+        fd = open(s, O_RDWR);
+    }
     return (fd);
 }
 
 int    out(t_cmd *cmd, int stat)
 {
     int fd;
-
+    char *s = ft_strdup("../lx/");
+    
     if (!stat)
-        fd = open(cmd->next->next->str, O_CREAT | O_RDWR | O_TRUNC, 0777);
+    {
+        s = ft_strjoin(s, cmd->next->next->str);
+        fd = open(s, O_CREAT | O_RDWR | O_TRUNC, 0777);
+    }
     else
-        fd = open(cmd->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+    {
+        s = ft_strjoin(s, cmd->next->str);
+        fd = open(s, O_CREAT | O_RDWR | O_TRUNC, 0777);
+    }
     return (fd);
 }
 
 int    append(t_cmd *cmd, int stat)
 {
     int fd;
-
+    char *s = ft_strdup("");
+    
     if (!stat)
-        fd = open(cmd->next->next->str, O_CREAT | O_APPEND | O_RDWR, 0777);
+    {
+        s = ft_strjoin(s, cmd->next->next->str);
+        fd = open(s, O_CREAT | O_APPEND | O_RDWR, 0777);
+    }
     else
-        fd = open(cmd->next->str, O_CREAT | O_APPEND | O_RDWR , 0777);
+    {
+        s = ft_strjoin(s, cmd->next->str);
+        fd = open(s, O_CREAT | O_APPEND | O_RDWR, 0777);
+    }
     return (fd);
 }
 

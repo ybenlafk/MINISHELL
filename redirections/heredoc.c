@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:00:55 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 18:23:56 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:44:05 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ int take_in(t_var *p, t_env *env , int stat)
 {
     t_exp *exp;
     t_var var;
+    t_cmd   *use;
 
     exp = NULL;
     if (!stat)
-        p->s1 = p->tmp->next->next->str;
+        use = p->tmp->next->next;
     else
-        p->s1 = p->tmp->next->str;
-    p->fd = open(p->file, O_CREAT | O_RDWR | O_APPEND, 0777);
+        use = p->tmp->next;
+    p->fd = open(p->file, O_CREAT | O_RDWR | O_APPEND | O_TRUNC, 0777);
     if (p->fd < 0)
         return (1);
     while (1)
@@ -30,13 +31,17 @@ int take_in(t_var *p, t_env *env , int stat)
         p->s = readline("heredoc> ");
         if (!p->s)
             return (1);
-        if (!ft_strcmp(p->s, p->s1))
+        if (!ft_strcmp(p->s, use->str))
             break ;
-        // lexer_pro_max(&exp, p->s, &var);
-        // p->s = check_set(exp, env);
+        if (!use->quote)
+        {
+            lexer_pro_max(&exp, p->s, &var);
+            p->s = check_set(exp, env);
+        }
         p->s = char_join(p->s, '\n');
         write (p->fd, p->s, len(p->s) + 1);
         free(p->s);
+        exp = NULL;
         p->s = NULL;
     }
 	p->tmp->str = "<";

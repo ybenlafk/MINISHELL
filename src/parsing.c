@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 18:24:09 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:07:14 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_list *fin(t_list **list, t_cmd *cmd)
 		}
 
 		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, p->in, p->out));
-		while (i--)
+		while (i-- && p)
 			p = p->next;
 		if (!tmp)
 			break ;
@@ -69,10 +69,11 @@ t_list *fin(t_list **list, t_cmd *cmd)
 	return (res);
 }
 
-int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
+t_list	*parsing(t_cmd *cmd, char *output, t_env *env)
 {
-	t_var vars;
-	t_cmd *tmp;
+	t_var	vars;
+	t_list	*list;
+	t_cmd 	*tmp;
 	char 	*syn;
 
 	if (!output[0])
@@ -84,40 +85,42 @@ int	parsing(t_cmd *cmd, char *output, t_env *env, t_list *list)
 	cmd = NULL;
 	list = NULL;
 	if (lexer(&cmd, output, &vars))
-		return (1);
+		return (NULL);
 	expanding(env, cmd);
 	cmd = lst_join(cmd);
 	syn = syntax_checker(cmd, output);
 	if (syn)
-		return (error(syn), 1);
+		return (error(syn), NULL);
 	tmp = lst_dup(cmd);
 	cmd = redire_heredoc(cmd, env, vars.file);
 	cmd = all(cmd, &list, &fd);
 	cmd = two_to_one(cmd);
 	list = fin(&list, tmp);
 	list = parser(cmd, list);
-	printf("<-------------------tokens-list---------------------->\n");
-	while (cmd)
-	{
-		printf("value : |%s|\n", cmd->str);
-		// printf("type : |%d|\n", cmd->type);
-		// printf("quotes : |%d|\n", cmd->quote);
-		cmd = cmd->next;
-	}
-	printf("<-------------------cmds-list------------------------>\n");
-	while (list)
-	{
-		int i = 0;
-		printf("cmd : |%s|\n", list->cmd);
-		if (list->args)
-			while (list->args[i])
-				printf("arg : {%s}\n", list->args[i++]);
-		printf("in : |%d|\n", list->in);
-		printf("out : |%d|\n", list->out);
-		printf("<<<<<<----------------->>>>>>\n");
-		list = list->next;
-	}
+	list = unused_clear(list);
+	// printf("<-------------------tokens-list---------------------->\n");
+	// while (cmd)
+	// {
+	// 	printf("value : |%s|\n", cmd->str);
+	// 	// printf("type : |%d|\n", cmd->type);
+	// 	// printf("quotes : |%d|\n", cmd->quote);
+	// 	printf("is added : |%d|\n", cmd->is_added);
+	// 	cmd = cmd->next;
+	// }
+	// printf("<-------------------cmds-list------------------------>\n");
+	// while (list)
+	// {
+	// 	int i = 0;
+	// 	printf("cmd : |%s|\n", list->cmd);
+	// 	if (list->args)
+	// 		while (list->args[i])
+	// 			printf("arg : {%s}\n", list->args[i++]);
+	// 	printf("in : |%d|\n", list->in);
+	// 	printf("out : |%d|\n", list->out);
+	// 	printf("<<<<<<----------------->>>>>>\n");
+	// 	list = list->next;
+	// }
 	list_free(&cmd, ft_lstsize(cmd));
 	close(fd);
-	return (0);
+	return (list);
 }
