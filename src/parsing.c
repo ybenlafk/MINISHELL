@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/22 13:07:14 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/22 23:46:03 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,44 +69,43 @@ t_list *fin(t_list **list, t_cmd *cmd)
 	return (res);
 }
 
-t_list	*parsing(t_cmd *cmd, char *output, t_env *env)
+t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 {
 	t_var	vars;
 	t_list	*list;
 	t_cmd 	*tmp;
 	char 	*syn;
 
-	if (!output[0])
+	if (!p.s[0])
 		return (0);
 	vars.i = 0;
-	vars.file = generate_name();
 	int fd = -1;
 	(void)env;
 	cmd = NULL;
 	list = NULL;
-	if (lexer(&cmd, output, &vars))
+	if (lexer(&cmd, p.s, &vars))
 		return (NULL);
 	expanding(env, cmd);
 	cmd = lst_join(cmd);
-	syn = syntax_checker(cmd, output);
+	syn = syntax_checker(cmd, p.s);
 	if (syn)
 		return (error(syn), NULL);
 	tmp = lst_dup(cmd);
-	cmd = redire_heredoc(cmd, env, vars.file);
+	cmd = redire_heredoc(cmd, env, p.file);
 	cmd = all(cmd, &list, &fd);
 	cmd = two_to_one(cmd);
 	list = fin(&list, tmp);
 	list = parser(cmd, list);
 	list = unused_clear(list);
-	// printf("<-------------------tokens-list---------------------->\n");
-	// while (cmd)
-	// {
-	// 	printf("value : |%s|\n", cmd->str);
-	// 	// printf("type : |%d|\n", cmd->type);
-	// 	// printf("quotes : |%d|\n", cmd->quote);
-	// 	printf("is added : |%d|\n", cmd->is_added);
-	// 	cmd = cmd->next;
-	// }
+	printf("<-------------------tokens-list---------------------->\n");
+	while (cmd)
+	{
+		printf("value : |%s|\n", cmd->str);
+		// printf("type : |%d|\n", cmd->type);
+		// printf("quotes : |%d|\n", cmd->quote);
+		printf("is added : |%d|\n", cmd->is_added);
+		cmd = cmd->next;
+	}
 	// printf("<-------------------cmds-list------------------------>\n");
 	// while (list)
 	// {

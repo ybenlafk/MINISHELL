@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/22 13:09:51 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/22 21:08:12 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct array
 	struct array	*next;
 }					t_list;
 
-t_list				*parsing(t_cmd *cmd, char *output, t_env *env);
+t_list				*parsing(t_cmd *cmd, t_var p, t_env *env);
 t_list				*parser(t_cmd *cmd, t_list *list);
 t_list				*unused_clear(t_list *list);
 t_list				*lst_new_list(char *cmd, char **args, int in, int out);

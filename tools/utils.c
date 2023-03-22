@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/21 22:14:45 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/22 23:43:57 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,29 +233,55 @@ int	set_util(t_cmd *res)
 	return (0);
 }
 
+// int    set(t_cmd **cmd, t_cmd **bef)
+// {
+//     t_cmd 	*res;
+// 	int		i;
+
+//     res = *cmd;
+//     if (!ft_lstsize(res))
+//         return (1);
+//     if (!res->next)
+//         return (1);
+//     if (res->type == SPACE)
+//         res = res->next;
+// 	// printf("---%s\n", res->str);
+//     if (!res)
+//         return (1);
+//     if (res->type == OUT || res->type == IN || res->type == APPEND)
+//     {
+// 		i = set_util(res);
+//         if (i == -1)
+// 			return (-1);
+// 		else if (i)
+// 			return (1);
+//     }
+//     return (0);
+// }
+
 int    set(t_cmd **cmd)
 {
     t_cmd 	*res;
+    t_cmd 	*p;
 	int		i;
 
+	i = 0;
     res = *cmd;
-    if (!ft_lstsize(res))
-        return (1);
-    if (!res->next)
-        return (1);
-    if (res->type == SPACE)
-        res = res->next;
-	// printf("---%s\n", res->str);
-    if (!res)
-        return (1);
-    if (res->type == OUT || res->type == IN || res->type == APPEND)
-    {
-		i = set_util(res);
-        if (i == -1)
-			return (-1);
-		else if (i)
-			return (1);
-    }
+    p = *cmd;
+    while (res && res->type != PIPE)
+	{
+		if (res->type == OUT || res->type == IN || res->type == APPEND)
+		{
+			set_util(res);
+			i = 1;
+			break;
+		}
+		res = res->next;
+	}
+	if (p->type == SPACE)
+		p = p->next;
+	if (p && i)
+		p->is_added = TRUE;
     return (0);
 }
 
@@ -266,11 +292,6 @@ char	*generate_name(void)
     nb = malloc(4);
     if (!nb)
         return ("/tmp/tmp-2343");
-    int fd = open("/dev/urandom", O_RDONLY);
-    read(fd, &nb[0], 1);
-    read(fd, &nb[1], 1);
-    read(fd, &nb[2], 1);
-    read(fd, &nb[3], 1);
     return (ft_strjoin(ft_strdup("/tmp/tmp-"), ft_itoa(*nb)));
 }
 

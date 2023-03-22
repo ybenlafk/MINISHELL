@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/21 10:46:39 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:58:31 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	qutes_skiper(char *s, int *i, int type)
 		else
 			break ;
 		(*i)++;
+		if(!s[*i])
+			break ;
 		if (is == 2)
 			break ;
 	}

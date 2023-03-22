@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:18:21 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/21 15:33:35 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:02:59 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ void	vars_checker_pro_max(t_var *p, t_exp **exp, char *s)
 	p->s = NULL;
 	while (s[p->i] && s[p->i] != ' ' && !is_special_char(s[p->i]))
 	{
+		if (s[p->i] == '$' && (!s[p->i + 1] || s[p->i + 1] == ' '))
+		{
+			p->s = ft_strdup("$");
+			p->i++;
+			break ;	
+		}
 		if (s[p->i] == '$')
 		{
 			if (ft_isalpha(s[p->i + 1]) || s[p->i + 1] == '_')

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:00:55 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/21 15:44:05 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/22 21:04:31 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ int take_in(t_var *p, t_env *env , int stat)
         return (1);
     while (1)
     {
+        // signal(SIGINT, ctr_c);
         p->s = readline("heredoc> ");
         if (!p->s)
-            return (1);
+            break ;
         if (!ft_strcmp(p->s, use->str))
             break ;
         if (!use->quote)
@@ -85,4 +86,3 @@ t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env, char *file)
     list_free(&cmd, ft_lstsize(cmd));
     return (res);
 }
-// 0ePOmn 

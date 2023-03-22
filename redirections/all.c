@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 14:49:05 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/21 22:00:06 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/22 23:44:13 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int    out(t_cmd *cmd, int stat)
 int    append(t_cmd *cmd, int stat)
 {
     int fd;
-    char *s = ft_strdup("");
+    char *s = ft_strdup("../lx/");
     
     if (!stat)
     {
@@ -66,7 +66,7 @@ int    append(t_cmd *cmd, int stat)
     return (fd);
 }
 
-static int	drop(t_var *p, t_cmd **res, int *fd)
+int	drop(t_var *p, t_cmd **res, int *fd)
 {
 	is(p, &p->tmp);
     if (p->tmp->type == PIPE)
