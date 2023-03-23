@@ -6,7 +6,7 @@
 #    By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 09:22:41 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/03/21 20:34:30 by ybenlafk         ###   ########.fr        #
+#    Updated: 2023/03/23 15:23:22 by ybenlafk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,8 @@ SRCS= tools/utils.c\
 
 OBGJ= $(SRCS:.c=.o)
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror -g
-# CFLAGS = -g -fsanitize=address
+# CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -g
 R_L = "-L/Users/ybenlafk/.brew/opt/readline/lib"
 R_I = "-I/Users/ybenlafk/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline
