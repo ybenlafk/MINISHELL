@@ -6,72 +6,45 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:26:18 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/21 21:59:55 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:54:51 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char *join_args(t_cmd *cmd)
+char *join_args(t_cmd **cmd)
 {
-    t_cmd *s;
     char *res;
 
     res = ft_strdup("");
-    s = cmd;
     
-    while (s && s->type != PIPE)
+    while ((*cmd) && (*cmd)->type != PIPE)
     {
-        res = ft_strjoin(res, s->str);
-        s = s->next;
+        res = ft_strjoin(res, (*cmd)->str);
+        (*cmd) = (*cmd)->next;
     }
     return (res);
 }
 
-t_list    *parser(t_cmd *cmd, t_list *list)
+int parser(t_cmd *cmd, t_list *list)
 {
+    t_var p;
     t_list *res;
-    t_cmd *tmp;
-    char    **s;
-    char    *str;
 
+    p.tmp = cmd;
     res = NULL;
-    tmp = cmd;
-    while (tmp && (tmp->type != WORD && tmp->type != VAR))
-        tmp = tmp->next;
-    if (!tmp)
-        return (list);
-    str = join_args(tmp);
-    s = ft_split(str, ' ');
-    if (!s || !s[0])
-        return (res);
-    if (tmp->is_added)
+    while (cmd)
     {
-        ft_lstadd_back_list(&res, lst_new_list(s[0], s, list->in, list->out));
-        list = list->next;
+        p.s = join_args(&cmd);
+        p.str = ft_split(p.s, ' ');
+        if (!p.str || !p.str[0])
+            return (1);
+        list->cmd = p.str[0];
+        list->args = p.str;
+        if (cmd)
+            cmd = cmd->next;
+        if (list)
+            list = list->next;
     }
-    else  
-        ft_lstadd_back_list(&res, lst_new_list(s[0], s, 0, 1));
-    while (tmp)
-    {
-        if (tmp->type == PIPE)
-        {
-            while (tmp && tmp->type != WORD && tmp->type != VAR)
-                tmp = tmp->next;
-            if (!tmp)
-                return (res);
-            s = ft_split(join_args(tmp), ' ');
-            if (!s || !s[0])
-                return (res);
-            if (tmp->is_added)
-            {
-                ft_lstadd_back_list(&res, lst_new_list(s[0], s, list->in, list->out));
-                list = list->next;
-            }
-            else
-                ft_lstadd_back_list(&res, lst_new_list(s[0], s, 0, 1));
-        }
-        tmp = tmp->next;
-    }
-    return (res);
+    return(0);
 }

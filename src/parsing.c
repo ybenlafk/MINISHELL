@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/22 23:46:03 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:53:53 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,42 +38,11 @@ int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 	return (0);
 }
 
-t_list *fin(t_list **list, t_cmd *cmd)
-{
-	t_list *res;
-	t_list *p;
-	t_cmd *tmp;
-	int i = 0;
-
-	res = NULL;
-	tmp = cmd;
-	p = *list;
-	while (tmp && p)
-	{
-		i = 0;
-		while (tmp && tmp->type != PIPE)
-		{
-			if (tmp->type == APPEND || tmp->type == IN
-				|| tmp->type == OUT || tmp->type == HEREDOC)
-				i++;
-			tmp = tmp->next;
-		}
-
-		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, p->in, p->out));
-		while (i-- && p)
-			p = p->next;
-		if (!tmp)
-			break ;
-		tmp = tmp->next;
-	}
-	return (res);
-}
-
 t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 {
 	t_var	vars;
 	t_list	*list;
-	t_cmd 	*tmp;
+	// t_cmd 	*tmp;
 	char 	*syn;
 
 	if (!p.s[0])
@@ -90,12 +59,10 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	syn = syntax_checker(cmd, p.s);
 	if (syn)
 		return (error(syn), NULL);
-	tmp = lst_dup(cmd);
+	list = create_list(cmd);
 	cmd = redire_heredoc(cmd, env, p.file);
-	cmd = all(cmd, &list, &fd);
-	cmd = two_to_one(cmd);
-	list = fin(&list, tmp);
-	list = parser(cmd, list);
+	cmd = all(cmd, &list);
+	parser(cmd, list);
 	list = unused_clear(list);
 	printf("<-------------------tokens-list---------------------->\n");
 	while (cmd)
@@ -103,7 +70,7 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 		printf("value : |%s|\n", cmd->str);
 		// printf("type : |%d|\n", cmd->type);
 		// printf("quotes : |%d|\n", cmd->quote);
-		printf("is added : |%d|\n", cmd->is_added);
+		// printf("is added : |%d|\n", cmd->is_added);
 		cmd = cmd->next;
 	}
 	// printf("<-------------------cmds-list------------------------>\n");

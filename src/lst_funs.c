@@ -6,11 +6,20 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:20:13 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/18 13:31:19 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/23 00:30:38 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_list	*last_lst(t_list *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
 
 t_cmd	*ft_lstlast_cmd(t_cmd *lst)
 {

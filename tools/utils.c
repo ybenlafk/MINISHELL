@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/22 23:43:57 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:56:40 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,88 +109,7 @@ int	env_size(t_env *lst)
 	return (len);
 }
 
-int	fill_list(t_var *p, int (*add)(t_cmd *, int))
-{
-	int	fd;
 
-	if (p->tmp->next->type == SPACE)
-	{
-		fd = add(p->tmp, 0);
-		if (fd < 0)
-			return (printf("%s : no such file or directory\n",
-						p->tmp->next->next->str), -1);
-		if (p->tmp->next->next)
-			p->tmp = p->tmp->next->next->next;
-	}
-	else
-	{
-		fd = add(p->tmp, 1);
-		if (fd < 0)
-			return (printf("%s : no such file or directory\n",
-						p->tmp->next->str), -1);
-		if (p->tmp->next)
-			p->tmp = p->tmp->next->next;
-	}
-	return (fd);
-}
-
-void	add_new(t_var *p, t_cmd **res)
-{
-	while (p->tmp)
-	{
-		if (p->tmp->type == SPACE && p->tmp->next)
-		{
-			if (p->tmp->next->type == SPACE)
-				p->tmp = p->tmp->next;
-			else
-			{
-				ft_lstadd_back_cmd(res, lst_new_cmd(p->tmp->str, p->tmp->type,
-							p->tmp->quote, p->tmp->is_added));
-				p->tmp = p->tmp->next;
-			}
-		}
-		else
-		{
-			ft_lstadd_back_cmd(res, lst_new_cmd(p->tmp->str, p->tmp->type,
-						p->tmp->quote, p->tmp->is_added));
-			p->tmp = p->tmp->next;
-		}
-	}
-}
-
-t_cmd	*two_to_one(t_cmd *cmd)
-{
-	t_var	p;
-	t_cmd	*res;
-
-	if (!cmd)
-		return (NULL);
-	p.tmp = cmd;
-	res = NULL;
-	add_new(&p, &res);
-	list_free(&cmd, ft_lstsize(cmd));
-	return (res);
-}
-
-int    is(t_var *p, t_cmd **cmd)
-{
-    if (!(*cmd)->next)
-        return (1);
-    if (!(*cmd)->next->next)
-        return (1);
-    if ((*cmd)->next->next->type == OUT || (*cmd)->next->next->type == IN
-		|| (*cmd)->next->next->type == APPEND)
-    {
-		if ((*cmd)->type == WORD || (*cmd)->type == VAR)
-        	(*cmd)->is_added = TRUE;
-        p->l = 1;
-    }
-    else if (((*cmd)->next->next->type == OUT || (*cmd)->next->next->type == IN
-		|| (*cmd)->next->next->type == APPEND) && !p->l)
-        if ((*cmd)->type == WORD || (*cmd)->type == VAR)
-        	(*cmd)->is_added = TRUE;
-    return (0);
-}
 
 t_cmd	*lst_dup(t_cmd *cmd)
 {
@@ -203,86 +122,6 @@ t_cmd	*lst_dup(t_cmd *cmd)
         cmd = cmd->next;
     }
     return (res);
-}
-
-int	set_util(t_cmd *res)
-{
-	res = res->next;
-    if (!res)
-        return (1);
-    if (res->type == SPACE)
-        res = res->next;
-    if (!res)
-        return (1);
-    if (res->type == WORD || res->type == VAR)
-        res = res->next;
-    if (!res)
-        return(-1);
-    if (res->type == SPACE)
-    {
-        res = res->next;
-        if (!res)
-            return(-1);
-        if (res->type == WORD || res->type == VAR)
-            res->is_added = TRUE;
-		else
-			return (-1);
-    }
-	else
-		return (-1);
-	return (0);
-}
-
-// int    set(t_cmd **cmd, t_cmd **bef)
-// {
-//     t_cmd 	*res;
-// 	int		i;
-
-//     res = *cmd;
-//     if (!ft_lstsize(res))
-//         return (1);
-//     if (!res->next)
-//         return (1);
-//     if (res->type == SPACE)
-//         res = res->next;
-// 	// printf("---%s\n", res->str);
-//     if (!res)
-//         return (1);
-//     if (res->type == OUT || res->type == IN || res->type == APPEND)
-//     {
-// 		i = set_util(res);
-//         if (i == -1)
-// 			return (-1);
-// 		else if (i)
-// 			return (1);
-//     }
-//     return (0);
-// }
-
-int    set(t_cmd **cmd)
-{
-    t_cmd 	*res;
-    t_cmd 	*p;
-	int		i;
-
-	i = 0;
-    res = *cmd;
-    p = *cmd;
-    while (res && res->type != PIPE)
-	{
-		if (res->type == OUT || res->type == IN || res->type == APPEND)
-		{
-			set_util(res);
-			i = 1;
-			break;
-		}
-		res = res->next;
-	}
-	if (p->type == SPACE)
-		p = p->next;
-	if (p && i)
-		p->is_added = TRUE;
-    return (0);
 }
 
 char	*generate_name(void)
@@ -308,5 +147,25 @@ t_list	*unused_clear(t_list *list)
 			ft_lstadd_back_list(&res, lst_new_list(tmp->cmd, tmp->args, tmp->in, tmp->out));
 		tmp = tmp->next;
 	}
+	return (res);
+}
+
+t_list	*create_list(t_cmd *cmd)
+{
+	t_var p;
+	t_list *res;
+
+	p.i = 0;
+	res = NULL;
+	p.tmp = cmd;
+	while (p.tmp)
+	{
+		if (p.tmp->type == PIPE)
+			p.i++;
+		p.tmp = p.tmp->next;
+	}
+	p.i++;
+	while (p.i--)
+		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, 0, 0));
 	return (res);
 }
