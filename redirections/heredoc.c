@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:00:55 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/22 21:04:31 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:17:35 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env, char *file)
                     return (NULL);
             }
         }
-        ft_lstadd_back_cmd(&res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote, FALSE));
+        ft_lstadd_back_cmd(&res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
         p.tmp = p.tmp->next;
     }
     list_free(&cmd, ft_lstsize(cmd));

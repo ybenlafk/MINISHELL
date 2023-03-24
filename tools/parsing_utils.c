@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:38:12 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/21 13:54:30 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:17:18 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void	add_special_char(char c1, char c2, t_cmd **list_cmd, t_var *p)
 {
 	if (c1 == '>' && redires_checker(list_cmd, c1, c2, &p->i))
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(char_to_str(c1), OUT, 0, FALSE));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(char_to_str(c1), OUT, 0));
 		p->i++;
 	}
 	if (c1 == '<' && redires_checker(list_cmd, c1, c2, &p->i))
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(char_to_str(c1), IN, 0, FALSE));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(char_to_str(c1), IN, 0));
 		p->i++;
 	}
 	if (c1 == '|' && redires_checker(list_cmd, c1, c2, &p->i))
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(char_to_str(c1), PIPE, 0, FALSE));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(char_to_str(c1), PIPE, 0));
 		p->i++;
 	}
 }

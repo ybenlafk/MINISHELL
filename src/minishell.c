@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:59:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/23 15:23:26 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:13:29 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int ac, char **av, char **e)
 		signal(SIGINT, c_hanndler);
 		signal(SIGQUIT, SIG_IGN);
 		p.s = NULL;
-		p.s = readline("\033[0;34mMinishell>$ ");
+		p.s = readline("\033[1;34mMinishell>$ ");
 		if (!p.s)
 		{
 			printf("exit");
