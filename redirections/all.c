@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 14:49:05 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/23 14:52:17 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:17:25 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ t_cmd	*del_redires(t_cmd *cmd)
 		if (p.tmp && p.tmp->type != OUT && p.tmp->type != IN
 			&& p.tmp->type != APPEND)
 			ft_lstadd_back_cmd(&p.res, lst_new_cmd(p.tmp->str, p.tmp->type,
-					p.tmp->quote, p.tmp->is_added));
+					p.tmp->quote));
 		if (p.tmp && p.tmp->type != OUT && p.tmp->type != IN
 			&& p.tmp->type != APPEND)
 			p.tmp = p.tmp->next;

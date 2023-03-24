@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/23 14:57:07 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:40:55 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct list
 	char			*str;
 	int				type;
 	int				quote;
-	int				is_added;
 	struct list		*next;
 }					t_cmd;
 
@@ -96,7 +95,7 @@ t_cmd				*redire_heredoc(t_cmd *cmd, t_env *env, char *file);
 t_cmd				*ft_lstlast_cmd(t_cmd *lst);
 t_cmd				*lst_dup(t_cmd *cmd);
 t_cmd				*lst_join(t_cmd *cmd);
-t_cmd				*lst_new_cmd(char *cmd, int type, int quote, int is_added);
+t_cmd				*lst_new_cmd(char *cmd, int type, int quote);
 t_exp				*lst_new_exp(char *value, int stat);
 t_exp				*ft_lstlast_exp(t_exp *lst);
 t_env				*lst_new_env(char *e);

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/22 14:58:31 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:49:09 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ int	quotes_checker(t_cmd **list_cmd, char *s, t_var *p)
 		p->s = is_quotes(s, &p->i, 0);
 		if (!p->s)
 			return (1);
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(s_quote_trim(p->s), WORD, 1, FALSE));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(s_quote_trim(p->s), WORD, 1));
 	}
 	if (s[p->i] == 34)
 	{
 		p->s = is_quotes(s, &p->i, 1);
 		if (!p->s)
 			return (1);
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(d_quote_trim(p->s), WORD, 2, FALSE));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(d_quote_trim(p->s), WORD, 2));
 	}
 	return (0);
 }
@@ -96,11 +96,11 @@ void	add_back(t_var *p, t_cmd **list_cmd)
 {
 	if (p->l)
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, VAR, 0, FALSE));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, VAR, 0));
 		p->l = 0;
 	}
 	else if (p->s)
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0, FALSE));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0));
 }
 
 void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
@@ -149,7 +149,7 @@ void	words_checker(t_var *p, t_cmd **list_cmd, char *s)
 	}
 	if (p->j)
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0, FALSE));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0));
 		p->j = 0;
 	}
 }
@@ -191,11 +191,12 @@ t_cmd	*lst_join(t_cmd *cmd)
 	p.i = 0;
 	p.j = 0;
 	p.l = 0;
-	p.s = ft_strdup("");
+	
 	if (!cmd)
 		return (NULL);
 	while (tmp->next)
 	{
+		p.s = ft_strdup("");
 		if (tmp->type == WORD && (tmp->next->type == WORD || tmp->next->type == VAR))
 		{
 			while (tmp->next && (tmp->type == VAR || tmp->type == WORD) && (tmp->next->type == WORD || tmp->next->type == VAR))
@@ -218,19 +219,20 @@ t_cmd	*lst_join(t_cmd *cmd)
 			}
 			if (p.l == 1)
 				p.s = ft_strjoin(p.s, tmp->str);
-			ft_lstadd_back_cmd(&res, lst_new_cmd(p.s, WORD, p.j, FALSE));
+			ft_lstadd_back_cmd(&res, lst_new_cmd(p.s, WORD, p.j));
 			p.i = 1;
 		}
 		else
 		{
 			p.s = ft_strdup("");
-			ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote, FALSE));
+			if (!p.i)
+				ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote));
 			p.i = 0;
 			tmp = tmp->next;
 		}
 	}
 	if (!p.i)
-		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote, FALSE));
+		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote));
 	list_free(&cmd, ft_lstsize(cmd));
 	return (res);
 }

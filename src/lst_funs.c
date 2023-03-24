@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:20:13 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/23 00:30:38 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:41:15 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	ft_lstadd_back_list(t_list **lst, t_list *new)
 	}
 }
 
-t_cmd	*lst_new_cmd(char *cmd, int type, int quote, int is_added)
+t_cmd	*lst_new_cmd(char *cmd, int type, int quote)
 {
 	t_cmd	*new;
 
@@ -106,7 +106,6 @@ t_cmd	*lst_new_cmd(char *cmd, int type, int quote, int is_added)
 	new->str = cmd;
 	new->quote = quote;
 	new->type = type;
-	new->is_added = is_added;
 	new->next = NULL;
 	return (new);
 }
