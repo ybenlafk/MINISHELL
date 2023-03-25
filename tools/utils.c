@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/24 14:16:51 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:39:54 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,52 +108,51 @@ int	env_size(t_env *lst)
 	}
 	return (len);
 }
-
-
-
+// Duplicate linked list type of {t_cmd}
 t_cmd	*lst_dup(t_cmd *cmd)
 {
-	t_cmd *res;
+	t_cmd	*res;
 
-    res = NULL;
-    while (cmd)
-    {
-        ft_lstadd_back_cmd(&res, lst_new_cmd(cmd->str, cmd->type, cmd->quote));
-        cmd = cmd->next;
-    }
-    return (res);
+	res = NULL;
+	while (cmd)
+	{
+		ft_lstadd_back_cmd(&res, lst_new_cmd(cmd->str, cmd->type, cmd->quote));
+		cmd = cmd->next;
+	}
+	return (res);
 }
-
+// Generate filename in /tmp dir for save the heredoc data on it.
 char	*generate_name(void)
 {
-    int *nb;
+	int	*nb;
 
-    nb = malloc(4);
-    if (!nb)
-        return ("/tmp/tmp-2343");
-    return (ft_strjoin(ft_strdup("/tmp/tmp-"), ft_itoa(*nb)));
+	nb = malloc(4);
+	if (!nb)
+		return ("/tmp/tmp-2343");
+	return (ft_strjoin(ft_strdup("/tmp/tmp-"), ft_itoa(*nb)));
 }
-
+// Clear any node thats have (null) in cmd and args : type {t_list}.
 t_list	*unused_clear(t_list *list)
 {
-	t_list 	*res;
-	t_list 	*tmp;
+	t_list	*res;
+	t_list	*tmp;
 
 	res = NULL;
 	tmp = list;
 	while (tmp)
 	{
 		if (tmp->cmd && tmp->args)
-			ft_lstadd_back_list(&res, lst_new_list(tmp->cmd, tmp->args, tmp->in, tmp->out));
+			ft_lstadd_back_list(&res, lst_new_list(tmp->cmd, tmp->args, tmp->in,
+						tmp->out));
 		tmp = tmp->next;
 	}
 	return (res);
 }
-
+// created a linked list where each node represente a command : type {t_list}
 t_list	*create_list(t_cmd *cmd)
 {
-	t_var p;
-	t_list *res;
+	t_var	p;
+	t_list	*res;
 
 	p.i = 0;
 	res = NULL;

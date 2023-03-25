@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:18:21 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/22 14:02:59 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:32:57 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void	add_back_exp(t_var *p, t_exp **exp)
 {
-	if (p->l  && p->s)
+	if (p->l && p->s)
 	{
 		ft_lstadd_back_exp(exp, lst_new_exp(p->s, 1));
 		p->l = 0;
-	}else if (p->s)
+	}
+	else if (p->s)
 		ft_lstadd_back_exp(exp, lst_new_exp(p->s, 0));
 }
 
@@ -31,7 +32,7 @@ void	vars_checker_pro_max(t_var *p, t_exp **exp, char *s)
 		{
 			p->s = ft_strdup("$");
 			p->i++;
-			break ;	
+			break ;
 		}
 		if (s[p->i] == '$')
 		{
@@ -46,7 +47,7 @@ void	vars_checker_pro_max(t_var *p, t_exp **exp, char *s)
 			return ;
 		}
 		if (len(p->s) >= 2 && !ft_isalnum(s[p->i]))
-			break;
+			break ;
 		p->s = char_join(p->s, s[p->i]);
 		p->i++;
 		if (s[p->i] == '$' && p->l)

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/24 15:49:09 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/25 15:01:52 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ void	qutes_skiper(char *s, int *i, int type)
 		if (is == 2)
 			break ;
 	}
+}
+
+int	is_white_sp(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\r' || c == '\v'
+		|| c == '\f' || c == '\n')
+		return (1);
+	return (0);
 }
 
 int	check_or(char *s, char c)
@@ -103,36 +111,40 @@ void	add_back(t_var *p, t_cmd **list_cmd)
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0));
 }
 
+int	vars_checker_util(char *s, t_var *p)
+{
+	if (s[p->i] == '$' && (!s[p->i + 1] || is_white_sp(s[p->i + 1])))
+	{
+		p->s = ft_strdup("$");
+		p->i++;
+		return (1) ;
+	}
+	if (s[p->i] == '$')
+	{
+		if (ft_isalpha(s[p->i + 1]) || s[p->i + 1] == '_')
+			p->l = 1;
+		else
+			p->l = 0;
+	}
+	if (!p->l)
+		return (p->i += 2, 1);
+	if (len(p->s) >= 2 && !ft_isalnum(s[p->i]))
+		return (1);
+	p->s = char_join(p->s, s[p->i]);
+	p->i++;
+	if (s[p->i] == '$' && p->l)
+        return (1);
+	return (0);
+}
+
 void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
 {
 	p->s = NULL;
-	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && s[p->i] != ' '
+	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && !is_white_sp(s[p->i])
 		&& !is_special_char(s[p->i]))
 	{
-		if (s[p->i] == '$' && (!s[p->i + 1] || s[p->i + 1] == ' '))
-		{
-			p->s = ft_strdup("$");
-			p->i++;
-			break ;	
-		}
-		if (s[p->i] == '$')
-		{
-			if (ft_isalpha(s[p->i + 1]) || s[p->i + 1] == '_')
-				p->l = 1;
-			else
-				p->l = 0;
-		}
-		if (!p->l)
-		{
-			p->i += 2;
-			break;
-		}
-		if (len(p->s) >= 2 && !ft_isalnum(s[p->i]))
-			break;
-		p->s = char_join(p->s, s[p->i]);
-		p->i++;
-		if (s[p->i] == '$' && p->l)
-            break;
+		if (vars_checker_util(s, p))
+			break ;
 	}
 	add_back(p, list_cmd);
 }
@@ -142,7 +154,7 @@ void	words_checker(t_var *p, t_cmd **list_cmd, char *s)
 	p->j = 0;
 	p->s = NULL;
 	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && s[p->i] != '$'
-		&& s[p->i] != ' ' && !is_special_char(s[p->i]))
+		&& !is_white_sp(s[p->i]) && !is_special_char(s[p->i]))
 	{
 		p->s = char_join(p->s, s[p->i++]);
 		p->j = 1;
@@ -197,7 +209,7 @@ t_cmd	*lst_join(t_cmd *cmd)
 	while (tmp->next)
 	{
 		p.s = ft_strdup("");
-		if (tmp->type == WORD && (tmp->next->type == WORD || tmp->next->type == VAR))
+		if ((tmp->type == VAR || tmp->type == WORD) && (tmp->next->type == WORD || tmp->next->type == VAR))
 		{
 			while (tmp->next && (tmp->type == VAR || tmp->type == WORD) && (tmp->next->type == WORD || tmp->next->type == VAR))
 			{

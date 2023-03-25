@@ -6,7 +6,7 @@
 #    By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 09:22:41 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/03/23 15:23:22 by ybenlafk         ###   ########.fr        #
+#    Updated: 2023/03/25 13:02:57 by ybenlafk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS= tools/utils.c\
 	tools/parsing_utils_2.c\
 	tools/expanding_utils.c\
 	tools/parsing_utils.c\
+	tools/split.c\
 	redirections/all.c\
 	redirections/heredoc.c\
 	src/syntax.c\
@@ -33,7 +34,7 @@ SRCS= tools/utils.c\
 OBGJ= $(SRCS:.c=.o)
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror
-# CFLAGS = -g
+CFLAGS = -g
 R_L = "-L/Users/ybenlafk/.brew/opt/readline/lib"
 R_I = "-I/Users/ybenlafk/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline
