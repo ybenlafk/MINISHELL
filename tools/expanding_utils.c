@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:18:21 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/20 14:38:02 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/25 13:12:49 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,21 +94,22 @@ char	*check_set(t_exp *exp, t_env *env)
 	return (res);
 }
 
-void	quotes_expander(t_var *p, t_cmd *cmd, t_env *env)
+void	quotes_expander(t_cmd *cmd, t_env *env)
 {
+	t_var 	p;
 	t_exp	*exp;
 	char	*s;
 
-	p->i = 0;
-	p->j = 0;
-	p->is = 1;
+	p.i = 0;
+	p.j = 0;
+	p.is = 1;
 	s = ft_strdup("");
 	while (cmd)
 	{
 		if (cmd->quote == 2)
 		{
 			exp = NULL;
-			lexer_pro_max(&exp, cmd->str, p);
+			lexer_pro_max(&exp, cmd->str, &p);
 			s = check_set(exp, env);
 			cmd->str = ft_strdup(s);
 		}

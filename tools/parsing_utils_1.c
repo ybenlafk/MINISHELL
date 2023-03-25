@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/24 14:17:01 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:30:22 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	sps_skiper(char *s, int *i)
 	int	stat;
 
 	stat = 0;
-	while (s[*i] && (s[*i] == '\t' || s[*i] == '\n' || s[*i] == '\v'
-			|| s[*i] == '\f' || s[*i] == '\r' || s[*i] == ' '))
+	while (s[*i] && is_white_sp(s[*i]))
 	{
 		stat = 1;
 		(*i)++;

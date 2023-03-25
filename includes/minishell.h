@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/23 19:40:55 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/25 13:12:03 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_env				*lst_new_env(char *e);
 void				rl_replace_line(const char *text, int clear_undo);
 void				ft_lstadd_back_exp(t_exp **lst, t_exp *new);
 void				free_env(t_env **philos, int len);
-void				expanding(t_env *env, t_cmd *cmd);
+t_cmd				*expanding(t_env *env, t_cmd *cmd);
 void				list_free(t_cmd **philos, int len);
 void				ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);
 void				ft_lstadd_back_env(t_env **lst, t_env *new);
@@ -110,7 +110,7 @@ void				add_special_char(char c1, char c2, t_cmd **list_cmd,
 						t_var *p);
 void				vars_checker(t_var *p, t_cmd **list_cmd, char *s);
 void				words_checker(t_var *p, t_cmd **list_cmd, char *s);
-void				quotes_expander(t_var *p, t_cmd *cmd, t_env *env);
+void				quotes_expander(t_cmd *cmd, t_env *env);
 void				lexer_pro_max(t_exp **exp, char *s, t_var *p);
 void				error(char *e);
 void				ft_lstadd_back_list(t_list **lst, t_list *new);
@@ -141,5 +141,6 @@ int					sps_skiper(char *s, int *i);
 int					redires_checker(t_cmd **list_cmd, char c1, char c2, int *i);
 int					env_size(t_env *lst);
 int					parser(t_cmd *cmd, t_list *list);
+int					is_white_sp(char c);
 
 #endif

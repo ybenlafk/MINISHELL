@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/24 15:35:55 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/25 13:18:10 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,14 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	t_list	*list;
 	char	*syn;
 
-	// if (!p.s[0])
-	// 	return (0);
 	vars.i = 0;
 	(void)env;
 	cmd = NULL;
 	list = NULL;
 	if (lexer(&cmd, p.s, &vars))
 		return (NULL);
-	expanding(env, cmd);
+	cmd = expanding(env, cmd);
+	quotes_expander(cmd, env);
 	cmd = lst_join(cmd);
 	syn = syntax_checker(cmd, p.s);
 	if (syn)

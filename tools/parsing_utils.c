@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:38:12 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/24 14:17:18 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:40:59 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,4 @@ char	*char_to_str(char c)
 	str[0] = c;
 	str[1] = '\0';
 	return (str);
-}
-
-int	ft_isalnum(int i)
-{
-	if ((i >= '0' && i <= '9') || (i >= 'a' && i <= 'z') || (i >= 'A'
-			&& i <= 'Z'))
-		return (1);
-	return (0);
 }
