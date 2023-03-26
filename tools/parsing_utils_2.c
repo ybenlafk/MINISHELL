@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/25 15:01:52 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/26 16:46:48 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,18 +83,19 @@ char	*is_quotes(char *s, int *i, int stat)
 int	quotes_checker(t_cmd **list_cmd, char *s, t_var *p)
 {
 	p->j = 0;
+	p->s = ft_strdup("");
 	if (s[p->i] == 39)
 	{
 		p->s = is_quotes(s, &p->i, 0);
 		if (!p->s)
-			return (1);
+			return (free(p->s), 1);
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(s_quote_trim(p->s), WORD, 1));
 	}
 	if (s[p->i] == 34)
 	{
 		p->s = is_quotes(s, &p->i, 1);
 		if (!p->s)
-			return (1);
+			return (free(p->s), 1);
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(d_quote_trim(p->s), WORD, 2));
 	}
 	return (0);
@@ -107,7 +108,7 @@ void	add_back(t_var *p, t_cmd **list_cmd)
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, VAR, 0));
 		p->l = 0;
 	}
-	else if (p->s)
+	else if (p->s[0])
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0));
 }
 
@@ -139,7 +140,7 @@ int	vars_checker_util(char *s, t_var *p)
 
 void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
 {
-	p->s = NULL;
+	p->s = ft_strdup("");
 	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && !is_white_sp(s[p->i])
 		&& !is_special_char(s[p->i]))
 	{
@@ -147,12 +148,13 @@ void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
 			break ;
 	}
 	add_back(p, list_cmd);
+	free(p->s);
 }
 
 void	words_checker(t_var *p, t_cmd **list_cmd, char *s)
 {
 	p->j = 0;
-	p->s = NULL;
+	p->s = ft_strdup("");
 	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && s[p->i] != '$'
 		&& !is_white_sp(s[p->i]) && !is_special_char(s[p->i]))
 	{
@@ -164,6 +166,7 @@ void	words_checker(t_var *p, t_cmd **list_cmd, char *s)
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0));
 		p->j = 0;
 	}
+	free(p->s);
 }
 
 char	*jwan(char *s1, char *s2, char *s3)
@@ -229,9 +232,12 @@ t_cmd	*lst_join(t_cmd *cmd)
 					p.l = 2;
 				}
 			}
-			if (p.l == 1)
+			if (p.l == 1 && (tmp->type == VAR || tmp->type == WORD))
 				p.s = ft_strjoin(p.s, tmp->str);
+
 			ft_lstadd_back_cmd(&res, lst_new_cmd(p.s, WORD, p.j));
+			if (tmp->type != VAR && tmp->type != WORD)
+				ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote));
 			p.i = 1;
 		}
 		else
@@ -242,9 +248,11 @@ t_cmd	*lst_join(t_cmd *cmd)
 			p.i = 0;
 			tmp = tmp->next;
 		}
+		free(p.s);
 	}
 	if (!p.i)
 		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote));
 	list_free(&cmd, ft_lstsize(cmd));
 	return (res);
 }
+//ls<<c"   "<<d

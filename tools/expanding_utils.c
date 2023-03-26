@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:18:21 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/25 13:12:49 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/26 17:37:33 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_exp	*lst_new_exp(char *value, int stat)
 	new = malloc(sizeof(t_exp));
 	if (!new)
 		return (NULL);
-	new->value = value;
+	new->value = ft_strdup(value);
 	new->stat = stat;
 	new->next = NULL;
 	return (new);
@@ -86,12 +86,41 @@ char	*check_set(t_exp *exp, t_env *env)
 		{
 			s = set_value(env, exp->value + 1);
 			res = ft_strjoin(res, s);
+			free(s);
 		}
 		else
 			res = ft_strjoin(res, exp->value);
 		exp = exp->next;
 	}
 	return (res);
+}
+int	ft_lstsize_exp(t_exp *lst)
+{
+	t_exp	*tmp;
+	int		len;
+
+	tmp = lst;
+	len = 0;
+	if (!tmp)
+		return (0);
+	while (tmp)
+	{
+		tmp = tmp->next;
+		len++;
+	}
+	return (len);
+}
+void	free_exp(t_exp **cmd, int len)
+{
+	t_exp	*tmp;
+
+	while (len--)
+	{
+		tmp = (*cmd);
+		*cmd = (*cmd)->next;
+		free(tmp->value);
+		free(tmp);
+	}
 }
 
 void	quotes_expander(t_cmd *cmd, t_env *env)
@@ -103,17 +132,19 @@ void	quotes_expander(t_cmd *cmd, t_env *env)
 	p.i = 0;
 	p.j = 0;
 	p.is = 1;
-	s = ft_strdup("");
-	while (cmd)
+	p.tmp = cmd;
+	while (p.tmp)
 	{
-		if (cmd->quote == 2)
+		if (p.tmp->quote == 2)
 		{
 			exp = NULL;
-			lexer_pro_max(&exp, cmd->str, &p);
+			lexer_pro_max(&exp, p.tmp->str, &p);
 			s = check_set(exp, env);
-			cmd->str = ft_strdup(s);
+			free(p.tmp->str);
+			p.tmp->str = ft_strdup(s);
+			free(s);
+			free_exp(&exp, ft_lstsize_exp(exp));
 		}
-		cmd = cmd->next;
+		p.tmp = p.tmp->next;
 	}
-	free(s);
 }

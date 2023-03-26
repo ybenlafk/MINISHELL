@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/24 17:39:54 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/26 10:51:33 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,15 @@ int	ft_lstsize(t_cmd *lst)
 	return (len);
 }
 
-void	list_free(t_cmd **philos, int len)
+void	list_free(t_cmd **cmd, int len)
 {
 	t_cmd	*tmp;
 
 	while (len--)
 	{
-		tmp = (*philos);
-		*philos = (*philos)->next;
+		tmp = (*cmd);
+		*cmd = (*cmd)->next;
+		free(tmp->str);
 		free(tmp);
 	}
 }
@@ -124,12 +125,21 @@ t_cmd	*lst_dup(t_cmd *cmd)
 // Generate filename in /tmp dir for save the heredoc data on it.
 char	*generate_name(void)
 {
-	int	*nb;
+	int 	*nb;
+	char	*s;
+	char	*res;
 
-	nb = malloc(4);
-	if (!nb)
-		return ("/tmp/tmp-2343");
-	return (ft_strjoin(ft_strdup("/tmp/tmp-"), ft_itoa(*nb)));
+    nb = malloc(4);
+    if (!nb)
+        return ("/tmp/tmp-2343");
+    int fd = open("/dev/urandom", O_RDONLY);
+    read(fd, &nb[0], 1);
+    read(fd, &nb[1], 1);
+    read(fd, &nb[2], 1);
+    read(fd, &nb[3], 1);
+	s = ft_itoa(*nb);
+	res = ft_strjoin(ft_strdup("/tmp/tmp-"), s);
+    return (free(s), res);
 }
 // Clear any node thats have (null) in cmd and args : type {t_list}.
 t_list	*unused_clear(t_list *list)
@@ -166,5 +176,42 @@ t_list	*create_list(t_cmd *cmd)
 	p.i++;
 	while (p.i--)
 		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, 0, 0));
+	return (res);
+}
+void	add_new(t_var *p, t_cmd **res)
+{
+	while (p->tmp)
+	{
+		if (p->tmp->type == SPACE && p->tmp->next)
+		{
+			if (p->tmp->next->type == SPACE)
+				p->tmp = p->tmp->next;
+			else
+			{
+				ft_lstadd_back_cmd(res, lst_new_cmd(p->tmp->str, p->tmp->type,
+							p->tmp->quote));
+				p->tmp = p->tmp->next;
+			}
+		}
+		else
+		{
+			ft_lstadd_back_cmd(res, lst_new_cmd(p->tmp->str, p->tmp->type,
+						p->tmp->quote));
+			p->tmp = p->tmp->next;
+		}
+	}
+}
+
+t_cmd	*two_to_one(t_cmd *cmd)
+{
+	t_var	p;
+	t_cmd	*res;
+
+	if (!cmd)
+		return (NULL);
+	p.tmp = cmd;
+	res = NULL;
+	add_new(&p, &res);
+	list_free(&cmd, ft_lstsize(cmd));
 	return (res);
 }

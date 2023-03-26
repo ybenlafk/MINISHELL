@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/25 13:18:10 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/26 17:11:59 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 	p->l = 0;
 	while (s[p->i])
 	{
-		p->s = NULL;
 		if (sps_skiper(s, &p->i))
 			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
 		if (quotes_checker(list_cmd, s, p))
@@ -50,24 +49,26 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	list = NULL;
 	if (lexer(&cmd, p.s, &vars))
 		return (NULL);
-	cmd = expanding(env, cmd);
-	quotes_expander(cmd, env);
-	cmd = lst_join(cmd);
 	syn = syntax_checker(cmd, p.s);
 	if (syn)
-		return (error(syn), NULL);
-	list = create_list(cmd);
-	cmd = redire_heredoc(cmd, env, p.file);
-	cmd = all(cmd, &list);
-	parser(cmd, list);
-	list = unused_clear(list);
+		return (list_free(&cmd, ft_lstsize(cmd)), error(syn), NULL);
+	cmd = expanding(env, cmd);
+	quotes_expander(cmd, env);
+	// cmd = lst_join(cmd);
+	// list = create_list(cmd);
+	// cmd = redire_heredoc(cmd, env);
+	// cmd = all(cmd, &list);
+	// cmd = two_to_one(cmd);
+	// parser(cmd, list);
+	// list = unused_clear(list);
 	printf("<-------------------tokens-list---------------------->\n");
-	while (cmd)
+	vars.tmp = cmd;
+	while (vars.tmp)
 	{
-		printf("value : |%s|\n", cmd->str);
-		// printf("type : |%d|\n", cmd->type);
-		// printf("quotes : |%d|\n", cmd->quote);
-		cmd = cmd->next;
+		printf("value : |%s|\n", vars.tmp->str);
+		// printf("type : |%d|\n", vars.tmp->type);
+		// printf("quotes : |%d|\n", vars.tmp->quote);
+		vars.tmp = vars.tmp->next;
 	}
 	// printf("<-------------------cmds-list------------------------>\n");
 	// while (list)

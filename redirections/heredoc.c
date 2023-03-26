@@ -6,11 +6,16 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:00:55 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/24 14:17:35 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/26 11:18:30 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// void ctr_c()
+// {
+    
+// }
 
 int take_in(t_var *p, t_env *env , int stat)
 {
@@ -54,12 +59,11 @@ int take_in(t_var *p, t_env *env , int stat)
     return (0);
 }
 
-t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env, char *file)
+t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env)
 {
     t_var p;
     t_cmd *res;
 
-    p.file = file;
     if (!cmd)
 		return (NULL);
     p.i = 0;
@@ -67,6 +71,7 @@ t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env, char *file)
     p.tmp = cmd;
     while (p.tmp)
     {
+        p.file = generate_name();
         if (p.tmp->type == HEREDOC)
         {
             if (p.tmp->next->type == SPACE)
@@ -82,6 +87,7 @@ t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env, char *file)
         }
         ft_lstadd_back_cmd(&res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
         p.tmp = p.tmp->next;
+        free(p.file);
     }
     list_free(&cmd, ft_lstsize(cmd));
     return (res);

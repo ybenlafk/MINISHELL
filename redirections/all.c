@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 14:49:05 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/24 14:17:25 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/26 10:36:12 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	append(t_cmd *cmd)
 		{
 			if (cmd->type == SPACE)
 				cmd = cmd->next;
-			printf(">>%s\n", cmd->str);
 			if (cmd)
 				fd = open(cmd->str, O_CREAT | O_APPEND | O_RDWR, 0777);
 		}
@@ -152,12 +151,12 @@ t_cmd	*all(t_cmd *cmd, t_list **list)
 		return (NULL);
 	p.j = 0;
 	p.res = NULL;
-	p.fd_in = 0;
-	p.fd_out = 1;
 	p.tmp = cmd;
 	p.lst = *list;
 	while (p.tmp)
 	{
+		p.fd_in = 0;
+		p.fd_out = 1;
 		while (p.tmp && p.tmp->type != PIPE)
 			if (drop(&p))
 				return (NULL);

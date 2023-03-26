@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:59:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/25 14:34:40 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/26 12:03:31 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,21 @@ void	fill_env(t_env **env, char **e)
 		}
 	}
 }
+void	fenv(t_env **env)
+{
+	t_env	*p;
 
+	if (env)
+	{
+		while (*env)
+		{
+			p = *env;
+			*env = p->next;
+			free(p);
+		}
+		p = NULL;
+	}
+}
 int	main(int ac, char **av, char **e)
 {
 	t_cmd	cmd;
@@ -51,12 +65,11 @@ int	main(int ac, char **av, char **e)
 	(void)ac;
 	(void)av;
 	env = NULL;
-	p.file = generate_name();
 	// int fd = open("/dev/urandom", O_RDONLY);
 	// dup2(fd, 0);
-	fill_env(&env, e);
 	while (1)
 	{
+		fill_env(&env, e);
 		signal(SIGINT, c_hanndler);
 		signal(SIGQUIT, SIG_IGN);
 		p.s = NULL;
@@ -68,21 +81,21 @@ int	main(int ac, char **av, char **e)
 		}
 		add_history(p.s);
 		list = parsing(&cmd, p, env);
-		printf("<-------------------cmds-list------------------------>\n");
-		while (list)
-		{
-			int i = 0;
-			printf("cmd : |%s|\n", list->cmd);
-			if (list->args)
-				while (list->args[i])
-					printf("arg : {%s}\n", list->args[i++]);
-			printf("in : |%d|\n", list->in);
-			printf("out : |%d|\n", list->out);
-			printf("<<<<<<----------------->>>>>>\n");
-			list = list->next;
-		}
+		// printf("<-------------------cmds-list------------------------>\n");
+		// while (list)
+		// {
+		// 	int i = 0;
+		// 	printf("cmd : |%s|\n", list->cmd);
+		// 	if (list->args)
+		// 		while (list->args[i])
+		// 			printf("arg : {%s}\n", list->args[i++]);
+		// 	printf("in : |%d|\n", list->in);
+		// 	printf("out : |%d|\n", list->out);
+		// 	printf("<<<<<<----------------->>>>>>\n");
+		// 	list = list->next;
+		// }
+		fenv(&env);
 		free(p.s);
 	}
-	unlink(p.file);
 	return (0);
 }

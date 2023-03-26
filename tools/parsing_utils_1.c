@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/24 17:30:22 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/26 10:36:59 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*char_join(char *str, char c)
 		p.s[p.j++] = str[p.i++];
 	p.s[p.j++] = c;
 	p.s[p.j] = '\0';
-	return (p.s);
+	return (free(str) ,p.s);
 }
 // check the redirections.
 int	redires_checker(t_cmd **list_cmd, char c1, char c2, int *i)
