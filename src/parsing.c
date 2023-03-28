@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 17:38:57 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:24:50 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 		return(NULL);
 	parser(cmd, list);
 	list = unused_clear(list);
-	printf("<-------------------tokens-list---------------------->\n");
-	vars.tmp = cmd;
-	while (vars.tmp)
-	{
-		printf("value : |%s|\n", vars.tmp->str);
-		// printf("type : |%d|\n", vars.tmp->type);
-		// printf("quotes : |%d|\n", vars.tmp->quote);
-		vars.tmp = vars.tmp->next;
-	}
+	// printf("<-------------------tokens-list---------------------->\n");
+	// vars.tmp = cmd;
+	// while (vars.tmp)
+	// {
+	// 	printf("value : |%s|\n", vars.tmp->str);
+	// 	// printf("type : |%d|\n", vars.tmp->type);
+	// 	// printf("quotes : |%d|\n", vars.tmp->quote);
+	// 	vars.tmp = vars.tmp->next;
+	// }
 	// printf("<-------------------cmds-list------------------------>\n");
 	// while (list)
 	// {

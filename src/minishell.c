@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:59:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 17:36:40 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:22:10 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,21 @@ int	main(int ac, char **av, char **e)
 		}
 		add_history(p.s);
 		list = parsing(&cmd, p, env);
-		printf("<-------------------cmds-list------------------------>\n");
-		while (list)
-		{
-			int i = 0;
-			printf("cmd : |%s|\n", list->cmd);
-			if (list->args)
-				while (list->args[i])
-					printf("arg : {%s}\n", list->args[i++]);
-			printf("in : |%d|\n", list->in);
-			printf("out : |%d|\n", list->out);
-			printf("<<<<<<----------------->>>>>>\n");
-			list = list->next;
-		}
-		fenv(&env);
+		// printf("<-------------------cmds-list------------------------>\n");
+		// while (list)
+		// {
+		// 	int i = 0;
+		// 	printf("cmd : |%s|\n", list->cmd);
+		// 	if (list->args)
+		// 		while (list->args[i])
+		// 			printf("arg : {%s}\n", list->args[i++]);
+		// 	printf("in : |%d|\n", list->in);
+		// 	printf("out : |%d|\n", list->out);
+		// 	printf("<<<<<<----------------->>>>>>\n");
+		// 	list = list->next;
+		// }
+		// fenv(&env);
+		execution(list, &env, e);
 		free(p.s);
 	}
 	return (0);
