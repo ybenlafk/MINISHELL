@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:03:19 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/25 13:21:20 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:26:10 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,11 @@ char	*set_value(t_env *env, char *rep)
 	{
 		p.s = is_var(env->e);
 		if (!ft_strcmp(rep, p.s))
-			return (get_value(env->e));
+			return (free(p.s), get_value(env->e));
 		env = env->next;
+		free(p.s);
 	}
-	return (ft_strdup(""));
+	return (NULL);
 }
 
 void	get_var(t_var *p)
@@ -96,12 +97,18 @@ void	get_var(t_var *p)
 	}
 }
 
-void	split_var(t_var *p, t_cmd **res)
+void	split_var(t_var *p, t_cmd **res, t_env *env)
 {
-	int i;
+	int 	i;
+	char	*s;
 
+	s = set_value(env, p->s);
+	if (!s)
+		return;
 	i = 0;
-	p->str = ft_split(getenv(p->s), ' ');
+	p->str = ft_split(s, ' ');
+	free(s);
+	free(p->s);
 	if (p->str)
 	{
 		while (p->str[i])
@@ -110,6 +117,7 @@ void	split_var(t_var *p, t_cmd **res)
 			if (p->str[i])
 				ft_lstadd_back_cmd(res, lst_new_cmd(" ", SPACE, 0));
 		}	
+		free_all(p->str);
 	}
 }
 
@@ -126,10 +134,11 @@ t_cmd	*expanding(t_env *env, t_cmd *cmd)
 		if (p.tmp->type == VAR)
 			get_var(&p);
 		if (p.s)
-			split_var(&p, &res);
+			split_var(&p, &res, env);
 		else
 			ft_lstadd_back_cmd(&res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
 		p.tmp = p.tmp->next;
 	}
+	list_free(&cmd, ft_lstsize(cmd));
 	return (res);
 }

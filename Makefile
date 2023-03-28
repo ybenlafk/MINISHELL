@@ -6,7 +6,7 @@
 #    By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 09:22:41 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/03/25 13:02:57 by ybenlafk         ###   ########.fr        #
+#    Updated: 2023/03/28 12:47:20 by ybenlafk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRCS= tools/utils.c\
 	src/minishell.c\
 
 OBGJ= $(SRCS:.c=.o)
-CC = cc
+CC = gcc
 # CFLAGS = -Wall -Wextra -Werror
 CFLAGS = -g
 R_L = "-L/Users/ybenlafk/.brew/opt/readline/lib"

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/25 13:12:03 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:09:35 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ typedef struct var
 	char			*file;
 	char			*s;
 	char			*s1;
+	char			*w;
+	char			*x;
 	char			*ch;
 	char			**str;
 	int				fd_in;
@@ -84,14 +86,15 @@ typedef struct var
 	t_cmd			*tmp;
 	t_exp			*exp;
 }					t_var;
-
+int	export_parser(t_cmd *cmd);
 t_cmd				*all(t_cmd *cmd, t_list **list);
+t_cmd				*two_to_one(t_cmd *cmd);
 t_list				*parsing(t_cmd *cmd, t_var p, t_env *env);
 t_list				*unused_clear(t_list *list);
 t_list				*lst_new_list(char *cmd, char **args, int in, int out);
 t_list				*last_lst(t_list *lst);
 t_list				*create_list(t_cmd *cmd);
-t_cmd				*redire_heredoc(t_cmd *cmd, t_env *env, char *file);
+t_cmd				*redire_heredoc(t_cmd *cmd, t_env *env);
 t_cmd				*ft_lstlast_cmd(t_cmd *lst);
 t_cmd				*lst_dup(t_cmd *cmd);
 t_cmd				*lst_join(t_cmd *cmd);
@@ -103,11 +106,12 @@ void				rl_replace_line(const char *text, int clear_undo);
 void				ft_lstadd_back_exp(t_exp **lst, t_exp *new);
 void				free_env(t_env **philos, int len);
 t_cmd				*expanding(t_env *env, t_cmd *cmd);
-void				list_free(t_cmd **philos, int len);
+void				list_free(t_cmd **cmd, int len);
 void				ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);
 void				ft_lstadd_back_env(t_env **lst, t_env *new);
 void				add_special_char(char c1, char c2, t_cmd **list_cmd,
 						t_var *p);
+void				free_all(char **s);
 void				vars_checker(t_var *p, t_cmd **list_cmd, char *s);
 void				words_checker(t_var *p, t_cmd **list_cmd, char *s);
 void				quotes_expander(t_cmd *cmd, t_env *env);
@@ -128,6 +132,8 @@ char				*syntax_checker(t_cmd *cmd, char *str);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 char				*generate_name(void);
+int 				count_fds(t_cmd *cmd, int type, int stat);
+int					ft_atoi(const char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_lstsize(t_cmd *lst);
 int					len(char *str);

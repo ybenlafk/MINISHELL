@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:20:13 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/23 19:41:15 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/26 11:18:11 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ t_cmd	*lst_new_cmd(char *cmd, int type, int quote)
 	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
-	new->str = cmd;
+	new->str = ft_strdup(cmd);
 	new->quote = quote;
 	new->type = type;
 	new->next = NULL;

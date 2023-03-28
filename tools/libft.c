@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 10:40:25 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/25 14:32:38 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:14:13 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,37 @@ char	*ft_itoa(int n)
 	ft_strrev(s);
 	return (s);
 }
+
+static void	scapes(char *str, int *i)
+{
+	while (str[*i] == '\t' || str[*i] == '\n'
+		|| str[*i] == '\v' || str[*i] == '\f'
+		|| str[*i] == '\r' || str[*i] == ' ')
+		(*i)++;
+}
+
+int	ft_atoi(const char *str)
+{
+	size_t	res;
+	int		i;
+	int		sign;
+
+	sign = 1;
+	i = 0;
+	res = 0;
+	scapes((char *)str, &i);
+	if (str[i] == '+')
+		i++;
+	else if (str[i] == '-')
+	{
+		sign *= -1;
+		i++;
+	}
+	while (str[i] <= '9' && str[i] >= '0')
+		res = res * 10 + str[i++] - '0';
+	return (res * sign);
+}
+
 
 int	ft_isalnum(int i)
 {

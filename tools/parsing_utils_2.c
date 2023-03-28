@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/25 15:01:52 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:04:22 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	qutes_skiper(char *s, int *i, int type)
 		else
 			break ;
 		(*i)++;
-		if(!s[*i])
+		if (!s[*i])
 			break ;
 		if (is == 2)
 			break ;
@@ -33,8 +33,8 @@ void	qutes_skiper(char *s, int *i, int type)
 
 int	is_white_sp(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\r' || c == '\v'
-		|| c == '\f' || c == '\n')
+	if (c == ' ' || c == '\t' || c == '\r' || c == '\v' || c == '\f'
+		|| c == '\n')
 		return (1);
 	return (0);
 }
@@ -79,23 +79,27 @@ char	*is_quotes(char *s, int *i, int stat)
 		return (error("'"), NULL);
 	return (error("\""), NULL);
 }
-
 int	quotes_checker(t_cmd **list_cmd, char *s, t_var *p)
 {
 	p->j = 0;
+	p->s = NULL;
 	if (s[p->i] == 39)
 	{
 		p->s = is_quotes(s, &p->i, 0);
 		if (!p->s)
 			return (1);
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(s_quote_trim(p->s), WORD, 1));
+		p->w = s_quote_trim(p->s);
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, 1));
+		free(p->w);
 	}
 	if (s[p->i] == 34)
 	{
 		p->s = is_quotes(s, &p->i, 1);
 		if (!p->s)
 			return (1);
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(d_quote_trim(p->s), WORD, 2));
+		p->w = d_quote_trim(p->s);
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, 2));
+		free(p->w);
 	}
 	return (0);
 }
@@ -107,7 +111,7 @@ void	add_back(t_var *p, t_cmd **list_cmd)
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, VAR, 0));
 		p->l = 0;
 	}
-	else if (p->s)
+	else if (p->s[0])
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0));
 }
 
@@ -117,7 +121,7 @@ int	vars_checker_util(char *s, t_var *p)
 	{
 		p->s = ft_strdup("$");
 		p->i++;
-		return (1) ;
+		return (1);
 	}
 	if (s[p->i] == '$')
 	{
@@ -133,13 +137,13 @@ int	vars_checker_util(char *s, t_var *p)
 	p->s = char_join(p->s, s[p->i]);
 	p->i++;
 	if (s[p->i] == '$' && p->l)
-        return (1);
+		return (1);
 	return (0);
 }
 
 void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
 {
-	p->s = NULL;
+	p->s = ft_strdup("");
 	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && !is_white_sp(s[p->i])
 		&& !is_special_char(s[p->i]))
 	{
@@ -147,12 +151,13 @@ void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
 			break ;
 	}
 	add_back(p, list_cmd);
+	free(p->s);
 }
 
 void	words_checker(t_var *p, t_cmd **list_cmd, char *s)
 {
 	p->j = 0;
-	p->s = NULL;
+	p->s = ft_strdup("");
 	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && s[p->i] != '$'
 		&& !is_white_sp(s[p->i]) && !is_special_char(s[p->i]))
 	{
@@ -164,12 +169,13 @@ void	words_checker(t_var *p, t_cmd **list_cmd, char *s)
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0));
 		p->j = 0;
 	}
+	free(p->s);
 }
 
 char	*jwan(char *s1, char *s2, char *s3)
 {
 	char	*s;
-	t_var p;
+	t_var	p;
 
 	p.i = 0;
 	p.j = 0;
@@ -192,59 +198,73 @@ char	*jwan(char *s1, char *s2, char *s3)
 	return (s);
 }
 
-t_cmd	*lst_join(t_cmd *cmd)
+void	join_diff(t_var *p)
 {
-	t_cmd	*res;
-	t_cmd	*tmp;
-	t_var	p;
-
-	res = NULL;
-	tmp = cmd;
-	p.i = 0;
-	p.j = 0;
-	p.l = 0;
-	
-	if (!cmd)
-		return (NULL);
-	while (tmp->next)
+	while (p->tmp->next && (p->tmp->type == VAR || p->tmp->type == WORD)
+		&& (p->tmp->next->type == WORD || p->tmp->next->type == VAR))
 	{
-		p.s = ft_strdup("");
-		if ((tmp->type == VAR || tmp->type == WORD) && (tmp->next->type == WORD || tmp->next->type == VAR))
+		p->s = jwan(p->s, p->tmp->str, p->tmp->next->str);
+		if (p->tmp->quote == 1 || p->tmp->next->quote == 1)
+			p->j = 1;
+		else if (p->tmp->quote == 2 || p->tmp->next->quote == 2)
+			p->j = 2;
+		if (p->tmp->next->next)
 		{
-			while (tmp->next && (tmp->type == VAR || tmp->type == WORD) && (tmp->next->type == WORD || tmp->next->type == VAR))
-			{
-				p.s = jwan(p.s, tmp->str, tmp->next->str);
-				if (tmp->quote == 1 || tmp->next->quote == 1)
-					p.j = 1;
-				else if (tmp->quote == 2 || tmp->next->quote == 2)
-					p.j = 2;
-				if (tmp->next->next)
-				{
-					tmp = tmp->next->next;
-					p.l = 1;
-				}
-				else
-				{
-					tmp = tmp->next;
-					p.l = 2;
-				}
-			}
-			if (p.l == 1)
-				p.s = ft_strjoin(p.s, tmp->str);
-			ft_lstadd_back_cmd(&res, lst_new_cmd(p.s, WORD, p.j));
-			p.i = 1;
+			p->tmp = p->tmp->next->next;
+			p->l = 1;
 		}
 		else
 		{
-			p.s = ft_strdup("");
-			if (!p.i)
-				ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote));
-			p.i = 0;
-			tmp = tmp->next;
+			p->tmp = p->tmp->next;
+			p->l = 2;
 		}
 	}
-	if (!p.i)
-		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote));
-	list_free(&cmd, ft_lstsize(cmd));
-	return (res);
 }
+
+void	lst_join_u(t_var *p)
+{
+	join_diff(p);
+	if (p->l == 1 && (p->tmp->type == VAR || p->tmp->type == WORD))
+		p->s = ft_strjoin(p->s, p->tmp->str);
+	ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->s, WORD, p->j));
+	if (p->tmp->type != VAR && p->tmp->type != WORD)
+		ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->tmp->str, p->tmp->type,
+					p->tmp->quote));
+	p->i = 1;
+}
+
+void	lst_join_u1(t_var *p)
+{
+	p->s = ft_strdup("");
+	if (!p->i)
+		ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->tmp->str, p->tmp->type,
+					p->tmp->quote));
+	p->i = 0;
+	p->tmp = p->tmp->next;
+}
+
+t_cmd	*lst_join(t_cmd *cmd)
+{
+	t_var	p;
+
+	p.res = NULL;
+	p.tmp = cmd;
+	p.i = 0;
+	if (!cmd)
+		return (NULL);
+	while (p.tmp->next)
+	{
+		p.s = ft_strdup("");
+		if ((p.tmp->type == VAR || p.tmp->type == WORD) && (p.tmp->next->type == WORD
+				|| p.tmp->next->type == VAR))
+			lst_join_u(&p);
+		else
+			lst_join_u1(&p);
+		free(p.s);
+	}
+	if (!p.i)
+		ft_lstadd_back_cmd(&p.res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
+	list_free(&cmd, ft_lstsize(cmd));
+	return (p.res);
+}
+//ls<<c"   "<<d
