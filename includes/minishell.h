@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 18:16:59 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/03/28 23:30:30 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct var
 	t_cmd			*tmp;
 	t_exp			*exp;
 }					t_var;
-int	export_parser(t_cmd *cmd);
+int					export_parser(t_cmd *cmd);
 t_cmd				*all(t_cmd *cmd, t_list **list);
 t_cmd				*two_to_one(t_cmd *cmd);
 t_list				*parsing(t_cmd *cmd, t_var p, t_env *env);

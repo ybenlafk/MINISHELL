@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 17:39:15 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/28 19:39:23 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,7 +280,8 @@ int	export_parser(t_cmd *cmd)
 					return (1);
 			}
 		}
-		tmp = tmp->next;
+		else
+			tmp = tmp->next;
 	}
 	return (0);
 }

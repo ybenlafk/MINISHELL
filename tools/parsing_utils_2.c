@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 16:04:22 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/28 20:31:51 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,10 @@ int	vars_checker_util(char *s, t_var *p)
 		else
 			p->l = 0;
 	}
-	if (!p->l)
+	if (!p->l && s[p->i + 1] != 34 && s[p->i + 1] != 39)
 		return (p->i += 2, 1);
+	else if (!p->l && (s[p->i + 1] == 34 || s[p->i + 1] == 39))
+		return (p->i++, 1);
 	if (len(p->s) >= 2 && !ft_isalnum(s[p->i]))
 		return (1);
 	p->s = char_join(p->s, s[p->i]);
@@ -147,6 +149,7 @@ void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
 	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && !is_white_sp(s[p->i])
 		&& !is_special_char(s[p->i]))
 	{
+		// printf(">>>>>>>>%c\n", s[p->i]);
 		if (vars_checker_util(s, p))
 			break ;
 	}

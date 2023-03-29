@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/03/27 16:04:32 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/03/28 23:35:26 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	srch_cmd(t_list *list)
 void	execution(t_list *list, t_env	**env, char **e)
 {
     int fd[2];
-	char str[] = "ls";
 	char **tabl;
 	char *cmd;
 	char *li;
@@ -93,10 +92,7 @@ void	execution(t_list *list, t_env	**env, char **e)
 			{
 				cmd = ft_strjoin(tabl[i], "/");
 				if (access(ft_strjoin(cmd, list->cmd), X_OK) == 0)
-				{
-					puts("here");
 					execve(ft_strjoin(cmd, list->cmd), list->args, e);
-				}
 				i++;
 			}
 			printf("cmd not found\n");

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+         #
+#    By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 09:22:41 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/03/28 18:18:57 by nouahidi         ###   ########.fr        #
+#    Updated: 2023/03/28 23:58:33 by ybenlafk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,9 +42,9 @@ SRCS= tools/utils.c\
 OBGJ= $(SRCS:.c=.o)
 CC = gcc
 # CFLAGS = -Wall -Wextra -Werror
-# CFLAGS = -g
-R_L = "-L/Users/nouahidi/.brew/opt/readline/lib"
-R_I = "-I/Users/nouahidi/.brew/opt/readline/include"
+CFLAGS = -g
+R_L = "-L/Users/ybenlafk/.brew/opt/readline/lib"
+R_I = "-I/Users/ybenlafk/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline
 FRM = rm -rf
 

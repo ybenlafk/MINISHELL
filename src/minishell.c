@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:59:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 18:22:10 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/03/28 23:59:08 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ int	main(int ac, char **av, char **e)
 
 	(void)ac;
 	(void)av;
-	env = NULL;
 	// int fd = open("/dev/urandom", O_RDONLY);
 	// dup2(fd, 0);
+	env = NULL;
+	fill_env(&env, e);
 	while (1)
 	{
-		fill_env(&env, e);
 		signal(SIGINT, c_hanndler);
 		signal(SIGQUIT, SIG_IGN);
 		p.s = NULL;
@@ -81,6 +81,12 @@ int	main(int ac, char **av, char **e)
 		}
 		add_history(p.s);
 		list = parsing(&cmd, p, env);
+		// while (env)
+		// {
+		// 	printf("|%s|\n", env->e);
+		// 	env = env->next;
+		// }
+		// exit(0);
 		// printf("<-------------------cmds-list------------------------>\n");
 		// while (list)
 		// {
@@ -95,7 +101,8 @@ int	main(int ac, char **av, char **e)
 		// 	list = list->next;
 		// }
 		// fenv(&env);
-		execution(list, &env, e);
+		if (list)
+			execution(list, &env, e);		
 		free(p.s);
 	}
 	return (0);
