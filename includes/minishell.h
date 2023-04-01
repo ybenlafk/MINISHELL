@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 23:30:30 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:23:57 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/errno.h>
+
 
 # define FALSE 0
 # define TRUE 1
@@ -86,7 +88,12 @@ typedef struct var
 	t_cmd			*tmp;
 	t_exp			*exp;
 }					t_var;
-int					export_parser(t_cmd *cmd);
+
+
+void	env_parser(t_list **list);
+void				export_parser(t_list **list);
+int					ft_lstsize_exp(t_exp *lst);
+void				free_exp(t_exp **cmd, int len);
 t_cmd				*all(t_cmd *cmd, t_list **list);
 t_cmd				*two_to_one(t_cmd *cmd);
 t_list				*parsing(t_cmd *cmd, t_var p, t_env *env);
@@ -132,7 +139,7 @@ char				*syntax_checker(t_cmd *cmd, char *str);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 char				*generate_name(void);
-int 				count_fds(t_cmd *cmd, int type, int stat);
+int					count_fds(t_cmd *cmd, int type, int stat);
 int					ft_atoi(const char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_lstsize(t_cmd *lst);
@@ -148,16 +155,16 @@ int					redires_checker(t_cmd **list_cmd, char c1, char c2, int *i);
 int					env_size(t_env *lst);
 int					parser(t_cmd *cmd, t_list *list);
 int					is_white_sp(char c);
-void    			cd_cmd(t_list   *list);
-void    			pwd_cmd();
+void				cd_cmd(t_list *list);
+void    			pwd_cmd(t_list *list);
 void				echo_cmd(t_list *list);
-void				env_cmd(t_list	*list, t_env *env);
+void				env_cmd(t_list *list, t_env *env);
 void				export_cmd(t_env **env, t_list *lst);
 int					ft_strlen_var(char *str);
 int					ft_strncmp(const char *str1, const char *str2, int n);
-t_env				*ft_lstdelone(t_env **lst, char	*str);
+t_env				*ft_lstdelone(t_env **lst, char *str);
 void				unset_cmd(t_list *lst, t_env **env);
-void				execution(t_list *list, t_env	**env, char **e);
-void				ft_command(t_list *list, int ind, t_env	**env);
+void				execution(t_list *list, t_env **env, char **e);
+void				ft_command(t_list *list, int ind, t_env **env);
 
 #endif

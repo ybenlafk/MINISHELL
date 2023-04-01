@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:51:37 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/03/28 23:33:30 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:37:07 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ t_env	*ft_lstdelone(t_env **lst, char	*str)
 	}
 	return (t);
 }
-
 
 void	print_ex(t_env	*env)
 {
@@ -329,7 +328,6 @@ void	sort_ex(t_env	*env)
 
 void	export_cmd(t_env **env, t_list *lst)
 {
-	int i = 0;
 
 	add_exp(lst, env);
 	// sort_ex(env);

@@ -6,13 +6,13 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/03/28 23:35:26 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/01 17:35:48 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_envcmp(char	*str)
+int	ft_envcmp(char *str)
 {
 	char	*st;
 	int		i;
@@ -29,7 +29,7 @@ int	ft_envcmp(char	*str)
 	return (1);
 }
 
-char	**path_research(t_env	**env)
+char	**path_research(t_env **env)
 {
 	t_env	*t;
 	int		i;
@@ -42,7 +42,7 @@ char	**path_research(t_env	**env)
 			return (ft_split(t->e + 5, ':'));
 		t = t->next;
 	}
-	return(NULL);
+	return (NULL);
 }
 
 int	srch_cmd(t_list *list)
@@ -67,37 +67,53 @@ int	srch_cmd(t_list *list)
 	return (0);
 }
 
-void	execution(t_list *list, t_env	**env, char **e)
+void	execution(t_list *list, t_env **env, char **e)
 {
-    int fd[2];
-	char **tabl;
-	char *cmd;
-	char *li;
-	int i = 0;
+	t_list	*tmp;
+	char	**tabl;
+	char	*cmd;
+	int		i;
+	int		id;
+	int		dsa;
 
-	li = malloc(5);
-	if (pipe(fd) == -1)
-		return ;
+	i = 0;
 	tabl = path_research(env);
-	if (srch_cmd(list))
-		ft_command(list, srch_cmd(list), env);
+	if (!tabl)
+		tabl = ft_split(" ", ' ');
+	tmp = list;
+	// while (tmp)
+	// {
+	if (srch_cmd(tmp))
+		ft_command(tmp, srch_cmd(tmp), env);
 	else
 	{
-		int id = fork();
+		id = fork();
 		if (id == -1)
 			return ;
 		if (id == 0)
 		{
 			while (tabl[i])
 			{
-				cmd = ft_strjoin(tabl[i], "/");
-				if (access(ft_strjoin(cmd, list->cmd), X_OK) == 0)
-					execve(ft_strjoin(cmd, list->cmd), list->args, e);
+				cmd = char_join(tabl[i], '/');
+				if (access(ft_strjoin(cmd, tmp->cmd), X_OK) == 0)
+				{
+					if (tmp->in != 0)
+						dup2(tmp->in, 0);
+					if (tmp->out != 1)
+						dup2(tmp->out, 1);
+					execve(ft_strjoin(cmd, tmp->cmd), tmp->args, e);
+				}
 				i++;
 			}
-			printf("cmd not found\n");
+			printf("minishell: command not found: %s\n", tmp->cmd);
+			exit(errno);
 		}
-		int r;
-		waitpid(id, &r, 0);
+		dsa = 20;
+		waitpid(id, &dsa, 0);
 	}
+	// 	if (tmp->next)
+	// 	{
+	// 	}
+	// 	tmp = tmp->next;
+	// }
 }

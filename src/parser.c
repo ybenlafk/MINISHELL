@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:26:18 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/24 14:48:56 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/30 22:06:46 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,15 @@ int parser(t_cmd *cmd, t_list *list)
     while (cmd)
     {
         p.str = join_args(&cmd);
-        // p.str = ft_split(p.s, '~');
         if (!p.str || !p.str[0])
             return (1);
-        list->cmd = p.str[0];
+        list->cmd = ft_strdup(p.str[0]);
         list->args = p.str;
         if (cmd)
             cmd = cmd->next;
         if (list)
             list = list->next;
     }
+    // freedom(p.str);
     return(0);
 }

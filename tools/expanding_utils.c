@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:18:21 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/26 17:37:33 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/29 13:54:40 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,23 @@ char	*check_set(t_exp *exp, t_env *env)
 {
 	char	*s;
 	char	*res;
+	t_exp	*tmp;
 
 	if (!env)
 		return (NULL);
+	tmp = exp;	
 	res = ft_strdup("");
-	while (exp)
+	while (tmp)
 	{
-		if (exp->stat)
+		if (tmp->stat)
 		{
-			s = set_value(env, exp->value + 1);
+			s = set_value(env, tmp->value + 1);
 			res = ft_strjoin(res, s);
 			free(s);
 		}
 		else
-			res = ft_strjoin(res, exp->value);
-		exp = exp->next;
+			res = ft_strjoin(res, tmp->value);
+		tmp = tmp->next;
 	}
 	return (res);
 }

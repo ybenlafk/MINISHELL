@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:00:55 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 13:18:30 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/29 13:57:57 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int take_in(t_var *p, t_env *env , int stat)
     t_var var;
     t_cmd   *use;
 
-    exp = NULL;
     if (!stat)
         use = p->tmp->next->next;
     else
@@ -34,27 +33,31 @@ int take_in(t_var *p, t_env *env , int stat)
     while (1)
     {
         // signal(SIGINT, ctr_c);
+        exp = NULL;
         p->s = readline("heredoc> ");
         if (!p->s)
             break ;
         if (!ft_strcmp(p->s, use->str))
+        {
+            free(p->s);
             break ;
+        }
         if (!use->quote)
         {
             lexer_pro_max(&exp, p->s, &var);
+            free(p->s);
             p->s = check_set(exp, env);
+            free_exp(&exp, ft_lstsize_exp(exp));
         }
         p->s = char_join(p->s, '\n');
         write (p->fd, p->s, len(p->s) + 1);
         free(p->s);
-        exp = NULL;
     }
+    free(p->tmp->str);
 	p->tmp->str = ft_strdup("<");
 	p->tmp->type = IN;
-    if (!stat)
-        p->tmp->next->next->str = ft_strdup(p->file);
-    else
-        p->tmp->next->str = ft_strdup(p->file);
+    free(use->str);
+    use->str = ft_strdup(p->file);
     return (p->fd);
 }
 
@@ -75,14 +78,12 @@ t_cmd    *redire_heredoc(t_cmd *cmd, t_env *env)
         {
             if (p.tmp->next->type == SPACE)
             {
-                p.j--;
                 p.fd = take_in(&p, env, 0);
                 if (p.fd < 0)
                     return (NULL);
             }
             else
             {
-                p.j--;
                 p.fd = take_in(&p, env, 1);
                 if (p.fd < 0)
                     return (NULL);

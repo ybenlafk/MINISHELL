@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:59:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 23:59:08 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/01 17:26:48 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,27 @@ void	c_hanndler()
 
 void	fill_env(t_env **env, char **e)
 {
-	int	i;
+	t_var	p;
 
-	i = 0;
-	if (!e[i])
+	p.s = getcwd(NULL, 0);
+	p.i = 0;
+	if (!e[p.i])
 	{
-		// ft_lstadd_back_env(env, lst_new_env("imad"));
-		// ft_lstadd_back_env(env, lst_new_env("yahya"));
-		// ft_lstadd_back_env(env, lst_new_env("saad"));
+		ft_lstadd_back_env(env, lst_new_env(ft_strjoin(ft_strdup("PWD=") ,p.s)));
+		ft_lstadd_back_env(env, lst_new_env("SHLVL=1"));
+		ft_lstadd_back_env(env, lst_new_env("_=/usr/bin/env"));
 	}
 	else
 	{
-		while (e[i])
+		while (e[p.i])
 		{
-			ft_lstadd_back_env(env, lst_new_env(e[i]));
-			i++;
+			ft_lstadd_back_env(env, lst_new_env(e[p.i]));
+			p.i++;
 		}
 	}
+	free(p.s);
 }
+
 void	fenv(t_env **env)
 {
 	t_env	*p;
@@ -55,6 +58,7 @@ void	fenv(t_env **env)
 		p = NULL;
 	}
 }
+
 int	main(int ac, char **av, char **e)
 {
 	t_cmd	cmd;
@@ -73,12 +77,9 @@ int	main(int ac, char **av, char **e)
 		signal(SIGINT, c_hanndler);
 		signal(SIGQUIT, SIG_IGN);
 		p.s = NULL;
-		p.s = readline("\033[1;32mMinishell>$ ");
+		p.s = readline("\e[1;32mMinishell>$ \e[0m");
 		if (!p.s)
-		{
-			printf("exit");
-			break;
-		}
+			return (fenv(&env), printf("\e[1;32mexit\e[0m\n"), 1);
 		add_history(p.s);
 		list = parsing(&cmd, p, env);
 		// while (env)
@@ -100,9 +101,8 @@ int	main(int ac, char **av, char **e)
 		// 	printf("<<<<<<----------------->>>>>>\n");
 		// 	list = list->next;
 		// }
-		// fenv(&env);
 		if (list)
-			execution(list, &env, e);		
+			execution(list, &env, e);
 		free(p.s);
 	}
 	return (0);

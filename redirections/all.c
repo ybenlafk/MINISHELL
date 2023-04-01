@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 14:49:05 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 13:16:54 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/29 22:19:24 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,21 @@ int	append(t_cmd *cmd)
 	return (fd);
 }
 
-int	drop_util(int *i, t_var *p, int(*redire)(t_cmd *))
+int	drop_util(int *i, t_var *p, int(*redire)(t_cmd *), int stat)
 {
 	(*i)--;
-	p->fd_in = redire(p->tmp);
-	if (p->fd_out < 0)
-		return (1);
+	if (stat)
+	{
+		p->fd_in = redire(p->tmp);
+		if (p->fd_in < 0)
+			return (1);
+	}
+	else
+	{
+		p->fd_out = redire(p->tmp);
+		if (p->fd_out < 0)
+			return (1);
+	}
 	if(*i)
 		close(p->fd_in);
 	return (0);
@@ -96,17 +105,17 @@ int	drop(t_var *p)
 {
 	if (p->tmp->type == IN)
 	{
-		if (drop_util(&p->l, p, in))
+		if (drop_util(&p->l, p, in, 1))
 			return (1);
 	}
 	else if (p->tmp->type == OUT)
 	{
-		if (drop_util(&p->i, p, out))
+		if (drop_util(&p->i, p, out, 0))
 			return (1);
 	}
 	else if (p->tmp->type == APPEND)
 	{
-		if (drop_util(&p->i, p, append))
+		if (drop_util(&p->i, p, append, 0))
 			return (1);
 	}
 	if (p->lst && !p->l)

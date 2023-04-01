@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 20:31:51 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:49:31 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ char	*is_quotes(char *s, int *i, int stat)
 			return (str);
 	}
 	if (!stat)
-		return (error("'"), NULL);
-	return (error("\""), NULL);
+		return (error("'"), free(str), NULL);
+	return (error("\""), free(str), NULL);
 }
 int	quotes_checker(t_cmd **list_cmd, char *s, t_var *p)
 {
@@ -198,7 +198,7 @@ char	*jwan(char *s1, char *s2, char *s3)
 	while (s3[p.l])
 		s[p.i++] = s3[p.l++];
 	s[p.i] = '\0';
-	return (s);
+	return (free(s1), s);
 }
 
 void	join_diff(t_var *p)
@@ -238,7 +238,6 @@ void	lst_join_u(t_var *p)
 
 void	lst_join_u1(t_var *p)
 {
-	p->s = ft_strdup("");
 	if (!p->i)
 		ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->tmp->str, p->tmp->type,
 					p->tmp->quote));

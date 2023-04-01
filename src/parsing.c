@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 20:33:01 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:50:49 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	cmd = redire_heredoc(cmd, env);
 	cmd = all(cmd, &list);
 	cmd = two_to_one(cmd);
-	if (export_parser(cmd))
-		return(NULL);
 	parser(cmd, list);
+	export_parser(&list);
+	env_parser(&list);
 	list = unused_clear(list);
 	// printf("<-------------------tokens-list---------------------->\n");
 	// vars.tmp = cmd;

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 19:39:23 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:51:27 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char	*generate_name(void)
 
 	nb = malloc(4);
 	if (!nb)
-		return ("/tmp/tmp-2343");
+		return ("/tmp/tmp-1337");
 	fd = open("/dev/urandom", O_RDONLY);
 	read(fd, &nb[0], 1);
 	read(fd, &nb[1], 1);
@@ -140,7 +140,7 @@ char	*generate_name(void)
 	read(fd, &nb[3], 1);
 	s = ft_itoa(*nb);
 	res = ft_strjoin(ft_strdup("/tmp/tmp-"), s);
-	return (close(fd), free(s), res);
+	return (close(fd), free(nb), free(s), res);
 }
 // Clear any node thats have (null) in cmd and args : type {t_list}.
 t_list	*unused_clear(t_list *list)
@@ -237,6 +237,22 @@ int	count_fds(t_cmd *cmd, int type, int stat)
 	return (p.i);
 }
 
+t_cmd	*del_cmd(t_cmd **lst, char	*str)
+{
+	t_cmd	*t;
+	t_cmd	*tmp;
+
+	tmp = *lst;
+	t = NULL;
+	while(tmp)
+	{
+		if (ft_strcmp(str, tmp->str) != 0)
+			ft_lstadd_back_cmd(&t, lst_new_cmd(tmp->str, tmp->type, tmp->quote));
+		tmp = tmp->next;
+	}
+	return (t);
+}
+
 int	i_var(char *s)
 {
 	int	i;
@@ -257,31 +273,103 @@ int	i_var(char *s)
 	return (0);
 }
 
-int	export_parser(t_cmd *cmd)
+char	**del_null(char **str)
 {
-	t_cmd	*tmp;
+	t_var p;
+	
+	p.i = 0;
+	p.len = 0;
+	while (str[p.i])
+		if (ft_strcmp(str[p.i++], ""))
+			p.len++;
+	p.str = malloc(sizeof(char *) * p.len + 1);
+	if (!p.str)
+		return (NULL);
+	p.i = 0;
+	p.j = 0;
+	while (str[p.i])
+	{
+		if (ft_strcmp(str[p.i], ""))
+			p.str[p.j++] = ft_strdup(str[p.i]);
+		p.i++;
+	}
+	p.str[p.j] = NULL;
+	return (free_all(str), p.str);
+}
 
-	tmp = cmd;
+int	is_empty(t_list *tmp)
+{
+	t_var	p;
+
+	p.i = 1;
+	p.len = 0;
+	while (tmp->args[p.i])
+	{
+		if (tmp->args[p.i][0] != 0)
+			p.len++;
+		p.i++;
+	}
+	tmp->args = del_null(tmp->args);
+	return (p.len);
+}
+
+void	i_valid_arg(t_list *tmp, t_var *p)
+{
+	while (tmp->args[p->i])
+	{
+		if (i_var(tmp->args[p->i]))
+		{
+			p->l = 1;
+			printf("export: `%s': not a valid identifier\n", tmp->args[p->i]);
+			tmp->args[p->i] = ft_strdup("");  
+		}
+		p->i++;
+	}
+}
+
+void	export_parser(t_list **list)
+{
+	t_list *res;
+	t_list *tmp;
+	t_var p;
+
+	if (!(*list)->cmd)
+		return ;
+	tmp = *list;
+	p.j = 0;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->str, "export"))
+		p.i = 1;
+		if (!ft_strcmp(tmp->cmd, "export"))
+			i_valid_arg(tmp, &p);
+		if (!is_empty(tmp) && p.l)
+			tmp->cmd = NULL;
+		tmp = tmp->next;
+	}
+}
+
+void	env_parser(t_list **list)
+{
+	t_list	*tmp;
+	t_var	p;
+
+	if (!(*list)->cmd)
+		return ;
+	tmp = *list;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->cmd, "env"))
 		{
-			tmp = tmp->next;
-			if (tmp)
+			if (tmp->args[1])
 			{
-				tmp = tmp->next;
-				if (tmp)
-				{
-					if (i_var(tmp->str))
-						return (printf("export: `%s': not a valid identifier\n",
-								tmp->str), 1);
-				}
-				else if (i_var(tmp->str))
-					return (1);
+				printf("Minishell: env has no options.\n");
+				free(tmp->cmd);
+				tmp->cmd = NULL;
+				free_all(tmp->args);
+				break ;
 			}
 		}
-		else
-			tmp = tmp->next;
+		tmp = tmp->next;
 	}
-	return (0);
 }
+
