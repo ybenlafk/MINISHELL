@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/06 16:36:35 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/02 17:06:38 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_envcmp(char *str)
+int	ft_envcmp(char	*str)
 {
 	char	*st;
 	int		i;
@@ -29,7 +29,7 @@ int	ft_envcmp(char *str)
 	return (1);
 }
 
-char	**path_research(t_env **env)
+char	**path_research(t_env	**env)
 {
 	t_env	*t;
 	int		i;
@@ -42,7 +42,7 @@ char	**path_research(t_env **env)
 			return (ft_split(t->e + 5, ':'));
 		t = t->next;
 	}
-	return (NULL);
+	return(NULL);
 }
 
 int	srch_cmd(t_list *list)
@@ -67,125 +67,38 @@ int	srch_cmd(t_list *list)
 	return (0);
 }
 
-int	lst_size_list(t_list *list)
+void	execution(t_list *list, t_env	**env, char **e)
 {
-	int i;
-	t_list 	*tmp;
-	
-	i = 0;
-	tmp = list;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
-}
+    int fd[2];
+	char str[] = "ls";
+	char **tabl;
+	char *cmd;
+	char *li;
+	int i = 0;
 
-int	**init_fds(t_list *list)
-{
-	int **fds;
-	int len;
-	int i; 
-
-	i = 0;
-	len = lst_size_list(list) - 1;
-	fds = ft_calloc(sizeof(int *) , len);
-	if (!fds)
-		return (NULL);
-	while (i < len)
-	{
-		fds[i] = ft_calloc(sizeof(int) , 2);
-		if (!fds[i])
-			return (NULL);
-		pipe(fds[i]);
-		i++;
-	}
-	return (fds);
-}
-// //first command
-// dup2(fd[0][1], 1);
-// //middle command
-// dup2(fd[0][0], 0);
-// dup2(fd[1][1], 1);
-
-int	exec_childs(t_var *var, char **e, int **fd)
-{
-	t_var	p;
-	int pid;
-
-	p.i = 0;
-	pid = fork();
-	if (pid == 0)
-	{
-		if (var->len_ > 1)
-		{
-			if (!var->j)
-			{
-				dup2(fd[var->j][1], 1);
-				close(fd[var->j][0]);
-			}
-			else if (var->j && !var->lst->next)
-			{
-				dup2(fd[var->j - 1][0], 0);
-				close(fd[var->j - 1][1]);
-			}
-			else
-			{
-				dup2(fd[var->j - 1][0], 0);
-				dup2(fd[var->j][1], 1);
-			}
-		}
-		while (var->str[p.i])
-		{
-			p.s = char_join(var->str[p.i], '/');
-			if (access(ft_strjoin(p.s, var->lst->cmd), X_OK) == 0)
-			{
-				if (var->lst->in != 0)
-					dup2(var->lst->in, 0);
-				if (var->lst->out != 1)
-					dup2(var->lst->out, 1);
-				execve(ft_strjoin(p.s, var->lst->cmd), var->lst->args, e);
-			}
-			p.i++;
-		}
-		printf("minishell: command not found: %s\n", var->lst->cmd);
-		exit(errno);
-	}
-	return (var->j++ ,pid);
-}
-
-void	execution(t_list *list, t_env **env, char **e)
-{
-	t_var p;
-	int		**fd;
-	int		pid;
-	
-	p.i = 0;
-	p.j = 0;
-	p.len = 0;
-	p.len_ = lst_size_list(list);
-	p.str = path_research(env);
-	if (!p.str)
-		p.str = ft_split(" ", ' ');
-	p.lst = list;
-	fd = init_fds(p.lst);
-	if (srch_cmd(p.lst))
-		ft_command(p.lst, srch_cmd(p.lst), env);
+	li = malloc(5);
+	if (pipe(fd) == -1)
+		return ;
+	tabl = path_research(env);
+	if (srch_cmd(list))
+		ft_command(list, srch_cmd(list), env, e);
 	else
 	{
-		while (p.lst)
+		int id = fork();
+		if (id == -1)
+			return ;
+		if (id == 0)
 		{
-			pid = exec_childs(&p, e, fd);
-			p.lst = p.lst->next;
+			while (tabl[i])
+			{
+				cmd = ft_strjoin(tabl[i], "/");
+				if (access(ft_strjoin(cmd, list->cmd), X_OK) == 0)
+					execve(ft_strjoin(cmd, list->cmd), list->args, e);
+				i++;
+			}
+			printf("cmd not found\n");
 		}
-		while (p.len < p.len_ - 1)
-		{
-			close(fd[p.len][0]);
-			close(fd[p.len][1]);
-			p.len++;
-		}
-		waitpid(pid, NULL, 0);
-		while(wait(NULL) != -1);
+		int r;
+		waitpid(id, &r, 0);
 	}
 }

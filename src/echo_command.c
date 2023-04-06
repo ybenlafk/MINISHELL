@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:43:48 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/03/26 14:46:17 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/01 15:56:27 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	check_args(t_list *list)
 {
-	int 	i;
-	int 	j;
+	int	i;
+	int	j;
 
 	i = 1;
 	j = 0;
@@ -38,10 +38,10 @@ int	check_args(t_list *list)
 	return (i);
 }
 
-void    echo_cmd(t_list *list)
+void	echo_cmd(t_list *list)
 {
-	int i;
-	t_list  *t;
+	int		i;
+	t_list	*t;
 
 	t = list;
 	i = check_args(list);

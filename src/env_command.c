@@ -3,24 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   env_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:47:55 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/03/31 12:15:15 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/01 15:31:08 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	env_cmd(t_list	*list, t_env *env)
+int	check_v(char *str)
 {
-	int i;
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	env_cmd(t_list	*list, t_env **env)
+{
 	t_env	*t;
 
-	t = env;
+	*env = sort_ex(*env);
+	t = *env;
 	while (t)
 	{
-		printf ("%s\n", t->e);
+		if (check_v(t->e))
+			printf ("%s\n", t->e);
 		t = t->next;
 	}
 }

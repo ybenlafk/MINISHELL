@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/05 23:48:33 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/06 17:05:30 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # define OUT 5
 # define SPACE 6
 # define VAR 7
-# define EX_S 8
 
 typedef struct array
 {
@@ -90,9 +89,7 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
-
-void	*ft_calloc(long count, long size);
-void	env_parser(t_list **list);
+void				env_parser(t_list **list);
 void				export_parser(t_list **list);
 int					ft_lstsize_exp(t_exp *lst);
 void				free_exp(t_exp **cmd, int len);
@@ -148,23 +145,38 @@ int					len(char *str);
 int					ft_isalnum(int i);
 int					ft_isalpha(int i);
 int					is_special_char(char c);
-int					redires_checker(t_cmd **list_cmd, char *s, int *i);
 int					check_or(char *s, char c);
 int					quotes_checker(t_cmd **list_cmd, char *s, t_var *p);
 int					sps_skiper(char *s, int *i);
+int					redires_checker(t_cmd **list_cmd, char *s, int *i);
 int					env_size(t_env *lst);
 int					parser(t_cmd *cmd, t_list *list);
 int					is_white_sp(char c);
 void				cd_cmd(t_list *list);
-void    			pwd_cmd(t_list *list);
+char				*pwd_cmd(void);
 void				echo_cmd(t_list *list);
-void				env_cmd(t_list *list, t_env *env);
+void				env_cmd(t_list *list, t_env **env);
 void				export_cmd(t_env **env, t_list *lst);
 int					ft_strlen_var(char *str);
 int					ft_strncmp(const char *str1, const char *str2, int n);
 t_env				*ft_lstdelone(t_env **lst, char *str);
 void				unset_cmd(t_list *lst, t_env **env);
 void				execution(t_list *list, t_env **env, char **e);
-void				ft_command(t_list *list, int ind, t_env **env);
+void				ft_command(t_list *list, int ind, t_env **env, char **tab);
+void				exit_cmd(t_list *lst);
+t_env				*sort_ex(t_env	*env);
+int					ft_lstsize_en(t_env *lst);
+t_env				*ft_lstnew(char *str);
+t_env				*ft_lstdelone(t_env **lst, char	*str);
+int					ft_strncmp(const char *str1, const char *str2, int n);
+int					ft_strlen(char *str);
+char				*del_plus(char *str);
+t_env				*sort_ex(t_env	*env);
+void				add_plus(t_env **env, char *str, int i);
+void				ft_lstadd_back(t_env **lst, t_env *new);
+void				print_ex(t_env	*env);
+void				ft_print(char *str);
+int					check_plus(char *str);
+int					check_rot(t_env *env, char *str);
 
 #endif
