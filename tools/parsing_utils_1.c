@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/26 20:28:46 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:07:01 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,39 @@ char	*char_join(char *str, char c)
 		p.s[p.j++] = str[p.i++];
 	p.s[p.j++] = c;
 	p.s[p.j] = '\0';
-	return (free(str) ,p.s);
+	return (free(str), p.s);
+}
+
+void	get_dilemiter(t_cmd **list_cmd, char *s, int *i)
+{
+	t_var p;
+	
+	p.i = 0;
+	p.s = ft_strdup("");
+	if (sps_skiper(s, i))
+			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
+	while (s[*i] && !is_white_sp(s[*i]) && !is_special_char(s[*i]))
+	{
+		p.s = char_join(p.s, s[(*i)++]);
+		p.i = 1;
+	}
+	if (p.i)
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p.s, WORD, 0));
+	free(p.s);
 }
 // check the redirections.
-int	redires_checker(t_cmd **list_cmd, char c1, char c2, int *i)
+int	redires_checker(t_cmd **list_cmd, char *s, int *i)
 {
-	if (!c1 || !c2)
+	if (!s[*i] || !s[*i + 1])
 		return (1);
-	if (c1 == '<' && c2 == '<')
+	if (s[*i] == '<' && s[*i + 1] == '<')
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<<", HEREDOC, 0));
 		*i += 2;
+		get_dilemiter(list_cmd, s, i);
 		return (0);
 	}
-	if (c1 == '>' && c2 == '>')
+	if (s[*i] == '>' && s[*i + 1] == '>')
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(">>", APPEND, 0));
 		*i += 2;

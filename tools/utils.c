@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/31 14:51:27 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:47:19 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,7 +321,7 @@ void	i_valid_arg(t_list *tmp, t_var *p)
 		{
 			p->l = 1;
 			printf("export: `%s': not a valid identifier\n", tmp->args[p->i]);
-			tmp->args[p->i] = ft_strdup("");  
+			tmp->args[p->i] = ft_strdup("");
 		}
 		p->i++;
 	}
@@ -329,7 +329,6 @@ void	i_valid_arg(t_list *tmp, t_var *p)
 
 void	export_parser(t_list **list)
 {
-	t_list *res;
 	t_list *tmp;
 	t_var p;
 
@@ -337,6 +336,7 @@ void	export_parser(t_list **list)
 		return ;
 	tmp = *list;
 	p.j = 0;
+	p.l = 0;
 	while (tmp)
 	{
 		p.i = 1;
@@ -351,7 +351,6 @@ void	export_parser(t_list **list)
 void	env_parser(t_list **list)
 {
 	t_list	*tmp;
-	t_var	p;
 
 	if (!(*list)->cmd)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/01 17:35:48 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:36:35 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,53 +67,125 @@ int	srch_cmd(t_list *list)
 	return (0);
 }
 
-void	execution(t_list *list, t_env **env, char **e)
+int	lst_size_list(t_list *list)
 {
-	t_list	*tmp;
-	char	**tabl;
-	char	*cmd;
-	int		i;
-	int		id;
-	int		dsa;
+	int i;
+	t_list 	*tmp;
+	
+	i = 0;
+	tmp = list;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+int	**init_fds(t_list *list)
+{
+	int **fds;
+	int len;
+	int i; 
 
 	i = 0;
-	tabl = path_research(env);
-	if (!tabl)
-		tabl = ft_split(" ", ' ');
-	tmp = list;
-	// while (tmp)
-	// {
-	if (srch_cmd(tmp))
-		ft_command(tmp, srch_cmd(tmp), env);
+	len = lst_size_list(list) - 1;
+	fds = ft_calloc(sizeof(int *) , len);
+	if (!fds)
+		return (NULL);
+	while (i < len)
+	{
+		fds[i] = ft_calloc(sizeof(int) , 2);
+		if (!fds[i])
+			return (NULL);
+		pipe(fds[i]);
+		i++;
+	}
+	return (fds);
+}
+// //first command
+// dup2(fd[0][1], 1);
+// //middle command
+// dup2(fd[0][0], 0);
+// dup2(fd[1][1], 1);
+
+int	exec_childs(t_var *var, char **e, int **fd)
+{
+	t_var	p;
+	int pid;
+
+	p.i = 0;
+	pid = fork();
+	if (pid == 0)
+	{
+		if (var->len_ > 1)
+		{
+			if (!var->j)
+			{
+				dup2(fd[var->j][1], 1);
+				close(fd[var->j][0]);
+			}
+			else if (var->j && !var->lst->next)
+			{
+				dup2(fd[var->j - 1][0], 0);
+				close(fd[var->j - 1][1]);
+			}
+			else
+			{
+				dup2(fd[var->j - 1][0], 0);
+				dup2(fd[var->j][1], 1);
+			}
+		}
+		while (var->str[p.i])
+		{
+			p.s = char_join(var->str[p.i], '/');
+			if (access(ft_strjoin(p.s, var->lst->cmd), X_OK) == 0)
+			{
+				if (var->lst->in != 0)
+					dup2(var->lst->in, 0);
+				if (var->lst->out != 1)
+					dup2(var->lst->out, 1);
+				execve(ft_strjoin(p.s, var->lst->cmd), var->lst->args, e);
+			}
+			p.i++;
+		}
+		printf("minishell: command not found: %s\n", var->lst->cmd);
+		exit(errno);
+	}
+	return (var->j++ ,pid);
+}
+
+void	execution(t_list *list, t_env **env, char **e)
+{
+	t_var p;
+	int		**fd;
+	int		pid;
+	
+	p.i = 0;
+	p.j = 0;
+	p.len = 0;
+	p.len_ = lst_size_list(list);
+	p.str = path_research(env);
+	if (!p.str)
+		p.str = ft_split(" ", ' ');
+	p.lst = list;
+	fd = init_fds(p.lst);
+	if (srch_cmd(p.lst))
+		ft_command(p.lst, srch_cmd(p.lst), env);
 	else
 	{
-		id = fork();
-		if (id == -1)
-			return ;
-		if (id == 0)
+		while (p.lst)
 		{
-			while (tabl[i])
-			{
-				cmd = char_join(tabl[i], '/');
-				if (access(ft_strjoin(cmd, tmp->cmd), X_OK) == 0)
-				{
-					if (tmp->in != 0)
-						dup2(tmp->in, 0);
-					if (tmp->out != 1)
-						dup2(tmp->out, 1);
-					execve(ft_strjoin(cmd, tmp->cmd), tmp->args, e);
-				}
-				i++;
-			}
-			printf("minishell: command not found: %s\n", tmp->cmd);
-			exit(errno);
+			pid = exec_childs(&p, e, fd);
+			p.lst = p.lst->next;
 		}
-		dsa = 20;
-		waitpid(id, &dsa, 0);
+		while (p.len < p.len_ - 1)
+		{
+			close(fd[p.len][0]);
+			close(fd[p.len][1]);
+			p.len++;
+		}
+		waitpid(pid, NULL, 0);
+		while(wait(NULL) != -1);
 	}
-	// 	if (tmp->next)
-	// 	{
-	// 	}
-	// 	tmp = tmp->next;
-	// }
 }

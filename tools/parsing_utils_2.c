@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/29 11:49:31 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/05 18:30:29 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,11 +148,8 @@ void	vars_checker(t_var *p, t_cmd **list_cmd, char *s)
 	p->s = ft_strdup("");
 	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && !is_white_sp(s[p->i])
 		&& !is_special_char(s[p->i]))
-	{
-		// printf(">>>>>>>>%c\n", s[p->i]);
 		if (vars_checker_util(s, p))
 			break ;
-	}
 	add_back(p, list_cmd);
 	free(p->s);
 }

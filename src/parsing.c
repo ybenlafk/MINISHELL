@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/31 14:50:49 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:08:05 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 			return (list_free(list_cmd, ft_lstsize(*list_cmd)), 1);
 		if (sps_skiper(s, &p->i))
 			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
-		redires_checker(list_cmd, s[p->i], s[p->i + 1], &p->i);
+		redires_checker(list_cmd, s, &p->i);
 		if (sps_skiper(s, &p->i))
 			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
-		add_special_char(s[p->i], s[p->i + 1], list_cmd, p);
+		add_special_char(s, list_cmd, p);
 		if (sps_skiper(s, &p->i))
 			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
 		words_checker(p, list_cmd, s);

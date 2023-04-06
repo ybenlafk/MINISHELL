@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/31 17:23:57 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:48:33 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define OUT 5
 # define SPACE 6
 # define VAR 7
+# define EX_S 8
 
 typedef struct array
 {
@@ -90,6 +91,7 @@ typedef struct var
 }					t_var;
 
 
+void	*ft_calloc(long count, long size);
 void	env_parser(t_list **list);
 void				export_parser(t_list **list);
 int					ft_lstsize_exp(t_exp *lst);
@@ -116,8 +118,7 @@ t_cmd				*expanding(t_env *env, t_cmd *cmd);
 void				list_free(t_cmd **cmd, int len);
 void				ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);
 void				ft_lstadd_back_env(t_env **lst, t_env *new);
-void				add_special_char(char c1, char c2, t_cmd **list_cmd,
-						t_var *p);
+void				add_special_char(char *s, t_cmd **list_cmd, t_var *p);
 void				free_all(char **s);
 void				vars_checker(t_var *p, t_cmd **list_cmd, char *s);
 void				words_checker(t_var *p, t_cmd **list_cmd, char *s);
@@ -147,11 +148,10 @@ int					len(char *str);
 int					ft_isalnum(int i);
 int					ft_isalpha(int i);
 int					is_special_char(char c);
-int					redires_checker(t_cmd **list_cmd, char c1, char c2, int *i);
+int					redires_checker(t_cmd **list_cmd, char *s, int *i);
 int					check_or(char *s, char c);
 int					quotes_checker(t_cmd **list_cmd, char *s, t_var *p);
 int					sps_skiper(char *s, int *i);
-int					redires_checker(t_cmd **list_cmd, char c1, char c2, int *i);
 int					env_size(t_env *lst);
 int					parser(t_cmd *cmd, t_list *list);
 int					is_white_sp(char c);

@@ -6,21 +6,11 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:26:18 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/30 22:06:46 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/04 19:34:56 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static void	freedom(char **p)
-{
-    int i;
-
-    i = 0;
-	while (p[i])
-		free(p[i++]);
-	free(p);
-}
 
 int lst_len(t_cmd *cmd)
 {

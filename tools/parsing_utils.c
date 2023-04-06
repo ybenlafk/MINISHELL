@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:38:12 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/28 14:07:53 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:49:03 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ int	is_special_char(char c)
 	return (0);
 }
 
-void	add_special_char(char c1, char c2, t_cmd **list_cmd, t_var *p)
+void	add_special_char(char *s, t_cmd **list_cmd, t_var *p)
 {
-	if (c1 == '>' && redires_checker(list_cmd, c1, c2, &p->i))
+	if (s[p->i] == '>' && redires_checker(list_cmd, s, &p->i))
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(">", OUT, 0));
 		p->i++;
 	}
-	if (c1 == '<' && redires_checker(list_cmd, c1, c2, &p->i))
+	if (s[p->i] == '<' && redires_checker(list_cmd, s, &p->i))
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<", IN, 0));
 		p->i++;
 	}
-	if (c1 == '|' && redires_checker(list_cmd, c1, c2, &p->i))
+	if (s[p->i] == '|' && redires_checker(list_cmd, s, &p->i))
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("|", PIPE, 0));
 		p->i++;

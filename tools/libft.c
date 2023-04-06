@@ -6,11 +6,31 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 10:40:25 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/30 16:33:12 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/04 19:34:40 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	ft_bzero(void *s, size_t n )
+{
+	char	*dest;
+
+	dest = (char *)s;
+	while (n-- > 0)
+		*dest++ = 0;
+}
+
+void	*ft_calloc(long count, long size)
+{
+	char	*p;
+
+	p = malloc(count * size);
+	if (!p)
+		return (NULL);
+	ft_bzero(p, size * count);
+	return (p);
+}
 
 int	ft_strcmp(char *s1, char *s2)
 {
