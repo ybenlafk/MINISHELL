@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/05 23:07:01 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/07 02:34:55 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	get_dilemiter(t_cmd **list_cmd, char *s, int *i)
 		p.i = 1;
 	}
 	if (p.i)
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p.s, WORD, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(d_quote_trim(s_quote_trim(p.s)), WORD, 0));
 	free(p.s);
 }
 // check the redirections.
@@ -77,7 +77,7 @@ int	redires_checker(t_cmd **list_cmd, char *s, int *i)
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<<", HEREDOC, 0));
 		*i += 2;
-		get_dilemiter(list_cmd, s, i);
+		// get_dilemiter(list_cmd, s, i);
 		return (0);
 	}
 	if (s[*i] == '>' && s[*i + 1] == '>')

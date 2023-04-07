@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/02 17:06:38 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/06 17:42:22 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	srch_cmd(t_list *list)
 	return (0);
 }
 
+
 void	execution(t_list *list, t_env	**env, char **e)
 {
     int fd[2];
@@ -93,10 +94,17 @@ void	execution(t_list *list, t_env	**env, char **e)
 			{
 				cmd = ft_strjoin(tabl[i], "/");
 				if (access(ft_strjoin(cmd, list->cmd), X_OK) == 0)
+				{
+					if (list->in != 0)
+						dup2(list->in, 0);
+					if (list->out != 1)
+						dup2(list->out, 1);
 					execve(ft_strjoin(cmd, list->cmd), list->args, e);
+				}
 				i++;
 			}
-			printf("cmd not found\n");
+			printf("minishell: command not found: %s\n", list->cmd);
+			exit(errno);
 		}
 		int r;
 		waitpid(id, &r, 0);
