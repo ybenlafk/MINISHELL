@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/09 00:40:04 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/09 12:07:31 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	exec_cmd(t_var *var, char **e)
 	exit(errno);
 }
 
-int	exec_childs(t_var *var, char **e)
+int	exec_childs(t_var *var, t_env **env, char **e)
 {
 	t_var	p;
 
@@ -130,11 +130,14 @@ int	exec_childs(t_var *var, char **e)
 	p.pid = fork();
 	if (p.pid == 0)
 	{
-		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (var->len_ > 1)
 			pipe_cases(var, &p);
-		exec_cmd(var, e);
+		if (srch_cmd(var->lst))
+			ft_command(var->lst, srch_cmd(var->lst), env);
+		else
+			exec_cmd(var, e);
 	}
 	else if (var->len_ > 1)
 	{
@@ -161,16 +164,11 @@ void	execution(t_list *list, t_env **env, char **e)
 	if (!p.str)
 		p.str = ft_split(" ", ' ');
 	p.lst = list;
-	if (srch_cmd(p.lst))
-		ft_command(p.lst, srch_cmd(p.lst), env);
-	else
+	while (p.lst)
 	{
-		while (p.lst)
-		{
-			pid = exec_childs(&p, e);
-			p.lst = p.lst->next;
-		}
-		waitpid(pid, NULL, 0);
-		while(wait(NULL) != -1);
+		pid = exec_childs(&p, env, e);
+		p.lst = p.lst->next;
 	}
+	waitpid(pid, NULL, 0);
+	while(wait(NULL) != -1);
 }
