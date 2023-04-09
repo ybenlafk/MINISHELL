@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/05 23:47:19 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/09 17:36:21 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,4 +371,5 @@ void	env_parser(t_list **list)
 		tmp = tmp->next;
 	}
 }
+
 

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/07 20:58:30 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/09 17:36:50 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,6 @@ int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 	}
 	return (0);
 }
-void	herdoc_del(t_cmd **cmd)
-{
-	t_cmd	*tmp;
-
-	tmp = *cmd;
-	while (tmp)
-	{
-		if (tmp->type == HEREDOC)
-		{
-			tmp = tmp->next;
-			if (tmp)
-			{
-				if (tmp->type == SPACE)
-				{
-					tmp = tmp->next;
-					if (tmp)
-						tmp->type = WORD;
-				}
-				else
-					tmp->type = WORD;
-			}
-		}
-		tmp = tmp->next;
-	}
-}
 
 t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 {
@@ -77,7 +52,6 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	syn = syntax_checker(cmd, p.s);
 	if (syn)
 		return (list_free(&cmd, ft_lstsize(cmd)), error(syn), NULL);
-	herdoc_del(&cmd);
 	cmd = expanding(env, cmd);
 	quotes_expander(cmd, env);
 	cmd = lst_join(cmd);
