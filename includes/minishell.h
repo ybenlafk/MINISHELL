@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/06 17:05:30 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/08 18:08:20 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct var
 	int				l;
 	int				is;
 	int				fd;
+	int				fds[2];
+	int				pid;
 	int				len;
 	int				len_;
 	int				stat;
@@ -89,6 +91,7 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
+void	*ft_calloc(long count, long size);
 void				env_parser(t_list **list);
 void				export_parser(t_list **list);
 int					ft_lstsize_exp(t_exp *lst);
@@ -162,7 +165,7 @@ int					ft_strncmp(const char *str1, const char *str2, int n);
 t_env				*ft_lstdelone(t_env **lst, char *str);
 void				unset_cmd(t_list *lst, t_env **env);
 void				execution(t_list *list, t_env **env, char **e);
-void				ft_command(t_list *list, int ind, t_env **env, char **tab);
+void				ft_command(t_list *list, int ind, t_env **env);
 void				exit_cmd(t_list *lst);
 t_env				*sort_ex(t_env	*env);
 int					ft_lstsize_en(t_env *lst);
