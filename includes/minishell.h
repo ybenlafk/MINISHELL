@@ -5,14 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/06 23:00:41 by nouahidi         ###   ########.fr       */
-=======
-/*   Updated: 2023/04/08 18:08:20 by ybenlafk         ###   ########.fr       */
->>>>>>> a3fa437a3d4e169733f69a87db63082b70b07c00
+/*   Created: 2023/04/09 00:21:25 by ybenlafk          #+#    #+#             */
+/*   Updated: 2023/04/09 00:23:11 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -37,6 +34,7 @@
 # define OUT 5
 # define SPACE 6
 # define VAR 7
+
 
 typedef struct array
 {
