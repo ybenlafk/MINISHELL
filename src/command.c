@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/09 12:09:07 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/09 12:41:37 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,4 @@ void    ft_command(t_list *list, int ind, t_env	**env)
 		env_cmd(list, env);
 	if (ind == 7)
 		exit_cmd(list);
-	exit(errno);
 }

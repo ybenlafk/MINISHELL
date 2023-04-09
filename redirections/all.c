@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 14:49:05 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/29 22:19:24 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/09 12:56:08 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,13 +169,13 @@ t_cmd	*all(t_cmd *cmd, t_list **list)
 	if (!cmd)
 		return (NULL);
 	p.j = 0;
-	p.l = count_fds(cmd, IN, 0);
-	p.i = count_fds(cmd, OUT, 1);
 	p.res = NULL;
 	p.tmp = cmd;
 	p.lst = *list;
 	while (p.tmp)
 	{
+		p.l = count_fds(p.tmp, IN, 0);
+		p.i = count_fds(p.tmp, OUT, 1);
 		p.fd_in = 0;
 		p.fd_out = 1;
 		while (p.tmp && p.tmp->type != PIPE)

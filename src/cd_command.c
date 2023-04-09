@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/08 16:51:25 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/09 12:45:29 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*change_dr(char	*str)
 	while (str[i])
 		i++;
 	j = i;
-	while (str[j] != '/' )
+	while (str[j] != '/')
 		j--;
 	if (j == 0)
 		return ("/");
@@ -115,11 +115,9 @@ void    cd_cmd(t_list   *lst, t_env **env)
 			str = new_dr(str, tab[i]);
 		i++;
 	}
-	printf ("%s\n", str);
 	st = str;
 	if(chdir(str) != 0)
 		printf("Minishell>$ cd: %s: No such file or directory\n", tab[0]);
 	st = ft_strjoin("PWD=", st);
-	printf ("%s\n", st);
 	new_pwd(st, env);
 }

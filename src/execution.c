@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/09 12:07:31 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/09 12:50:48 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,16 +126,25 @@ int	exec_childs(t_var *var, t_env **env, char **e)
 	t_var	p;
 
 	p.i = 0;
-	pipe(p.fds);
+	if (pipe(p.fds) ==  -1)
+		exit(errno);
 	p.pid = fork();
+	if (p.pid ==  -1)
+		exit(errno);
 	if (p.pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		if (var->len_ > 1)
 			pipe_cases(var, &p);
-		if (srch_cmd(var->lst))
+		else 
+			if (close(p.fds[1]) == -1 || close(p.fds[0]) == -1)
+				exit(errno);
+		if (srch_cmd(var->lst) && var->len_ > 1)
+		{
 			ft_command(var->lst, srch_cmd(var->lst), env);
+			exit(errno);
+		}
 		else
 			exec_cmd(var, e);
 	}
@@ -146,7 +155,7 @@ int	exec_childs(t_var *var, t_env **env, char **e)
 		var->stat = dup(p.fds[0]);
 		if (close(p.fds[1]) == -1 || close(p.fds[0]) == -1)
 			exit(errno);
-	}
+	}	
 	return (var->j++ ,p.pid);
 }
 
@@ -164,11 +173,16 @@ void	execution(t_list *list, t_env **env, char **e)
 	if (!p.str)
 		p.str = ft_split(" ", ' ');
 	p.lst = list;
-	while (p.lst)
+	if (srch_cmd(p.lst) && p.len_ == 1)
+			ft_command(p.lst, srch_cmd(p.lst), env);
+	else
 	{
-		pid = exec_childs(&p, env, e);
-		p.lst = p.lst->next;
+		while (p.lst)
+		{
+			pid = exec_childs(&p, env, e);
+			p.lst = p.lst->next;
+		}
+		waitpid(pid, NULL, 0);
+		while(wait(NULL) != -1);
 	}
-	waitpid(pid, NULL, 0);
-	while(wait(NULL) != -1);
 }
