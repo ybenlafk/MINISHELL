@@ -6,7 +6,11 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:30:01 by ybenlafk          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2023/04/06 23:00:41 by nouahidi         ###   ########.fr       */
+=======
 /*   Updated: 2023/04/08 18:08:20 by ybenlafk         ###   ########.fr       */
+>>>>>>> a3fa437a3d4e169733f69a87db63082b70b07c00
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +159,7 @@ int					redires_checker(t_cmd **list_cmd, char *s, int *i);
 int					env_size(t_env *lst);
 int					parser(t_cmd *cmd, t_list *list);
 int					is_white_sp(char c);
-void				cd_cmd(t_list *list);
+void				cd_cmd(t_list *list, t_env **env);
 char				*pwd_cmd(void);
 void				echo_cmd(t_list *list);
 void				env_cmd(t_list *list, t_env **env);
@@ -181,5 +185,7 @@ void				print_ex(t_env	*env);
 void				ft_print(char *str);
 int					check_plus(char *str);
 int					check_rot(t_env *env, char *str);
+void				add_exp(t_list	*lst, t_env	**env);
+int					norm_exp(t_env	**env, char *str, int i);
 
 #endif

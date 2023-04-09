@@ -6,7 +6,11 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2023/04/08 17:22:28 by nouahidi         ###   ########.fr       */
+=======
 /*   Updated: 2023/04/08 23:34:59 by ybenlafk         ###   ########.fr       */
+>>>>>>> a3fa437a3d4e169733f69a87db63082b70b07c00
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +169,26 @@ void	execution(t_list *list, t_env **env, char **e)
 	{
 		while (p.lst)
 		{
+<<<<<<< HEAD
+			while (tabl[i])
+			{
+				cmd = ft_strjoin(tabl[i], "/");
+				if (access(ft_strjoin(cmd, list->cmd), X_OK) == 0)
+				{
+					if (list->in != 0)
+						dup2(list->in, 0);
+					if (list->out != 1)
+						dup2(list->out, 1);
+					execve(ft_strjoin(cmd, list->cmd), list->args, e);
+				}
+				i++;
+			}
+			printf("cmd not found\n");
+			exit(errno);
+=======
 			pid = exec_childs(&p, e);
 			p.lst = p.lst->next;
+>>>>>>> a3fa437a3d4e169733f69a87db63082b70b07c00
 		}
 		waitpid(pid, NULL, 0);
 		while(wait(NULL) != -1);

@@ -6,11 +6,51 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/02 01:41:26 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/08 16:51:25 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	old_pwd(char *str, t_env **env)
+{
+	t_env	*t;
+	int		i;
+	char	*st;
+
+	t = *env;
+	st = ft_strjoin("OLDPWD=", str);
+	while (t)
+	{
+		if (ft_strncmp("OLDPWD=", t->e, 6) == 0)
+		{
+			ft_lstadd_back(env, ft_lstnew(st));
+			*env = ft_lstdelone(env, t->e);
+			break ;
+		}
+		t = t->next;
+	}
+}
+
+void	new_pwd(char *str, t_env **env)
+{
+	t_env	*t;
+
+	t = *env;
+	while (t)
+	{
+		if (ft_strncmp("PWD=", t->e, 3) == 0)
+		{
+			if (!ft_strcmp(ft_strjoin("PWD=", "/"), t->e) && !ft_strcmp(ft_strjoin("PWD=", "/"), str))
+				break ;
+			ft_lstadd_back(env, ft_lstnew(str));
+			*env = ft_lstdelone(env, t->e);
+			break ;
+		}
+		t = t->next;
+	}
+	old_pwd(t->e + 4, env);
+}
 
 char	*change_dr(char	*str)
 {
@@ -24,6 +64,8 @@ char	*change_dr(char	*str)
 	j = i;
 	while (str[j] != '/' )
 		j--;
+	if (j == 0)
+		return ("/");
 	j = i - j;
 	j = i - j;
 	st = malloc(j);
@@ -46,9 +88,10 @@ char	*new_dr(char *s1, char *s2)
 	return (str);
 }
 
-void    cd_cmd(t_list   *lst)
+void    cd_cmd(t_list   *lst, t_env **env)
 {
 	char	*str;
+	char	*st;
 	char	**tab;
 	int		i;
 	int		j;
@@ -59,6 +102,7 @@ void    cd_cmd(t_list   *lst)
 	if (!lst->args[1])
 	{
 		chdir("/Users/nouahidi");
+		new_pwd("PWD=/Users/nouahidi", env);
 		return ;
 	}
 	while (tab[i])
@@ -72,6 +116,10 @@ void    cd_cmd(t_list   *lst)
 		i++;
 	}
 	printf ("%s\n", str);
+	st = str;
 	if(chdir(str) != 0)
 		printf("Minishell>$ cd: %s: No such file or directory\n", tab[0]);
+	st = ft_strjoin("PWD=", st);
+	printf ("%s\n", st);
+	new_pwd(st, env);
 }

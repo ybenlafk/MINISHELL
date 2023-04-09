@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:51:37 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/02 15:03:03 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:10:15 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,16 @@ void	add_exp(t_list	*lst, t_env	**env)
 	i = 1;
 	while (lst->args[i])
 	{
-		if (check_var(lst->args[i], env))
+		if (check_var(lst->args[i], env) && check_empty_var(lst->args[i]))
 			i = norm_exp(env, lst->args[i], i);
-		else
+		else if (check_empty_var(lst->args[i]))
 		{
 			str = del_plus(lst->args[i]);
 			ft_lstadd_back(env, ft_lstnew(str));
 			i++;
 		}
+		else
+			i++;
 	}
 }
 

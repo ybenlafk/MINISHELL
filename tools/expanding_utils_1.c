@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding_utils_1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:18:21 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/29 13:16:58 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/07 02:23:01 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[j])
 		p[i++] = s2[j++];
 	p[i] = '\0';
-	return (free(s1), p);
+	return (p);
 }
 
 void	lexer_pro_max(t_exp **exp, char *s, t_var *p)
