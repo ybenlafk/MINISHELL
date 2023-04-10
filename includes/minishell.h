@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:21:25 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/09 21:52:27 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:09:00 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <sys/errno.h>
 # include <unistd.h>
 
-# define FALSE 0
-# define TRUE 1
+extern int exit_status;
+
 # define WORD 0
 # define HEREDOC 1
 # define APPEND 2
@@ -32,6 +32,7 @@
 # define OUT 5
 # define SPACE 6
 # define VAR 7
+# define EXIT_ST 8
 
 typedef struct array
 {
@@ -65,6 +66,7 @@ typedef struct exp
 
 typedef struct var
 {
+	int				ext_st;
 	int				i;
 	int				j;
 	int				l;

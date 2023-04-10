@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:18:21 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/07 02:23:01 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:11:28 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,24 @@ void	add_back_exp(t_var *p, t_exp **exp)
 {
 	if (p->l && p->s)
 	{
-		ft_lstadd_back_exp(exp, lst_new_exp(p->s, 1));
+		if (!ft_strcmp(p->s, "$?"))
+			ft_lstadd_back_exp(exp, lst_new_exp(p->s, 2));
+		else
+			ft_lstadd_back_exp(exp, lst_new_exp(p->s, 1));
 		p->l = 0;
 	}
 	else if (p->s)
-		ft_lstadd_back_exp(exp, lst_new_exp(p->s, 0));
+	{
+		if (!ft_strcmp(p->s, "$?"))
+			ft_lstadd_back_exp(exp, lst_new_exp(p->s, 2));
+		else
+			ft_lstadd_back_exp(exp, lst_new_exp(p->s, 0));
+	}
 }
 int	utils_pro_max(char *s, t_var *p)
 {
+	if (s[p->i] == '$' && s[p->i + 1] == '?')
+		return (p->s = ft_strdup("$?"), p->i += 2, 1);
 	if (s[p->i] == '$' && (!s[p->i + 1] || is_white_sp(s[p->i + 1])))
 	{
 		p->s = ft_strdup("$");

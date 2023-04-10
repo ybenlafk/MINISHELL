@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:59:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/09 12:56:35 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:16:12 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	exit_status = 0;
+
 void	c_hanndler()
 {
-	int flag = 0;
+	int	flag = 0;
 	if (waitpid(-1, NULL, WNOHANG) == 0)
 		flag = 1;
 	if (!flag)

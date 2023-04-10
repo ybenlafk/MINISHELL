@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:18:21 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/03/29 13:54:40 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:13:46 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ char	*check_set(t_exp *exp, t_env *env)
 	{
 		if (tmp->stat)
 		{
-			s = set_value(env, tmp->value + 1);
+			if (tmp->stat == 1)
+				s = set_value(env, tmp->value + 1);
+			else
+				s = ft_itoa(exit_status);
 			res = ft_strjoin(res, s);
 			free(s);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/09 21:41:39 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:20:31 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void	execution(t_list *list, t_env **env, char **e)
 			pid = exec_childs(&p, env, e);
 			p.lst = p.lst->next;
 		}
-		waitpid(pid, NULL, 0);
+		p.ext_st = waitpid(pid, NULL, 0);
 		while(wait(NULL) != -1);
 	}
 }

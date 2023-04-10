@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/09 17:36:50 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:16:04 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// int	exit_status = 0;
 
 int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 {
@@ -68,7 +70,7 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	// while (vars.tmp)
 	// {
 	// 	printf("value : |%s|\n", vars.tmp->str);
-	// 	// printf("type : |%d|\n", vars.tmp->type);
+	// 	printf("type : |%d|\n", vars.tmp->type);
 	// 	// printf("quotes : |%d|\n", vars.tmp->quote);
 	// 	vars.tmp = vars.tmp->next;
 	// }
