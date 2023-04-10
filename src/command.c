@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/09 21:43:41 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:04:07 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void    ft_command(t_list *list, int ind, t_env	**env)
 		ft_putstr_fd("\n", list->out);
 	}
 	if (ind == 4) 
-		echo_cmd(list);  
+		echo_cmd(list);
 	if (ind == 5)
-	    unset_cmd(list, env);  
+		unset_cmd(list, env);
 	if (ind == 6) 
 		env_cmd(list, env);
 	if (ind == 7)

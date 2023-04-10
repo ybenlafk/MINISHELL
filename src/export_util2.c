@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_util2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:32:44 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/10 14:20:59 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:01:51 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_ex(t_env	*env, t_list *lst)
 		ft_putstr_fd("declare -x ", lst->out);
 		ft_print(t->e, lst);
 		ft_putstr_fd("\n", lst->out);
-		t = NULL;
+		t = t->next;
 	}
 }
 

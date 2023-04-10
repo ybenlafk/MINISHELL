@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:25:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/10 14:33:17 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:02:48 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,21 +105,21 @@ void	ft_print(char *str, t_list *lst)
 	i = 0;
 	while (str[i])
 	{
-		ft_putstr_fd(&str[i], 1);
+		ft_putstr_fd(char_to_str(str[i]), lst->out);
 		if (str[i] == '=')
 		{
 			if (!str[i + 1])
 			{
-				ft_putstr_fd(&quotes, 1);
-				ft_putstr_fd(&quotes, 1);
+				ft_putstr_fd(char_to_str(quotes), lst->out);
+				ft_putstr_fd(char_to_str(quotes), lst->out);
 			}
 			if (str[i + 1])
 			{
-				ft_putstr_fd(&quotes, 1);
+				ft_putstr_fd(char_to_str(quotes), lst->out);
 				i++;
 				while (str[i])
-					ft_putstr_fd(&str[i++], 1);
-				ft_putstr_fd(&quotes, 1);
+					ft_putstr_fd(char_to_str(str[i++]), lst->out);
+				ft_putstr_fd(char_to_str(quotes), lst->out);
 				break ;
 			}
 		}

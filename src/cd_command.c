@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/09 12:45:29 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:45:03 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,79 @@ void	old_pwd(char *str, t_env **env)
 	}
 }
 
+char	*del_slash(char *str)
+{
+	char	*st;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	st = malloc(ft_strlen(str));
+	while (str[i])
+	{
+		st[j++] = str[i++];
+		if (str[i] == '/' && str[i + 1] == '/')
+			i++;
+	}
+	return (st);
+}
+
+int	check_pwd(t_env **env, char *str)
+{
+	t_env	*t;
+
+	t = *env;
+	if (ft_strlen(str) == 3)
+	{
+		while (t)
+		{
+			if (ft_strncmp("PWD", t->e, 3) == 0)
+				return (1);
+			t = t->next;
+		}
+	}
+	else
+	{
+		while (t)
+		{
+			if (ft_strncmp("OLDPWD", t->e, 6) == 0)
+				return (1);
+			t = t->next;
+		}
+	}
+	return (0);
+}
+
 void	new_pwd(char *str, t_env **env)
 {
 	t_env	*t;
 
 	t = *env;
-	while (t)
+	str = del_slash(str);
+	if (check_pwd(env, "PWD"))
 	{
-		if (ft_strncmp("PWD=", t->e, 3) == 0)
+		while (t)
 		{
-			if (!ft_strcmp(ft_strjoin("PWD=", "/"), t->e) && !ft_strcmp(ft_strjoin("PWD=", "/"), str))
+			if (ft_strncmp("PWD=", t->e, 3) == 0)
+			{
+				if (!ft_strcmp(ft_strjoin("PWD=", "/"), t->e)
+					&& !ft_strcmp(ft_strjoin("PWD=", "/"), str))
+					break ;
+				ft_lstadd_back(env, ft_lstnew(str));
+				*env = ft_lstdelone(env, t->e);
 				break ;
-			ft_lstadd_back(env, ft_lstnew(str));
-			*env = ft_lstdelone(env, t->e);
-			break ;
+			}
+			t = t->next;
 		}
-		t = t->next;
 	}
-	old_pwd(t->e + 4, env);
+	if (check_pwd(env, "OLDPWD"))
+	{
+		if (check_pwd(env, "PWD"))
+			old_pwd(t->e + 4, env);
+		else
+			old_pwd("", env);
+	}
 }
 
 char	*change_dr(char	*str)
@@ -62,7 +117,7 @@ char	*change_dr(char	*str)
 	while (str[i])
 		i++;
 	j = i;
-	while (str[j] != '/')
+	while (str[j] != '/' )
 		j--;
 	if (j == 0)
 		return ("/");
@@ -88,7 +143,7 @@ char	*new_dr(char *s1, char *s2)
 	return (str);
 }
 
-void    cd_cmd(t_list   *lst, t_env **env)
+void	cd_cmd(t_list *lst, t_env **env)
 {
 	char	*str;
 	char	*st;
@@ -115,9 +170,14 @@ void    cd_cmd(t_list   *lst, t_env **env)
 			str = new_dr(str, tab[i]);
 		i++;
 	}
+	printf ("%s\n", str);
 	st = str;
-	if(chdir(str) != 0)
+	if (chdir(str) != 0)
 		printf("Minishell>$ cd: %s: No such file or directory\n", tab[0]);
-	st = ft_strjoin("PWD=", st);
-	new_pwd(st, env);
+	else
+	{
+		st = ft_strjoin("PWD=", st);
+		printf ("%s\n", st);
+		new_pwd(st, env);
+	}
 }
