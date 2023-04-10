@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   export_util2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:32:44 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/02 15:09:36 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:20:59 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	print_ex(t_env	*env)
+// ft_putstr_fd("declare -x ", lst->out);
+// ft_putstr_fd("\n", lst->out);
+void	print_ex(t_env	*env, t_list *lst)
 {
 	t_env	*t;
 	int		i;
@@ -23,10 +24,10 @@ void	print_ex(t_env	*env)
 	t = env;
 	while (t)
 	{
-		printf ("declare -x ");
-		ft_print(t->e);
-		printf ("\n");
-		t = t->next;
+		ft_putstr_fd("declare -x ", lst->out);
+		ft_print(t->e, lst);
+		ft_putstr_fd("\n", lst->out);
+		t = NULL;
 	}
 }
 

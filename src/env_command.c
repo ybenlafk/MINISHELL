@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:47:55 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/01 15:31:08 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:46:42 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	env_cmd(t_list	*list, t_env **env)
 	while (t)
 	{
 		if (check_v(t->e))
-			printf ("%s\n", t->e);
+		{
+			ft_putstr_fd (t->e, list->out);
+			ft_putstr_fd ("\n", list->out);
+		}
 		t = t->next;
 	}
 }

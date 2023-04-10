@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/09 12:41:37 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:43:41 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 
 void    ft_command(t_list *list, int ind, t_env	**env)
 {
-	if (list->in != 0)
-		dup2(list->in, 0);
-	if (list->out != 1)
-		dup2(list->out, 1);
 	if (ind == 1)
 	    cd_cmd(list, env);
 	if (ind == 2) 
 	    export_cmd(env, list);
-	if (ind == 3) 
-		printf ("%s\n", pwd_cmd());  
+	if (ind == 3)
+	{
+		ft_putstr_fd(pwd_cmd(), list->out);
+		ft_putstr_fd("\n", list->out);
+	}
 	if (ind == 4) 
 		echo_cmd(list);  
 	if (ind == 5)

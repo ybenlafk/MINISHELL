@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:21:25 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/09 17:36:27 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:52:27 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
+void				ft_putstr_fd(char *s, int fd);
 void				*ft_calloc(long count, long size);
 void				env_parser(t_list **list);
 void				export_parser(t_list **list);
@@ -176,8 +177,8 @@ char				*del_plus(char *str);
 t_env				*sort_ex(t_env *env);
 void				add_plus(t_env **env, char *str, int i);
 void				ft_lstadd_back(t_env **lst, t_env *new);
-void				print_ex(t_env *env);
-void				ft_print(char *str);
+void				print_ex(t_env *env, t_list *lst);
+void				ft_print(char *str, t_list *lst);
 int					check_plus(char *str);
 int					check_rot(t_env *env, char *str);
 void				add_exp(t_list *lst, t_env **env);

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/09 12:50:48 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:41:39 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void	execution(t_list *list, t_env **env, char **e)
 		p.str = ft_split(" ", ' ');
 	p.lst = list;
 	if (srch_cmd(p.lst) && p.len_ == 1)
-			ft_command(p.lst, srch_cmd(p.lst), env);
+		ft_command(p.lst, srch_cmd(p.lst), env);
 	else
 	{
 		while (p.lst)

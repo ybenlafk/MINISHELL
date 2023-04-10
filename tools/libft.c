@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 10:40:25 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/04 19:34:40 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:40:48 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,4 +176,12 @@ char	*ft_strcpy(char *dest, char *src)
         (*dest++) = (*src++);
     *dest = '\0';
     return (s);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	while (*s)
+		write(fd, &*s++, 1);
 }

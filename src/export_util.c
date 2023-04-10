@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:25:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/08 16:50:21 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:33:17 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_env	*ft_lstdelone(t_env **lst, char	*str)
 	return (t);
 }
 
-void	ft_print(char *str)
+void	ft_print(char *str, t_list *lst)
 {
 	int		i;
 	char	quotes;
@@ -105,18 +105,21 @@ void	ft_print(char *str)
 	i = 0;
 	while (str[i])
 	{
-		printf ("%c", str[i]);
+		ft_putstr_fd(&str[i], 1);
 		if (str[i] == '=')
 		{
 			if (!str[i + 1])
-				printf ("%c%c", quotes, quotes);
+			{
+				ft_putstr_fd(&quotes, 1);
+				ft_putstr_fd(&quotes, 1);
+			}
 			if (str[i + 1])
 			{
-				printf ("%c", quotes);
+				ft_putstr_fd(&quotes, 1);
 				i++;
 				while (str[i])
-					printf ("%c", str[i++]);
-				printf ("%c", quotes);
+					ft_putstr_fd(&str[i++], 1);
+				ft_putstr_fd(&quotes, 1);
 				break ;
 			}
 		}

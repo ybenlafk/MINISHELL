@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:43:48 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/01 15:56:27 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:45:56 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	echo_cmd(t_list *list)
 	i = check_args(list);
 	while (t->args[i])
 	{
-		printf ("%s", t->args[i]);
+		ft_putstr_fd (t->args[i], list->out);
 		if (t->args[i + 1])
-			printf(" ");
+			ft_putstr_fd(" ", list->out);
 		i++;
 	}
 	if (check_args(list) == 1)
-		printf ("\n");
+		ft_putstr_fd ("\n", list->out);
 }
