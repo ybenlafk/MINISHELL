@@ -89,15 +89,17 @@ int	drop_util(int *i, t_var *p, int(*redire)(t_cmd *), int stat)
 		p->fd_in = redire(p->tmp);
 		if (p->fd_in < 0)
 			return (1);
+		if(*i)
+			close(p->fd_in);
 	}
 	else
 	{
 		p->fd_out = redire(p->tmp);
 		if (p->fd_out < 0)
 			return (1);
+		if(*i)
+			close(p->fd_out);
 	}
-	if(*i)
-		close(p->fd_in);
 	return (0);
 }
 
