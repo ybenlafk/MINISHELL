@@ -73,7 +73,7 @@ char	*set_value(t_env *env, char *rep)
 		env = env->next;
 		free(p.s);
 	}
-	return (NULL);
+	return (ft_strdup(""));
 }
 
 void	get_var(t_var *p)
@@ -131,14 +131,17 @@ t_cmd	*expanding(t_env *env, t_cmd *cmd)
 	while (p.tmp)
 	{
 		p.s = NULL;
-		if (p.tmp->type == VAR)
-			get_var(&p);
-		if (p.s)
-			split_var(&p, &res, env);
 		if (p.tmp->type == EXIT_ST)
 			ft_lstadd_back_cmd(&res, lst_new_cmd(ft_itoa(g_exit_status), p.tmp->type, p.tmp->quote));
-		else 
-			ft_lstadd_back_cmd(&res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
+		else
+		{
+			if (p.tmp->type == VAR)
+				get_var(&p);
+			if (p.s)
+				split_var(&p, &res, env);
+			else
+				ft_lstadd_back_cmd(&res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
+		}
 		p.tmp = p.tmp->next;
 	}
 	list_free(&cmd, ft_lstsize(cmd));

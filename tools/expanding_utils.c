@@ -86,10 +86,10 @@ char	*check_set(t_exp *exp, t_env *env)
 	{
 		if (tmp->stat)
 		{
-			if (tmp->stat == 1)
-				s = set_value(env, tmp->value + 1);
-			else
+			if (tmp->stat == 2)
 				s = ft_itoa(g_exit_status);
+			else
+				s = set_value(env, tmp->value + 1);
 			res = ft_strjoin(res, s);
 			free(s);
 		}
