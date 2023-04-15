@@ -6,13 +6,13 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:59:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/10 16:16:12 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/10 18:16:41 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	exit_status = 0;
+int	g_exit_status = 0;
 
 void	c_hanndler()
 {
@@ -85,7 +85,7 @@ int	main(int ac, char **av, char **e)
 		signal(SIGINT, c_hanndler);
 		signal(SIGQUIT, SIG_IGN);
 		p.s = NULL;
-		p.s = readline("\e[1;32mMinishell>$ \e[0m");
+		p.s = 	readline("\e[1;32mMinishell>$ \e[0m");
 		if (!p.s)
 			return (fenv(&env), printf("\e[1;32mexit\e[0m\n"), 1);
 		add_history(p.s);

@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:18:21 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/10 16:13:46 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/10 18:15:52 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*check_set(t_exp *exp, t_env *env)
 			if (tmp->stat == 1)
 				s = set_value(env, tmp->value + 1);
 			else
-				s = ft_itoa(exit_status);
+				s = ft_itoa(g_exit_status);
 			res = ft_strjoin(res, s);
 			free(s);
 		}

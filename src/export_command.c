@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:51:37 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/09 21:47:59 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/11 01:46:34 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	norm_exp(t_env	**env, char *str, int i)
 
 	j = 1;
 	t = *env;
-	while (t)
+	while (t && check_empty_var(str))
 	{
 		if (j == check_var(str, env))
 		{
@@ -93,16 +93,14 @@ void	add_exp(t_list	*lst, t_env	**env)
 	i = 1;
 	while (lst->args[i])
 	{
-		if (check_var(lst->args[i], env) && check_empty_var(lst->args[i]))
+		if (check_var(lst->args[i], env))
 			i = norm_exp(env, lst->args[i], i);
-		else if (check_empty_var(lst->args[i]))
+		else
 		{
 			str = del_plus(lst->args[i]);
 			ft_lstadd_back(env, ft_lstnew(str));
 			i++;
 		}
-		else
-			i++;
 	}
 }
 
@@ -110,11 +108,13 @@ void	export_cmd(t_env **env, t_list *lst)
 {
 	t_env	*new;
 
+	if (!*env)
+		return;
 	if (lst->args[1])
 		add_exp(lst, env);
 	else
 	{
-		sort_ex(*env);
-		print_ex(*env, lst);
+		new = sort_ex(*env);
+		print_ex(new, lst);
 	}
 }

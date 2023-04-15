@@ -6,13 +6,13 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/10 16:16:04 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/10 18:16:41 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// int	exit_status = 0;
+// int	g_exit_status = 0;
 
 int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 {

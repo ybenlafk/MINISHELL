@@ -12,6 +12,20 @@
 
 #include "../includes/minishell.h"
 
+char* env_pwd(t_env **env)
+{
+	t_env	*t;
+
+	t = *env;
+	while (t)
+	{
+		if (!ft_strncmp("PWD", t->e, 3))
+			return (t->e + 4);
+		t = t->next;
+	}
+	return (NULL);
+}
+
 void    ft_command(t_list *list, int ind, t_env	**env)
 {
 	if (ind == 1)
@@ -20,6 +34,8 @@ void    ft_command(t_list *list, int ind, t_env	**env)
 	    export_cmd(env, list);
 	if (ind == 3)
 	{
+		if (!pwd_cmd())
+			ft_putstr_fd(env_pwd(env), list->out);
 		ft_putstr_fd(pwd_cmd(), list->out);
 		ft_putstr_fd("\n", list->out);
 	}

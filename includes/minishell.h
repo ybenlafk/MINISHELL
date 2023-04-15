@@ -6,23 +6,23 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:21:25 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/10 16:09:00 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/10 18:12:33 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/errno.h>
 # include <unistd.h>
 
-extern int exit_status;
+extern int	g_exit_status;
 
 # define WORD 0
 # define HEREDOC 1
@@ -185,5 +185,9 @@ int					check_plus(char *str);
 int					check_rot(t_env *env, char *str);
 void				add_exp(t_list *lst, t_env **env);
 int					norm_exp(t_env **env, char *str, int i);
+t_cmd				*del_redires(t_cmd *cmd);
+t_cmd				*all(t_cmd *cmd, t_list **list);
+void				del_util(t_var *p);
+int					drop(t_var *p);
 
 #endif

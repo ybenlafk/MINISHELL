@@ -6,7 +6,7 @@
 #    By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 09:22:41 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/04/10 14:56:51 by nouahidi         ###   ########.fr        #
+#    Updated: 2023/04/10 17:43:31 by nouahidi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,11 @@ SRCS= tools/utils.c\
 	src/export_util.c\
 	src/export_util2.c\
 	src/export_util3.c\
+	redirections/all_util.c \
 
 OBGJ= $(SRCS:.c=.o)
 CC = gcc
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 CFLAGS = -g
 R_L = "-L/Users/nouahidi/.brew/opt/readline/lib"
 R_I = "-I/Users/nouahidi/.brew/opt/readline/include"

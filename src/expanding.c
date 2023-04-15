@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:03:19 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/10 16:05:12 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/10 18:16:41 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ t_cmd	*expanding(t_env *env, t_cmd *cmd)
 		if (p.s)
 			split_var(&p, &res, env);
 		if (p.tmp->type == EXIT_ST)
-			ft_lstadd_back_cmd(&res, lst_new_cmd(ft_itoa(exit_status), p.tmp->type, p.tmp->quote));
+			ft_lstadd_back_cmd(&res, lst_new_cmd(ft_itoa(g_exit_status), p.tmp->type, p.tmp->quote));
 		else 
 			ft_lstadd_back_cmd(&res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
 		p.tmp = p.tmp->next;

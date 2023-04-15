@@ -30,6 +30,8 @@ void	env_cmd(t_list	*list, t_env **env)
 {
 	t_env	*t;
 
+	if (!*env)
+		return ;
 	*env = sort_ex(*env);
 	t = *env;
 	while (t)
