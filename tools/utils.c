@@ -332,8 +332,6 @@ void	export_parser(t_list **list)
 	t_list *tmp;
 	t_var p;
 
-	if (!(*list)->cmd)
-		return ;
 	tmp = *list;
 	p.j = 0;
 	p.l = 0;

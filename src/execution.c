@@ -197,11 +197,13 @@ int	exec_childs(t_var *var, t_env **env, char **e)
 				exit(errno);
 		if (srch_cmd(var->lst) && var->len_ > 1)
 		{
-			ft_command(var->lst, srch_cmd(var->lst), env);
+			if (var->lst->cmd)
+				ft_command(var->lst, srch_cmd(var->lst), env);
 			exit(errno);
 		}
 		else
-			exec_cmd(var, e);
+			if (var->lst->cmd)
+				exec_cmd(var, e);
 	}
 	else if (var->len_ > 1)
 	{
