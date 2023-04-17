@@ -232,7 +232,10 @@ void	execution(t_list *list, t_env **env, char **e)
 		p.str = ft_split(" ", ' ');
 	p.lst = list;
 	if (srch_cmd(p.lst) && p.len_ == 1)
-		ft_command(p.lst, srch_cmd(p.lst), env);
+	{
+		if (p.lst->cmd)
+			ft_command(p.lst, srch_cmd(p.lst), env);
+	}
 	else
 	{
 		while (p.lst)

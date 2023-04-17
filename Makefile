@@ -48,15 +48,15 @@ OBGJ= $(SRCS:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS = -g
-R_L = "-L/Users/nouahidi/.brew/opt/readline/lib"
-R_I = "-I/Users/nouahidi/.brew/opt/readline/include"
+R_L = "-L/Users/uruma/.brew/opt/readline/lib"
+R_I = "-I/Users/uruma/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline
 FRM = rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBGJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(OBGJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBGJ) -o $(NAME) $(LDFLAGS)
 
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS)  -c $< $(R_I) -o $@
