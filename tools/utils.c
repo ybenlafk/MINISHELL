@@ -338,10 +338,13 @@ void	export_parser(t_list **list)
 	while (tmp)
 	{
 		p.i = 1;
-		if (!ft_strcmp(tmp->cmd, "export"))
-			i_valid_arg(tmp, &p);
-		if (!is_empty(tmp) && p.l)
-			tmp->cmd = NULL;
+		if (tmp->cmd)
+		{
+			if (!ft_strcmp(tmp->cmd, "export"))
+				i_valid_arg(tmp, &p);
+			if (!is_empty(tmp) && p.l)
+				tmp->cmd = NULL;
+		}
 		tmp = tmp->next;
 	}
 }
@@ -350,24 +353,23 @@ void	env_parser(t_list **list)
 {
 	t_list	*tmp;
 
-	if (!(*list)->cmd)
-		return ;
 	tmp = *list;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->cmd, "env"))
+		if (tmp->cmd)
 		{
-			if (tmp->args[1])
+			if (!ft_strcmp(tmp->cmd, "env"))
 			{
-				printf("Minishell: env has no options.\n");
-				free(tmp->cmd);
-				tmp->cmd = NULL;
-				free_all(tmp->args);
-				break ;
+				if (tmp->args[1])
+				{
+					printf("Minishell: env has no options.\n");
+					free(tmp->cmd);
+					tmp->cmd = NULL;
+					free_all(tmp->args);
+					break ;
+				}
 			}
 		}
 		tmp = tmp->next;
 	}
 }
-
-

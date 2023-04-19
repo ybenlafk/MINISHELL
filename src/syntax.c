@@ -28,6 +28,25 @@ int redire_checker(t_cmd **cmd, int type)
     return (0);
 }
 
+int is_doubl_pipe(t_cmd *cmd)
+{
+    t_cmd *tmp;
+
+    tmp = cmd;
+    while (tmp)
+    {
+        if (tmp->type == PIPE)
+        {
+            if (tmp->next->type == PIPE)
+                return (1);
+            else if (tmp->next->type == SPACE && tmp->next->next->type == PIPE)
+                return (1);
+        }
+        tmp = tmp->next;
+    }
+    return (0);
+}
+
 int pipe_checker(t_cmd *cmd)
 {
     t_var p;
@@ -45,6 +64,8 @@ int pipe_checker(t_cmd *cmd)
     while (p.tmp->next->next)
         p.tmp = p.tmp->next;
     if (p.tmp->next->type == PIPE || (p.tmp->next->type == SPACE && p.tmp->type == PIPE))
+        return (1);
+    if (is_doubl_pipe(cmd))
         return (1);
     return (0);
 }

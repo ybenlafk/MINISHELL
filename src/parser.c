@@ -55,7 +55,7 @@ int parser(t_cmd *cmd, t_list *list)
     while (cmd)
     {
         p.str = join_args(&cmd);
-        if (!p.str || !p.str[0])
+        if (!p.str)
             return (1);
         list->cmd = ft_strdup(p.str[0]);
         list->args = p.str;
