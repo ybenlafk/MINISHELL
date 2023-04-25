@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/21 16:38:32 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/25 14:29:00 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,28 @@ void	rslt_excve(int i, t_var *var)
 	}
 }
 
+char	*get_path(char *str)
+{
+	int		i;
+	int		j;
+	char	*st;
+
+	i = ft_strlen(str);
+	i--;
+	while (i >= 0)
+	{
+		if (str[i] == '/')
+			break ;
+		i--;
+	}
+	st = malloc(i);
+	j = -1;
+	while (++j <= i)
+		st[j] = str[j];
+	st[j] = '\0';
+	return (st);
+}
+
 void	exec_cmd(t_var *var, char **e)
 {
 	t_var	p;
@@ -49,7 +71,8 @@ void	exec_cmd(t_var *var, char **e)
 	st = valid_path(var->str, var->lst->cmd);
 	if (ft_strchr(var->lst->cmd, '/') || !st)
 	{
-		if (st)
+		st = get_path(var->lst->cmd);
+		if (!access(st, X_OK) && st)
 			i++;
 		if (chech_directory(var->lst->cmd) == 1)
 		{
