@@ -11,8 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-// ft_putstr_fd("declare -x ", lst->out);
-// ft_putstr_fd("\n", lst->out);
+
 void	print_ex(t_env	*env, t_list *lst)
 {
 	t_env	*t;
@@ -29,20 +28,6 @@ void	print_ex(t_env	*env, t_list *lst)
 		ft_putstr_fd("\n", lst->out);
 		t = t->next;
 	}
-}
-
-int	check_rot(t_env *env, char *str)
-{
-	t_env	*t;
-
-	t = env;
-	while (t)
-	{
-		if (ft_strcmp(t->e, str) == 0)
-			return (0);
-		t = t->next;
-	}
-	return (1);
 }
 
 int	check_plus(char *str)
@@ -85,6 +70,16 @@ int	ft_strlen(char *str)
 	if (!str)
 		return (0);
 	while (str[i])
+		i++;
+	return (i);
+}
+
+int	ft_strlen_var(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '=' && str[i] != '+')
 		i++;
 	return (i);
 }

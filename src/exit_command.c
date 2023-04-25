@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:39:09 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/01 16:01:05 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/23 22:29:35 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_isnum(char	*str)
 	tab = ft_split(str, ' ');
 	if (!tab[0])
 		return (0);
+	if ((tab[0][0] == '-' || tab[0][0] == '+'))
+		i++;
 	while (tab[0][i])
 	{
 		if (!(tab[0][i] >= '0' && tab[0][i] <= '9'))
@@ -39,30 +41,37 @@ int	ft_isnum(char	*str)
 	return (0);
 }
 
+void	norm_exit_cmd(t_list *lst, char *str)
+{
+	long long	nb;
+
+	if (!ft_isnum(str))
+		print_cmnt(str);
+	nb = ft_atoi(str);
+	if (nb <= LONG_MIN && nb >= LONG_MAX)
+		print_cmnt(str);
+	else
+	{
+		if (!lst->args[2])
+		{
+			ft_putstr_fd("exit\n", lst->out);
+			exit(nb % 256);
+		}
+		else
+			ft_putstr_fd("Minishell>$ exit: too many arguments\n", lst->out);
+	}
+}
+
 void	exit_cmd(t_list *lst)
 {
 	int			i;
-	long long	nb;
 
 	i = 0;
 	if (lst->args[1])
-	{
-		if (!ft_isnum(lst->args[1]))
-			print_cmnt(lst->args[1]);
-		nb = ft_atoi(lst->args[1]);
-		if (nb <= LONG_MIN && nb >= LONG_MAX)
-			print_cmnt(lst->args[1]);
-		else
-		{
-			if (!lst->args[2])
-			{
-				printf ("exit\n");
-				exit(0);
-			}
-			else
-				printf ("Minishell>$ exit: too many arguments\n");
-		}
-	}
+		norm_exit_cmd(lst, lst->args[1]);
 	else
+	{
+		ft_putstr_fd("exit\n", lst->out);
 		exit(0);
+	}
 }

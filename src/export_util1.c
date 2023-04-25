@@ -1,24 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd_command.c                                      :+:      :+:    :+:   */
+/*   export_util1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/26 14:31:38 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/20 02:40:37 by nouahidi         ###   ########.fr       */
+/*   Created: 2023/04/18 00:41:14 by nouahidi          #+#    #+#             */
+/*   Updated: 2023/04/18 00:43:23 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*pwd_cmd(void)
+t_env	*ft_lstnew(char *str)
 {
-	char	*buffer;
+	t_env	*t;
 
-	buffer = malloc(1024);
-	if (getcwd(buffer, 1024) != NULL)
-		return (buffer);
-	else
+	t = malloc(sizeof(t_env));
+	if (!t)
 		return (NULL);
+	t->e = ft_strdup(str);
+	t->next = NULL;
+	return (t);
+}
+
+void	ft_lstadd_back(t_env **lst, t_env *new)
+{
+	t_env	*t;
+
+	if (!new || !lst)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	t = *lst;
+	while (t->next != NULL)
+		t = t->next;
+	t->next = new;
 }

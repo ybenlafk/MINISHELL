@@ -6,7 +6,7 @@
 #    By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 09:22:41 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/04/10 17:43:31 by nouahidi         ###   ########.fr        #
+#    Updated: 2023/04/20 01:56:25 by nouahidi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,21 +42,28 @@ SRCS= tools/utils.c\
 	src/export_util.c\
 	src/export_util2.c\
 	src/export_util3.c\
+	src/export_util1.c\
+	src/cd_command_util.c\
+	src/cd_command_util1.c\
+	src/cd_command_util2.c\
+	src/execution_util.c\
+	src/execution_util1.c\
+	src/lst_funs_util.c\
 	redirections/all_util.c \
 
 OBGJ= $(SRCS:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS = -g
-R_L = "-L/Users/uruma/.brew/opt/readline/lib"
-R_I = "-I/Users/uruma/.brew/opt/readline/include"
+R_L = "-L/Users/nouahidi/.brew/opt/readline/lib"
+R_I = "-I/Users/nouahidi/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline
 FRM = rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBGJ)
-	$(CC) $(CFLAGS) $(OBGJ) -o $(NAME) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBGJ) -o $(NAME)
 
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS)  -c $< $(R_I) -o $@

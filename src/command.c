@@ -6,44 +6,53 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/10 15:04:07 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/20 01:19:14 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char* env_pwd(t_env **env)
+char	*env_pwd(t_env **env)
 {
 	t_env	*t;
 
 	t = *env;
 	while (t)
 	{
-		if (!ft_strncmp("PWD", t->e, 3))
-			return (t->e + 4);
+		if (!ft_strncmp("PWD=", t->e, 4))
+			return (t->e);
 		t = t->next;
 	}
-	return (NULL);
+	t = *env;
+	while (t)
+	{
+		if (!ft_strncmp("OLDPWD=", t->e, 7))
+			return (t->e);
+		t = t->next;
+	}
+	if (get_home(env))
+		return (get_home(env));
+	return ("HOME not set");
 }
 
-void    ft_command(t_list *list, int ind, t_env	**env)
+void	ft_command(t_list *list, int ind, t_env	**env)
 {
 	if (ind == 1)
-	    cd_cmd(list, env);
-	if (ind == 2) 
-	    export_cmd(env, list);
+		cd_cmd(list, env);
+	if (ind == 2)
+		export_cmd(env, list);
 	if (ind == 3)
 	{
 		if (!pwd_cmd())
-			ft_putstr_fd(env_pwd(env), list->out);
+			ft_putstr_fd(env_pwd(env) + del_head(env_pwd(env)), list->out);
 		ft_putstr_fd(pwd_cmd(), list->out);
 		ft_putstr_fd("\n", list->out);
 	}
-	if (ind == 4) 
+	if (ind == 4)
 		echo_cmd(list);
 	if (ind == 5)
 		unset_cmd(list, env);
-	if (ind == 6) 
+	if (ind == 6)
 		env_cmd(list, env);
 	if (ind == 7)
 		exit_cmd(list);

@@ -68,11 +68,14 @@ void	norm_add(char *se, char *str, t_env	**env)
 		st = ft_strjoin(se, "=");
 		st = ft_strjoin(st, str + (i + 1));
 		ft_lstadd_back(env, ft_lstnew(st));
+		free(st);
 		*env = ft_lstdelone(env, se);
 	}
 	else
 	{
-		ft_lstadd_back(env, ft_lstnew(ft_strjoin(se, str + (i + 1))));
+		st = ft_strjoin(se, str + (i + 1));
+		ft_lstadd_back(env, ft_lstnew(st));
+		free(st);
 		*env = ft_lstdelone(env, se);
 	}
 }

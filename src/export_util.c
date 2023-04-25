@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:25:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/10 15:02:48 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/18 00:43:18 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,6 @@ int	ft_lstsize_en(t_env *lst)
 		i++;
 	}
 	return (i);
-}
-
-t_env	*ft_lstnew(char *str)
-{
-	t_env	*t;
-
-	t = malloc(sizeof(t_env));
-	if (!t)
-		return (NULL);
-	t->e = str;
-	t->next = NULL;
-	return (t);
-}
-
-void	ft_lstadd_back(t_env **lst, t_env *new)
-{
-	t_env	*t;
-
-	if (!new || !lst)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	t = *lst;
-	while (t->next != NULL)
-		t = t->next;
-	t->next = new;
 }
 
 int	ind_str(t_env **lst, char *str)
@@ -96,6 +67,18 @@ t_env	*ft_lstdelone(t_env **lst, char	*str)
 	return (t);
 }
 
+void	norm_print(int i, char *str, t_list	*lst)
+{
+	char	quotes;
+
+	quotes = '"';
+	ft_putstr_fd(char_to_str(quotes), lst->out);
+	i++;
+	while (str[i])
+		ft_putstr_fd(char_to_str(str[i++]), lst->out);
+	ft_putstr_fd(char_to_str(quotes), lst->out);
+}
+
 void	ft_print(char *str, t_list *lst)
 {
 	int		i;
@@ -115,11 +98,8 @@ void	ft_print(char *str, t_list *lst)
 			}
 			if (str[i + 1])
 			{
-				ft_putstr_fd(char_to_str(quotes), lst->out);
+				norm_print(i, str, lst);
 				i++;
-				while (str[i])
-					ft_putstr_fd(char_to_str(str[i++]), lst->out);
-				ft_putstr_fd(char_to_str(quotes), lst->out);
 				break ;
 			}
 		}

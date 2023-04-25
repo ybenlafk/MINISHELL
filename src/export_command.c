@@ -12,16 +12,6 @@
 
 #include "../includes/minishell.h"
 
-int	ft_strlen_var(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != '=' && str[i] != '+')
-		i++;
-	return (i);
-}
-
 int	check_var(char *str, t_env **env)
 {
 	t_env	*t;
@@ -34,7 +24,7 @@ int	check_var(char *str, t_env **env)
 	{
 		if (ft_strlen_var(str) == ft_strlen_var(t->e))
 		{
-			if (ft_strncmp(str, t->e, ft_strlen_var(str)) == 0)
+			if (!ft_strncmp(str, t->e, ft_strlen_var(str)))
 				return (i);
 		}
 		t = t->next;
@@ -99,6 +89,7 @@ void	add_exp(t_list	*lst, t_env	**env)
 		{
 			str = del_plus(lst->args[i]);
 			ft_lstadd_back(env, ft_lstnew(str));
+			free(str);
 			i++;
 		}
 	}
@@ -109,7 +100,7 @@ void	export_cmd(t_env **env, t_list *lst)
 	t_env	*new;
 
 	if (!*env)
-		return;
+		return ;
 	if (lst->args[1])
 		add_exp(lst, env);
 	else

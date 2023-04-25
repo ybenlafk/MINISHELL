@@ -136,26 +136,29 @@ static void	scapes(char *str, int *i)
 		(*i)++;
 }
 
-int	ft_atoi(const char *str)
+long long	ft_atoi(const char *st)
 {
-	size_t	res;
-	int		i;
-	int		sign;
+	int			i;
+	long long	r;
+	long long	nb;
 
-	sign = 1;
+	r = 1;
+	nb = 0;
 	i = 0;
-	res = 0;
-	scapes((char *)str, &i);
-	if (str[i] == '+')
+	while ((st[i] >= 9 && st[i] <= 13) || st[i] == ' ')
 		i++;
-	else if (str[i] == '-')
+	if (st[i] == '+' || st[i] == '-')
 	{
-		sign *= -1;
+		if (st[i] == '-')
+			r = -1;
+	i++;
+	}
+	while (st[i] >= '0' && st[i] <= '9')
+	{
+		nb = (nb * 10) + (st[i] - '0');
 		i++;
 	}
-	while (str[i] <= '9' && str[i] >= '0')
-		res = res * 10 + str[i++] - '0';
-	return (res * sign);
+	return (nb * r);
 }
 
 

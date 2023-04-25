@@ -1,26 +1,15 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/09 00:21:25 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/10 18:12:33 by nouahidi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/errno.h>
 # include <unistd.h>
+# include <sys/stat.h>
 
 extern int	g_exit_status;
 
@@ -143,7 +132,7 @@ char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 char				*generate_name(void);
 int					count_fds(t_cmd *cmd, int type, int stat);
-int					ft_atoi(const char *str);
+long long			ft_atoi(const char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_lstsize(t_cmd *lst);
 int					len(char *str);
@@ -189,5 +178,31 @@ t_cmd				*del_redires(t_cmd *cmd);
 t_cmd				*all(t_cmd *cmd, t_list **list);
 void				del_util(t_var *p);
 int					drop(t_var *p);
+char				*get_home(t_env **env);
+char				*env_pwd(t_env **env);
+int					del_head(char *str);
+int					del_head(char *str);
+char				*get_pwd(t_env **env);
+int					new_path(char	*str);
+char				*del_dr(char *str);
+char				*get_home(t_env **env);
+char				*new_dr(char *s1, char *s2);
+char				*change_dr(char	*str);
+void				new_pwd(char *str, t_env **env);
+char				*new_pwd_norm(t_env **env, char	*str);
+int					check_pwd(t_env **env, char *str);
+char				*del_slash(char *str);
+void				old_pwd(char *str, t_env **env);
+int					lst_size_list(t_list *list);
+void				pipe_cases(t_var *var, t_var *p);
+char				*ft_strchr(const char *str, int s);
+int					ft_envcmp(char	*str);
+char				*valid_path(char	**tab, char *str);
+char				**path_research(t_env	**env);
+int					srch_cmd(t_list *list);
+t_env				*ft_lstlast_env(t_env *lst);
+t_list				*ft_lstlast_list(t_list *lst);
+int					chech_directory(char *path);
+void				change_path(t_env **env);
 
 #endif

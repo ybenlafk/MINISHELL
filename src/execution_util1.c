@@ -1,46 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_command.c                                      :+:      :+:    :+:   */
+/*   execution_util1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/26 14:47:55 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/09 21:46:42 by ybenlafk         ###   ########.fr       */
+/*   Created: 2023/04/20 01:47:41 by nouahidi          #+#    #+#             */
+/*   Updated: 2023/04/20 01:48:41 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_v(char *str)
+int	ft_envcmp(char	*str)
 {
-	int	i;
+	char	*st;
+	int		i;
 
 	i = 0;
-	while (str[i])
+	st = malloc(5);
+	st = "PATH";
+	while (i < 4)
 	{
-		if (str[i] == '=')
-			return (1);
+		if (st[i] != str[i])
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
-void	env_cmd(t_list	*list, t_env **env)
+char	**path_research(t_env	**env)
 {
 	t_env	*t;
+	int		i;
 
-	if (!*env)
-		return ;
-	*env = sort_ex(*env);
+	i = 0;
 	t = *env;
 	while (t)
 	{
-		if (check_v(t->e))
-		{
-			ft_putstr_fd (t->e, list->out);
-			ft_putstr_fd ("\n", list->out);
-		}
+		if (ft_envcmp(t->e))
+			return (ft_split(t->e + 5, ':'));
 		t = t->next;
 	}
+	return (NULL);
 }
