@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/21 16:38:32 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/25 12:34:14 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,16 @@ void	execution(t_list *list, t_env **env, char **e)
 		p.str = ft_split(" ", ' ');
 	p.lst = list;
 	if (srch_cmd(p.lst) && p.len_ == 1)
-		ft_command(p.lst, srch_cmd(p.lst), env);
+	{
+		if (p.lst->cmd)
+			ft_command(p.lst, srch_cmd(p.lst), env);
+	}
 	else
 	{
 		while (p.lst)
 		{
-			pid = exec_childs(&p, env, e);
+			if (p.lst->cmd)
+				pid = exec_childs(&p, env, e);
 			p.lst = p.lst->next;
 		}
 		p.ext_st = waitpid(pid, &status, 0);

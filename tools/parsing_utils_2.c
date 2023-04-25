@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parsing_utils_2.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2023/03/10 17:43:50 by ybenlafk          #+#    #+#             */
 /*   Updated: 2023/04/10 15:56:54 by nouahidi         ###   ########.fr       */
 /*                                                                            */
@@ -12,9 +15,10 @@
 
 #include "../includes/minishell.h"
 
+
 void	qutes_skiper(char *s, int *i, int type)
 {
-	int	is;
+	int is;
 
 	is = 0;
 	while (s[*i])
@@ -41,7 +45,7 @@ int	is_white_sp(char c)
 
 int	check_or(char *s, char c)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (s[i])
@@ -57,8 +61,8 @@ int	check_or(char *s, char c)
 
 char	*is_quotes(char *s, int *i, int stat)
 {
-	t_var	p;
-	char	*str;
+	t_var p;
+	char *str;
 
 	p.j = 0;
 	if (!stat)
@@ -184,8 +188,8 @@ void	words_checker(t_var *p, t_cmd **list_cmd, char *s)
 
 char	*jwan(char *s1, char *s2, char *s3)
 {
-	char	*s;
-	t_var	p;
+	char *s;
+	t_var p;
 
 	p.i = 0;
 	p.j = 0;
@@ -210,8 +214,9 @@ char	*jwan(char *s1, char *s2, char *s3)
 
 void	join_diff(t_var *p)
 {
-	while (p->tmp->next && (p->tmp->type == VAR || p->tmp->type == WORD || p->tmp->type == EXIT_ST)
-		&& (p->tmp->next->type == WORD || p->tmp->next->type == VAR))
+	while (p->tmp->next && (p->tmp->type == VAR || p->tmp->type == WORD
+			|| p->tmp->type == EXIT_ST) && (p->tmp->next->type == WORD
+			|| p->tmp->next->type == VAR || p->tmp->next->type == EXIT_ST))
 	{
 		p->s = jwan(p->s, p->tmp->str, p->tmp->next->str);
 		if (p->tmp->quote == 1 || p->tmp->next->quote == 1)
@@ -234,13 +239,13 @@ void	join_diff(t_var *p)
 void	lst_join_u(t_var *p)
 {
 	join_diff(p);
-	if (p->l == 1 && (p->tmp->type == VAR
-			|| p->tmp->type == WORD || p->tmp->type == EXIT_ST))
+	if (p->l == 1 && (p->tmp->type == VAR || p->tmp->type == WORD
+			|| p->tmp->type == EXIT_ST))
 		p->s = ft_strjoin(p->s, p->tmp->str);
 	ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->s, WORD, p->j));
 	if (p->tmp->type != VAR && p->tmp->type != WORD && p->tmp->type != EXIT_ST)
 		ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->tmp->str, p->tmp->type,
-				p->tmp->quote));
+					p->tmp->quote));
 	p->i = 1;
 }
 
@@ -248,14 +253,14 @@ void	lst_join_u1(t_var *p)
 {
 	if (!p->i)
 		ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->tmp->str, p->tmp->type,
-				p->tmp->quote));
+					p->tmp->quote));
 	p->i = 0;
 	p->tmp = p->tmp->next;
 }
 
 t_cmd	*lst_join(t_cmd *cmd)
 {
-	t_var	p;
+	t_var p;
 
 	p.res = NULL;
 	p.tmp = cmd;
@@ -265,16 +270,19 @@ t_cmd	*lst_join(t_cmd *cmd)
 	while (p.tmp->next)
 	{
 		p.s = ft_strdup("");
-		if ((p.tmp->type == VAR || p.tmp->type == WORD || p.tmp->type == EXIT_ST) 
-			&& (p.tmp->next->type == WORD || p.tmp->next->type == VAR || p.tmp->next->type == EXIT_ST))
+		if ((p.tmp->type == VAR || p.tmp->type == WORD
+				|| p.tmp->type == EXIT_ST) && (p.tmp->next->type == WORD
+				|| p.tmp->next->type == VAR || p.tmp->next->type == EXIT_ST))
 			lst_join_u(&p);
 		else
 			lst_join_u1(&p);
 		free(p.s);
 	}
 	if (!p.i)
-		ft_lstadd_back_cmd(&p.res, lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
+		ft_lstadd_back_cmd(&p.res, lst_new_cmd(p.tmp->str, p.tmp->type,
+					p.tmp->quote));
 	list_free(&cmd, ft_lstsize(cmd));
 	return (p.res);
 }
+
 //ls<<c"   "<<d
