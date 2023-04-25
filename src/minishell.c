@@ -67,6 +67,27 @@ void	fenv(t_env **env)
 	}
 }
 
+void	flist(t_list **list)
+{
+	t_list	*p;
+
+	if (list)
+	{
+		while (*list)
+		{
+			p = *list;
+			*list = p->next;
+			if (p->cmd)
+			{
+				free(p->cmd);
+				free_all(p->args);
+			}
+			free(p);
+		}
+		p = NULL;
+	}
+}
+
 int	main(int ac, char **av, char **e)
 {
 	t_cmd	cmd;
@@ -87,7 +108,7 @@ int	main(int ac, char **av, char **e)
 		p.s = NULL;
 		p.s = 	readline("\e[1;32mMinishell>$ \e[0m");
 		if (!p.s)
-			return (fenv(&env), printf("\e[1;32mexit\e[0m\n"), 1);
+			return (fenv(&env), flist(&list), printf("\e[1;32mexit\e[0m\n"), 1);
 		add_history(p.s);
 		list = parsing(&cmd, p, env);
 		// while (env)
@@ -111,7 +132,9 @@ int	main(int ac, char **av, char **e)
 		// }
 		if (list)
 			execution(list, &env, e);
+		flist(&list);
 		free(p.s);
 	}
+	fenv(&env);
 	return (0);
 }

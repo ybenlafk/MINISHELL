@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:41:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/20 01:48:25 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/25 17:16:59 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*valid_path(char	**tab, char *str)
 		return (NULL);
 	while (tab[i])
 	{
-		st = char_join(tab[i], '/');
+		st = char_join(ft_strdup(tab[i]), '/');
 		if (access(ft_strjoin(st, str), X_OK) == 0)
 			return (tab[i]);
 		i++;

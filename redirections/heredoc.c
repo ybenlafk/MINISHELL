@@ -79,9 +79,9 @@ t_cmd	*redire_heredoc(t_cmd *cmd, t_env *env)
 	p.tmp = cmd;
 	while (p.tmp)
 	{
-		p.file = generate_name();
 		if (p.tmp->type == HEREDOC)
 		{
+			p.file = generate_name();
 			if (p.tmp->next->type == SPACE)
 			{
 				p.fd = take_in(&p, env, 0);
@@ -94,12 +94,12 @@ t_cmd	*redire_heredoc(t_cmd *cmd, t_env *env)
 				if (p.fd < 0)
 					return (NULL);
 			}
+			free(p.file);
 			close(p.fd);
 		}
 		ft_lstadd_back_cmd(&res,
 			lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
 		p.tmp = p.tmp->next;
-		free(p.file);
 	}
 	list_free(&cmd, ft_lstsize(cmd));
 	return (res);

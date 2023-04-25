@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2023/03/04 16:15:50 by ybenlafk          #+#    #+#             */
 /*   Updated: 2023/04/09 17:36:21 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
@@ -12,9 +15,10 @@
 
 #include "../includes/minishell.h"
 
+
 int	len(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!str)
@@ -26,8 +30,8 @@ int	len(char *str)
 
 char	*ft_strdup(char *s)
 {
-	char	*str;
-	int		i;
+	char *str;
+	int i;
 
 	i = 0;
 	if (!s)
@@ -46,8 +50,8 @@ char	*ft_strdup(char *s)
 
 int	ft_lstsize(t_cmd *lst)
 {
-	t_cmd	*tmp;
-	int		len;
+	t_cmd *tmp;
+	int len;
 
 	tmp = lst;
 	len = 0;
@@ -63,7 +67,7 @@ int	ft_lstsize(t_cmd *lst)
 
 void	list_free(t_cmd **cmd, int len)
 {
-	t_cmd	*tmp;
+	t_cmd *tmp;
 
 	while (len--)
 	{
@@ -83,7 +87,7 @@ int	ft_isalpha(int i)
 
 void	free_env(t_env **philos, int len)
 {
-	t_env	*tmp;
+	t_env *tmp;
 
 	while (len--)
 	{
@@ -95,8 +99,8 @@ void	free_env(t_env **philos, int len)
 
 int	env_size(t_env *lst)
 {
-	t_env	*tmp;
-	int		len;
+	t_env *tmp;
+	int len;
 
 	tmp = lst;
 	len = 0;
@@ -112,7 +116,7 @@ int	env_size(t_env *lst)
 // Duplicate linked list type of {t_cmd}
 t_cmd	*lst_dup(t_cmd *cmd)
 {
-	t_cmd	*res;
+	t_cmd *res;
 
 	res = NULL;
 	while (cmd)
@@ -125,10 +129,10 @@ t_cmd	*lst_dup(t_cmd *cmd)
 // Generate filename in /tmp dir for save the heredoc data on it.
 char	*generate_name(void)
 {
-	int		*nb;
-	char	*s;
-	char	*res;
-	int		fd;
+	int *nb;
+	char *s;
+	char *res;
+	int fd;
 
 	nb = malloc(4);
 	if (!nb)
@@ -145,8 +149,8 @@ char	*generate_name(void)
 // Clear any node thats have (null) in cmd and args : type {t_list}.
 t_list	*unused_clear(t_list *list)
 {
-	t_list	*res;
-	t_list	*tmp;
+	t_list *res;
+	t_list *tmp;
 
 	res = NULL;
 	tmp = list;
@@ -162,8 +166,8 @@ t_list	*unused_clear(t_list *list)
 // created a linked list where each node represente a command : type {t_list}
 t_list	*create_list(t_cmd *cmd)
 {
-	t_var	p;
-	t_list	*res;
+	t_var p;
+	t_list *res;
 
 	p.i = 0;
 	res = NULL;
@@ -205,8 +209,8 @@ void	add_new(t_var *p, t_cmd **res)
 
 t_cmd	*two_to_one(t_cmd *cmd)
 {
-	t_var	p;
-	t_cmd	*res;
+	t_var p;
+	t_cmd *res;
 
 	if (!cmd)
 		return (NULL);
@@ -219,7 +223,7 @@ t_cmd	*two_to_one(t_cmd *cmd)
 
 int	count_fds(t_cmd *cmd, int type, int stat)
 {
-	t_var	p;
+	t_var p;
 
 	p.i = 0;
 	p.tmp = cmd;
@@ -237,17 +241,18 @@ int	count_fds(t_cmd *cmd, int type, int stat)
 	return (p.i);
 }
 
-t_cmd	*del_cmd(t_cmd **lst, char	*str)
+t_cmd	*del_cmd(t_cmd **lst, char *str)
 {
-	t_cmd	*t;
-	t_cmd	*tmp;
+	t_cmd *t;
+	t_cmd *tmp;
 
 	tmp = *lst;
 	t = NULL;
-	while(tmp)
+	while (tmp)
 	{
 		if (ft_strcmp(str, tmp->str) != 0)
-			ft_lstadd_back_cmd(&t, lst_new_cmd(tmp->str, tmp->type, tmp->quote));
+			ft_lstadd_back_cmd(&t, lst_new_cmd(tmp->str, tmp->type,
+						tmp->quote));
 		tmp = tmp->next;
 	}
 	return (t);
@@ -255,7 +260,7 @@ t_cmd	*del_cmd(t_cmd **lst, char	*str)
 
 int	i_var(char *s)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (s[i] != '_' && !ft_isalpha(s[i]))
@@ -276,7 +281,7 @@ int	i_var(char *s)
 char	**del_null(char **str)
 {
 	t_var p;
-	
+
 	p.i = 0;
 	p.len = 0;
 	while (str[p.i])
@@ -299,7 +304,7 @@ char	**del_null(char **str)
 
 int	is_empty(t_list *tmp)
 {
-	t_var	p;
+	t_var p;
 
 	p.i = 1;
 	p.len = 0;
@@ -351,7 +356,7 @@ void	export_parser(t_list **list)
 
 void	env_parser(t_list **list)
 {
-	t_list	*tmp;
+	t_list *tmp;
 
 	tmp = *list;
 	while (tmp)
@@ -372,4 +377,29 @@ void	env_parser(t_list **list)
 		}
 		tmp = tmp->next;
 	}
+}
+
+t_cmd	*out_pipe(t_cmd *cmd)
+{
+	t_cmd *tmp;
+	t_cmd *res;
+
+	tmp = cmd;
+	res = NULL;
+	while (tmp)
+	{
+		if (tmp->type == OUT)
+		{
+			ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type,
+						tmp->quote));
+			if (tmp->next)
+				if (tmp->next->type == PIPE)
+					tmp = tmp->next;
+		}
+		else
+			ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type,
+						tmp->quote));
+		tmp = tmp->next;
+	}
+	return (list_free(&cmd, ft_lstsize(cmd)), res);
 }

@@ -204,5 +204,6 @@ t_env				*ft_lstlast_env(t_env *lst);
 t_list				*ft_lstlast_list(t_list *lst);
 int					chech_directory(char *path);
 void				change_path(t_env **env);
+t_cmd				*out_pipe(t_cmd *cmd);
 
 #endif

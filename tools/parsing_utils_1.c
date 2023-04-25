@@ -48,8 +48,7 @@ char	*char_join(char *str, char c)
 		p.s[p.j++] = str[p.i++];
 	p.s[p.j++] = c;
 	p.s[p.j] = '\0';
-	// return (free(str), p.s);
-	return (p.s);
+	return (free(str), p.s);
 }
 
 void	get_dilemiter(t_cmd **list_cmd, char *s, int *i)
