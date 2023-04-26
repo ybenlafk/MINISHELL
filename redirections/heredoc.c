@@ -12,6 +12,17 @@
 
 #include "../includes/minishell.h"
 
+// void	ctl_c()
+// {
+// 	int in;
+
+// 	in = dup(0);
+// 	close(0);
+
+// 	dup2(in, 0);
+// 	close (in);
+// }
+
 int	take_in(t_var *p, t_env *env, int stat)
 {
 	t_exp	*exp;
@@ -28,6 +39,7 @@ int	take_in(t_var *p, t_env *env, int stat)
 	while (1)
 	{
 		exp = NULL;
+		// signal(SIGINT, ctl_c);
 		p->s = readline("heredoc> ");
 		if (!p->s)
 			break ;

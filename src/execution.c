@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/25 14:29:00 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:15:08 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	rslt_excve(int i, t_var *var)
 	}
 	else
 	{
-		write (1, "Minishell>$ command not found: ", 32);
+		ft_putstr_fd("Minishell>$ command not found: ", var->lst->out);
 		ft_putstr_fd(var->lst->cmd, var->lst->out);
 		write (1, "\n", 1);
 		g_exit_status = 127;
@@ -53,12 +53,24 @@ char	*get_path(char *str)
 			break ;
 		i--;
 	}
+	if (str[i] != '/')
+		return (NULL);
 	st = malloc(i);
 	j = -1;
 	while (++j <= i)
 		st[j] = str[j];
 	st[j] = '\0';
 	return (st);
+}
+
+void	ft_free(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	tab = NULL;
 }
 
 void	exec_cmd(t_var *var, char **e)
@@ -72,8 +84,9 @@ void	exec_cmd(t_var *var, char **e)
 	if (ft_strchr(var->lst->cmd, '/') || !st)
 	{
 		st = get_path(var->lst->cmd);
-		if (!access(st, X_OK) && st)
+		if (!access(st, X_OK) || st)
 			i++;
+		free(st);
 		if (chech_directory(var->lst->cmd) == 1)
 		{
 			ft_putstr_fd("Minishell>$ ", var->lst->out);
@@ -154,12 +167,16 @@ void	execution(t_list *list, t_env **env, char **e)
 		p.str = ft_split(" ", ' ');
 	p.lst = list;
 	if (srch_cmd(p.lst) && p.len_ == 1)
-		ft_command(p.lst, srch_cmd(p.lst), env);
+	{
+		if (p.lst->cmd)
+			ft_command(p.lst, srch_cmd(p.lst), env);
+	}
 	else
 	{
 		while (p.lst)
 		{
-			pid = exec_childs(&p, env, e);
+			if (p.lst->cmd)
+				pid = exec_childs(&p, env, e);
 			p.lst = p.lst->next;
 		}
 		p.ext_st = waitpid(pid, &status, 0);

@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:41:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/20 01:48:25 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:11:44 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ char	*valid_path(char	**tab, char *str)
 	{
 		st = char_join(tab[i], '/');
 		if (access(ft_strjoin(st, str), X_OK) == 0)
-			return (tab[i]);
+			return (ft_free(tab), tab[i]);
 		i++;
 	}
-	return (NULL);
+	return (ft_free(tab), NULL);
 }
 
 char	*ft_strchr(const char *str, int s)
