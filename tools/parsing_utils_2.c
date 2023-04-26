@@ -130,7 +130,7 @@ void	add_back(t_var *p, t_cmd **list_cmd)
 int	vars_checker_util(char *s, t_var *p)
 {
 	if (s[p->i] == '$' && s[p->i + 1] == '?')
-		return (p->s = ft_strdup("$?"), p->i += 2, 1);
+		return (free(p->s), p->s = ft_strdup("$?"), p->i += 2, 1);
 	if (s[p->i] == '$' && (!s[p->i + 1] || is_white_sp(s[p->i + 1])))
 	{
 		p->s = ft_strdup("$");

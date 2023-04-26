@@ -54,6 +54,9 @@ int pipe_checker(t_cmd *cmd)
     p.tmp = cmd;
     if (!cmd)
         return (0);
+    if (p.tmp->type == PIPE)
+        if (!p.tmp->next)
+            return (1);
     if (p.tmp->next)
     {
         if (p.tmp->type == PIPE || (p.tmp->type == SPACE && p.tmp->next->type == PIPE))

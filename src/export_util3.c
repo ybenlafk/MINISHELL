@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_util3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/11 01:46:04 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:09:17 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	norm_add(char *se, char *str, t_env	**env)
 		i++;
 	if (!check_egl(se))
 	{
-		st = ft_strjoin(se, "=");
+		st = ft_strjoin(ft_strdup(se), "=");
 		st = ft_strjoin(st, str + (i + 1));
 		ft_lstadd_back(env, ft_lstnew(st));
 		free(st);
@@ -73,7 +73,7 @@ void	norm_add(char *se, char *str, t_env	**env)
 	}
 	else
 	{
-		st = ft_strjoin(se, str + (i + 1));
+		st = ft_strjoin(ft_strdup(se), str + (i + 1));
 		ft_lstadd_back(env, ft_lstnew(st));
 		free(st);
 		*env = ft_lstdelone(env, se);
