@@ -88,7 +88,7 @@ int	get_dilemiter(t_cmd **list_cmd, char *s, int *i)
 int	redires_checker(t_cmd **list_cmd, char *s, int *i)
 {
 	if (!s[*i] || !s[*i + 1])
-		return (1);
+		return (0);
 	if (s[*i] == '<' && s[*i + 1] == '<')
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<<", HEREDOC, 0));
