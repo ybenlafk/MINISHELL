@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/20 01:19:14 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:03:57 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,20 @@ char	*env_pwd(t_env **env)
 
 void	ft_command(t_list *list, int ind, t_env	**env)
 {
+	char *s;
+
 	if (ind == 1)
 		cd_cmd(list, env);
 	if (ind == 2)
 		export_cmd(env, list);
 	if (ind == 3)
 	{
-		if (!pwd_cmd())
+		s = pwd_cmd();
+		if (!s)
 			ft_putstr_fd(env_pwd(env) + del_head(env_pwd(env)), list->out);
-		ft_putstr_fd(pwd_cmd(), list->out);
+		ft_putstr_fd(s, list->out);
 		ft_putstr_fd("\n", list->out);
+		free(s);
 	}
 	if (ind == 4)
 		echo_cmd(list);

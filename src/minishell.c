@@ -102,6 +102,7 @@ int	main(int ac, char **av, char **e)
 
 	(void)ac;
 	(void)av;
+	// atexit(f);
 	// int fd = open("/dev/urandom", O_RDONLY);
 	// dup2(fd, 0);
 	env = NULL;
@@ -135,8 +136,8 @@ int	main(int ac, char **av, char **e)
 		// 	printf("<<<<<<----------------->>>>>>\n");
 		// 	list = list->next;
 		// }
-		// if (list)
-		// 	execution(list, &env, e);
+		if (list)
+			execution(list, &env, e);
 		flist(&list);
 		free(p.s);
 	}
