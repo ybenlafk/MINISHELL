@@ -31,7 +31,10 @@ int	in(t_cmd *cmd)
 		}
 	}
 	if (fd < 0)
+	{
+		g_exit_status = 1;
 		printf("%s : no such file or directory\n", cmd->str);
+	}
 	return (fd);
 }
 
@@ -54,7 +57,10 @@ int	out(t_cmd *cmd)
 		}
 	}
 	if (fd < 0)
+	{
+		g_exit_status = 1;
 		printf("%s : no such file or directory\n", cmd->str);
+	}
 	return (fd);
 }
 
@@ -77,7 +83,10 @@ int	append(t_cmd *cmd)
 		}
 	}
 	if (fd < 0)
+	{
+		g_exit_status = 1;
 		printf("%s : no such file or directory\n", cmd->str);
+	}
 	return (fd);
 }
 

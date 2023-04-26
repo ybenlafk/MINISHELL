@@ -15,6 +15,7 @@
 //print error.
 void	error(char *e)
 {
+	g_exit_status = 258;
 	printf("Minishell: syntax error near unexpected token `%s'\n", e);
 }
 // skip the spaces and return 1 if there is a spaces else return 0.

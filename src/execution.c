@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 11:35:14 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 12:41:21 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	exec_cmd(t_var *var, char **e)
 			ft_putstr_fd("Minishell>$ ", var->lst->out);
 			ft_putstr_fd(var->lst->cmd, var->lst->out);
 			ft_putstr_fd(": is a directory\n", var->lst->out);
-			return ;
+			exit(126);
 		}
 		else
 			execve(var->lst->cmd, var->lst->args, e);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/25 21:07:16 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:46:53 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,23 @@ void	cd_cmd(t_list *lst, t_env **env)
 		if (chdir(get_home(env)) == -1)
 			ft_putstr_fd("cd: HOME not set\n", lst->out);
 		g_exit_status = 0;
+		free(str);
 		return ;
 	}
 	if (!str && !ft_strcmp(".", lst->args[1]))
 	{
 		norm_cd1(env, lst);
+		free(str);
 		return ;
 	}
 	if (!norm_cd(lst, env, str))
+	{
+		free(str);
 		return ;
+	}
 	if (chdir(lst->args[1]) != 0)
 		check_file(lst);
 	else
 		change_path(env);
+	free(str);
 }

@@ -161,7 +161,6 @@ void				exit_cmd(t_list *lst);
 t_env				*sort_ex(t_env *env);
 int					ft_lstsize_en(t_env *lst);
 t_env				*ft_lstnew(char *str);
-t_env				*ft_lstdelone(t_env **lst, char *str);
 int					ft_strncmp(const char *str1, const char *str2, int n);
 int					ft_strlen(char *str);
 char				*del_plus(char *str);
@@ -208,4 +207,5 @@ void				ft_free(char **str);
 t_cmd				*out_pipe(t_cmd *cmd);
 int					drop_util(int *i, t_var *p, int(*redire)(t_cmd *), int stat);
 void				fenv(t_env **env);
+void				flist(t_list **list);
 #endif

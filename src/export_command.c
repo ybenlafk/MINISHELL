@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:51:37 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/11 01:46:34 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:18:37 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	norm_exp(t_env	**env, char *str, int i)
 				break ;
 			}
 			ft_lstadd_back(env, ft_lstnew(str));
-			*env = ft_lstdelone(env, t->e);
+			ft_lstdelone(env, t->e);
 			break ;
 		}
 		j++;

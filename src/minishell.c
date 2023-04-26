@@ -26,6 +26,7 @@ void	c_hanndler()
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	g_exit_status = 1;
 }
 
 void	fill_env(t_env **env, char **e)
@@ -36,7 +37,9 @@ void	fill_env(t_env **env, char **e)
 	p.i = 0;
 	if (!e[p.i])
 	{
-		ft_lstadd_back_env(env, lst_new_env(ft_strjoin(ft_strdup("PWD=") ,p.s)));
+		p.s1 = ft_strjoin(ft_strdup("PWD="), p.s);
+		ft_lstadd_back_env(env, lst_new_env("OLDPWD"));
+		ft_lstadd_back_env(env, lst_new_env(p.s1));
 		ft_lstadd_back_env(env, lst_new_env("SHLVL=1"));
 		ft_lstadd_back_env(env, lst_new_env("_=/usr/bin/env"));
 	}
@@ -48,6 +51,7 @@ void	fill_env(t_env **env, char **e)
 			p.i++;
 		}
 	}
+	free(p.s1);
 	free(p.s);
 }
 
@@ -61,7 +65,7 @@ void	fenv(t_env **env)
 		{
 			p = *env;
 			*env = p->next;
-			free(p->e);
+			free(p->e);	
 			free(p);
 		}
 		p = NULL;
@@ -115,7 +119,7 @@ int	main(int ac, char **av, char **e)
 		p.s = NULL;
 		p.s = 	readline("\e[1;32mMinishell>$ \e[0m");
 		if (!p.s)
-			return (fenv(&env), flist(&list), printf("\e[1;32mexit\e[0m\n"), 1);
+			return (fenv(&env), flist(&list), printf("\e[1;32mexit\e[0m\n"), g_exit_status);
 		add_history(p.s);
 		list = parsing(&cmd, p, env);
 		// while (env)
