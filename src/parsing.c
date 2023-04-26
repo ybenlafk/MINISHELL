@@ -53,6 +53,7 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 		return (NULL);
 	cmd = expanding(env, cmd);
 	quotes_expander(cmd, env);
+	cmd = out_pipe(cmd);
 	syn = syntax_checker(cmd, p.s);
 	if (syn)
 		return (list_free(&cmd, ft_lstsize(cmd)), error(syn), NULL);
@@ -64,7 +65,6 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	parser(cmd, list);
 	export_parser(&list);
 	env_parser(&list);
-	// list = unused_clear(list);
 	// printf("<-------------------tokens-list---------------------->\n");
 	// vars.tmp = cmd;
 	// while (vars.tmp)

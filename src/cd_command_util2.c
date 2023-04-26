@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command_util2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:22:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/21 16:35:24 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:06:39 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	change_path(t_env **env)
 {
 	char	*s1;
 
-	s1 = ft_strjoin("PWD=", pwd_cmd());
+	s1 = ft_strjoin(ft_strdup("PWD="), pwd_cmd());
 	new_pwd(s1, env);
 	g_exit_status = 0;
 	free(s1);
@@ -29,7 +29,7 @@ void	old_pwd(char *str, t_env **env)
 	char	*st;
 
 	t = *env;
-	st = ft_strjoin("OLDPWD=", str);
+	st = ft_strjoin(ft_strdup("OLDPWD="), str);
 	while (t)
 	{
 		if (ft_strncmp("OLDPWD", t->e, 6) == 0)

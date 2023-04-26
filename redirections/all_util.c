@@ -12,6 +12,17 @@
 
 #include "../includes/minishell.h"
 
+void	del_util(t_var *p)
+{
+	if (p->tmp && p->tmp->type != OUT && p->tmp->type != IN
+		&& p->tmp->type != APPEND)
+		ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->tmp->str, p->tmp->type,
+				p->tmp->quote));
+	if (p->tmp && p->tmp->type != OUT && p->tmp->type != IN
+		&& p->tmp->type != APPEND)
+		p->tmp = p->tmp->next;
+}
+
 t_cmd	*del_redires(t_cmd *cmd)
 {
 	t_var	p;
@@ -37,40 +48,25 @@ t_cmd	*del_redires(t_cmd *cmd)
 	return (list_free(&cmd, ft_lstsize(cmd)), p.res);
 }
 
-t_cmd	*all(t_cmd *cmd, t_list **list)
-{
-	t_var	p;
 
-	if (!cmd)
-		return (NULL);
-	p.j = 0;
-	p.res = NULL;
-	p.tmp = cmd;
-	p.lst = *list;
-	while (p.tmp)
+int	drop_util(int *i, t_var *p, int(*redire)(t_cmd *), int stat)
+{
+	(*i)--;
+	if (stat)
 	{
-		p.l = count_fds(p.tmp, IN, 0);
-		p.i = count_fds(p.tmp, OUT, 1);
-		p.fd_in = 0;
-		p.fd_out = 1;
-		while (p.tmp && p.tmp->type != PIPE)
-			if (drop(&p))
-				return (NULL);
-		p.lst = p.lst->next;
-		if (p.tmp)
-			p.tmp = p.tmp->next;
+		p->fd_in = redire(p->tmp);
+		if (p->fd_in < 0)
+			return (1);
+		if (*i)
+			close(p->fd_in);
 	}
-	return (del_redires(cmd));
+	else
+	{
+		p->fd_out = redire(p->tmp);
+		if (p->fd_out < 0)
+			return (1);
+		if (*i)
+			close(p->fd_out);
+	}
+	return (0);
 }
-
-void	del_util(t_var *p)
-{
-	if (p->tmp && p->tmp->type != OUT && p->tmp->type != IN
-		&& p->tmp->type != APPEND)
-		ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->tmp->str, p->tmp->type,
-				p->tmp->quote));
-	if (p->tmp && p->tmp->type != OUT && p->tmp->type != IN
-		&& p->tmp->type != APPEND)
-		p->tmp = p->tmp->next;
-}
-

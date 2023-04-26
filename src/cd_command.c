@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/21 16:35:13 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:07:16 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	norm_cd2(t_env **env, t_list *lst)
 	s1 = get_pwd(env);
 	if (s1)
 	{
-		s2 = ft_strjoin(s1, "/..");
+		s2 = ft_strjoin(ft_strdup(s1), "/..");
 		new_pwd(s2, env);
 	}
 	free(s2);
@@ -49,7 +49,7 @@ int	norm_cd(t_list	*lst, t_env	**env, char *str)
 			if (!new_path(pwd_path))
 				return (ft_putstr_fd("HOME not set\n", lst->out), 0);
 		}
-		s1 = ft_strjoin("PWD=", pwd_cmd());
+		s1 = ft_strjoin(ft_strdup("PWD="), pwd_cmd());
 		new_pwd(s1, env);
 		free(s1);
 		return (0);
@@ -68,7 +68,7 @@ void	norm_cd1(t_env **env, t_list *lst)
 	s1 = env_pwd(env);
 	if (s1)
 	{
-		s2 = ft_strjoin(s1, "/.");
+		s2 = ft_strjoin(ft_strdup(s1), "/.");
 		new_pwd(s2, env);
 		free(s2);
 	}

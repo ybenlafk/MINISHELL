@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:25:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/18 00:43:18 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:43:16 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_env	*ft_lstdelone(t_env **lst, char	*str)
 		tmp = tmp->next;
 		j++;
 	}
-	return (t);
+	return (fenv(lst), t);
 }
 
 void	norm_print(int i, char *str, t_list	*lst)

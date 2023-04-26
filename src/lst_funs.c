@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:20:13 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/20 01:54:46 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:41:04 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_env	*lst_new_env(char *e)
 	new = malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
-	new->e = e;
+	new->e = ft_strdup(e);
 	new->next = NULL;
 	return (new);
 }

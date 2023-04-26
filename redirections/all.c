@@ -81,28 +81,6 @@ int	append(t_cmd *cmd)
 	return (fd);
 }
 
-int	drop_util(int *i, t_var *p, int(*redire)(t_cmd *), int stat)
-{
-	(*i)--;
-	if (stat)
-	{
-		p->fd_in = redire(p->tmp);
-		if (p->fd_in < 0)
-			return (1);
-		if (*i)
-			close(p->fd_in);
-	}
-	else
-	{
-		p->fd_out = redire(p->tmp);
-		if (p->fd_out < 0)
-			return (1);
-		if (*i)
-			close(p->fd_out);
-	}
-	return (0);
-}
-
 int	drop(t_var *p)
 {
 	if (p->tmp->type == IN)
@@ -126,4 +104,30 @@ int	drop(t_var *p)
 		p->lst->out = p->fd_out;
 	p->tmp = p->tmp->next;
 	return (0);
+}
+
+t_cmd	*all(t_cmd *cmd, t_list **list)
+{
+	t_var	p;
+
+	if (!cmd)
+		return (NULL);
+	p.j = 0;
+	p.res = NULL;
+	p.tmp = cmd;
+	p.lst = *list;
+	while (p.tmp)
+	{
+		p.l = count_fds(p.tmp, IN, 0);
+		p.i = count_fds(p.tmp, OUT, 1);
+		p.fd_in = 0;
+		p.fd_out = 1;
+		while (p.tmp && p.tmp->type != PIPE)
+			if (drop(&p))
+				return (list_free(&cmd, ft_lstsize(cmd)), NULL);
+		p.lst = p.lst->next;
+		if (p.tmp)
+			p.tmp = p.tmp->next;
+	}
+	return (del_redires(cmd));
 }

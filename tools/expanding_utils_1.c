@@ -33,7 +33,7 @@ void	add_back_exp(t_var *p, t_exp **exp)
 int	utils_pro_max(char *s, t_var *p)
 {
 	if (s[p->i] == '$' && s[p->i + 1] == '?')
-		return (p->s = ft_strdup("$?"), p->i += 2, 1);
+		return (free(p->s), p->s = ft_strdup("$?"), p->i += 2, 1);
 	if (s[p->i] == '$' && (!s[p->i + 1] || is_white_sp(s[p->i + 1])))
 	{
 		p->s = ft_strdup("$");
@@ -108,7 +108,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[j])
 		p[i++] = s2[j++];
 	p[i] = '\0';
-	return (p);
+	return (free(s1), p);
 }
 
 void	lexer_pro_max(t_exp **exp, char *s, t_var *p)
