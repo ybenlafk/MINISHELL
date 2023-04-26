@@ -68,8 +68,6 @@ void	fenv(t_env **env)
 		free(p2);
 		free(p);
 	}
-	// free(*env);
-	
 }
 
 void	flist(t_list **list)

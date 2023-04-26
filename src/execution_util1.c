@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_util1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:47:41 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 11:26:55 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/20 01:48:41 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ int	ft_envcmp(char	*str)
 	int		i;
 
 	i = 0;
-	st = ft_strdup("PATH");
+	st = malloc(5);
+	st = "PATH";
 	while (i < 4)
 	{
 		if (st[i] != str[i])
-			return (free(st), 0);
+			return (0);
 		i++;
 	}
-	return (free(st), 1);
+	return (1);
 }
 
 char	**path_research(t_env	**env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/26 11:03:57 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/26 17:15:07 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_command(t_list *list, int ind, t_env	**env)
 		export_cmd(env, list);
 	if (ind == 3)
 	{
+
 		s = pwd_cmd();
 		if (!s)
 			ft_putstr_fd(env_pwd(env) + del_head(env_pwd(env)), list->out);

@@ -27,7 +27,8 @@ int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 			return (list_free(list_cmd, ft_lstsize(*list_cmd)), 1);
 		if (sps_skiper(s, &p->i))
 			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
-		redires_checker(list_cmd, s, &p->i);
+		if (redires_checker(list_cmd, s, &p->i))
+			return (list_free(list_cmd, ft_lstsize(*list_cmd)), 1);
 		if (sps_skiper(s, &p->i))
 			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
 		add_special_char(s, list_cmd, p);
