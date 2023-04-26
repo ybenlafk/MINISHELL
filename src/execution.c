@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 17:12:44 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:41:37 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	rslt_excve(int i, t_var *var)
 	}
 	else
 	{
-		write (1, "Minishell>$ command not found: ", 32);
+		write (1, "Minishell> command not found: ", 32);
 		ft_putstr_fd(var->lst->cmd, var->lst->out);
 		write (1, "\n", 1);
 		g_exit_status = 127;
@@ -78,7 +78,7 @@ void	exec_cmd(t_var *var, char **e)
 			ft_putstr_fd("Minishell>$ ", var->lst->out);
 			ft_putstr_fd(var->lst->cmd, var->lst->out);
 			ft_putstr_fd(": is a directory\n", var->lst->out);
-			return ;
+			exit(126);
 		}
 		else
 			execve(var->lst->cmd, var->lst->args, e);

@@ -121,12 +121,6 @@ int	main(int ac, char **av, char **e)
 			return (fenv(&env), flist(&list), printf("\e[1;32mexit\e[0m\n"), g_exit_status);
 		add_history(p.s);
 		list = parsing(&cmd, p, env);
-		// while (env)
-		// {
-		// 	printf("|%s|\n", env->e);
-		// 	env = env->next;
-		// }
-		// exit(0);
 		// printf("<-------------------cmds-list------------------------>\n");
 		// while (list)
 		// {

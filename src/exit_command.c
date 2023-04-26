@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:39:09 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/23 22:29:35 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:38:20 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	print_cmnt(char *str)
 {
-	printf ("Minishell>$ exit: %s: numeric argument required\n", str);
+	printf ("Minishell> exit: %s: numeric argument required\n", str);
 	exit(0);
 }
 

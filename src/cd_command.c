@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 17:21:38 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:38:07 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void	norm_cd1(t_env **env, t_list *lst)
 void	check_file(t_list *lst)
 {
 	if (chech_directory(lst->args[1]) == 2)
-		printf("Minishell>$ cd: %s: Not a directory\n", lst->args[1]);
+		printf("Minishell> cd: %s: Not a directory\n", lst->args[1]);
 	else
-		printf("Minishell>$ cd: %s: No such file or directory\n", lst->args[1]);
+		printf("Minishell> cd: %s: No such file or directory\n", lst->args[1]);
 	g_exit_status = 1;
 }
 
