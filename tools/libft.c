@@ -128,7 +128,7 @@ char	*ft_itoa(int n)
 	return (s);
 }
 
-static void	scapes(char *str, int *i)
+ void	scapes(char *str, int *i)
 {
 	while (str[*i] == '\t' || str[*i] == '\n'
 		|| str[*i] == '\v' || str[*i] == '\f'

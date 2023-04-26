@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 14:36:55 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:33:34 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ t_env	*sort_ex(t_env	*env)
 			t = t->next;
 		}
 		ft_lstadd_back(&new, ft_lstnew(tmp->e));
-		tp = ft_lstdelone(&tp, tmp->e);
+		puts("here");
+		// ft_lstdel(&tp, tmp->e);
+		tp = ft_lstdelone(&tp, ft_strdup(tmp->e));
 		if (ft_lstsize_en(new) == ft_lstsize_en(env))
 			break ;
 	}

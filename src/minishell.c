@@ -58,18 +58,18 @@ void	fill_env(t_env **env, char **e)
 void	fenv(t_env **env)
 {
 	t_env	*p;
+	char	*p2;
 
-	if (env)
+	while ((*env))
 	{
-		while (*env)
-		{
-			p = *env;
-			*env = p->next;
-			free(p->e);	
-			free(p);
-		}
-		p = NULL;
+		p2 = (*env)->e;
+		p = (*env);
+		(*env) = (*env)->next;
+		free(p2);
+		free(p);
 	}
+	// free(*env);
+	
 }
 
 void	flist(t_list **list)
@@ -97,6 +97,7 @@ void f()
 {
 	system("leaks minishell");
 }
+
 
 int	main(int ac, char **av, char **e)
 {

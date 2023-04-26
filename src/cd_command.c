@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 11:46:53 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:06:27 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	norm_cd2(t_env **env, t_list *lst)
 	ft_putstr_fd("directory: getcwd: cannot access parent ", lst->out);
 	ft_putstr_fd("directories: No such file or directory\n", lst->out);
 	s1 = get_pwd(env);
+	s2 = 0x0;
 	if (s1)
 	{
 		s2 = ft_strjoin(ft_strdup(s1), "/..");

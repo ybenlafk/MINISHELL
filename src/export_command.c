@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:51:37 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 14:18:37 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:44:58 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	add_exp(t_list	*lst, t_env	**env)
 		{
 			str = del_plus(lst->args[i]);
 			ft_lstadd_back(env, ft_lstnew(str));
-			free(str);
+			// free(str);
 			i++;
 		}
 	}

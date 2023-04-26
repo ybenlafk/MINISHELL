@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:25:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 14:36:39 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:33:42 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,26 @@ int	ind_str(t_env **lst, char *str)
 	return (i);
 }
 
+void	ft_lstdel(t_env **env, char *str)
+{
+	t_env	*t;
+	t_env	*tmp;
+
+	t = *env;
+	while (t)
+	{
+		if (!ft_strcmp(str, t->next->e))
+		{
+			tmp = t->next;
+			t = t->next->next;
+			free(tmp);
+		}
+		t = t->next;
+		if (!t->next)
+			return ;
+	}
+}
+
 t_env	*ft_lstdelone(t_env **lst, char	*str)
 {
 	t_env	*t;
@@ -60,12 +80,11 @@ t_env	*ft_lstdelone(t_env **lst, char	*str)
 	while (tmp)
 	{
 		if (i != j)
-			ft_lstadd_back(&t, ft_lstnew(tmp->e));
+			ft_lstadd_back(&t, ft_lstnew(ft_strdup(tmp->e)));
 		tmp = tmp->next;
 		j++;
 	}
-	j = 0;
-	return (fenv(lst), t);
+	return (t);
 }
 
 void	norm_print(int i, char *str, t_list	*lst)
