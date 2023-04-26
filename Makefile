@@ -54,8 +54,8 @@ SRCS= tools/utils.c\
 OBGJ= $(SRCS:.c=.o)
 CC = gcc
 CFLAGS =  -g
-R_L = "-L/Users/nouahidi/.brew/opt/readline/lib"
-R_I = "-I/Users/nouahidi/.brew/opt/readline/include"
+R_L = "-L/Users/ybenlafk/.brew/opt/readline/lib"
+R_I = "-I/Users/ybenlafk/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline
 FRM = rm -rf
 
