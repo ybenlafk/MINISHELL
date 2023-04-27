@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command_util2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:22:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 22:16:49 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:36:16 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	change_path(t_env **env)
 
 	s1 = ft_strjoin(ft_strdup("PWD="), pwd_cmd());
 	new_pwd(s1, env);
-	g_exit_status = 0;
+	gvar.g_exit_status = 0;
 	// free(s1);
 }
 

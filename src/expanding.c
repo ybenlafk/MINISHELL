@@ -135,7 +135,7 @@ t_cmd	*expanding(t_env *env, t_cmd *cmd)
 	while (p.tmp)
 	{
 		p.s = NULL;
-		p.s1 = ft_itoa(g_exit_status);
+		p.s1 = ft_itoa(gvar.g_exit_status);
 		if (p.tmp->type == EXIT_ST)
 			ft_lstadd_back_cmd(&res, lst_new_cmd(p.s1, p.tmp->type, p.tmp->quote));
 		else

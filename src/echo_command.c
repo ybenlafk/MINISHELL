@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:43:48 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/22 17:32:33 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:36:16 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	echo_cmd(t_list *list)
 	}
 	if (check_args(list) == 1)
 		ft_putstr_fd ("\n", list->out);
-	g_exit_status = 0;
+	gvar.g_exit_status = 0;
 }

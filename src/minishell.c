@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	g_exit_status = 0;
+t_gvar gvar;
 
 void	c_hanndler()
 {
@@ -26,7 +26,7 @@ void	c_hanndler()
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	g_exit_status = 1;
+	gvar.g_exit_status = 1;
 }
 
 void	fill_env(t_env **env, char **e)
@@ -100,6 +100,7 @@ int	main(int ac, char **av, char **e)
 
 	(void)ac;
 	(void)av;
+	gvar.g_exit_status = 0;
 	// int fd = open("/dev/urandom", O_RDONLY);
 	// dup2(fd, 0);
 	env = NULL;
@@ -111,7 +112,7 @@ int	main(int ac, char **av, char **e)
 		p.s = NULL;
 		p.s = readline("\e[1;32mMinishell>$ \e[0m");
 		if (!p.s)
-			return (fenv(&env), flist(&list), printf("\e[1;32mexit\e[0m\n"), g_exit_status);
+			return (fenv(&env), flist(&list), printf("\e[1;32mexit\e[0m\n"), gvar.g_exit_status);
 		add_history(p.s);
 		list = parsing(&cmd, p, env);
 		// printf("<-------------------cmds-list------------------------>\n");

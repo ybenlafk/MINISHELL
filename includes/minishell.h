@@ -11,7 +11,14 @@
 # include <unistd.h>
 # include <sys/stat.h>
 
-extern int	g_exit_status;
+
+typedef struct glob
+{
+	int	g_exit_status;
+	int	fd;
+}			t_gvar;
+
+extern t_gvar gvar;
 
 # define WORD 0
 # define HEREDOC 1
@@ -67,6 +74,7 @@ typedef struct var
 	int				len_;
 	int				stat;
 	char			*file;
+	char			*file_;
 	char			*s;
 	char			*s1;
 	char			*w;

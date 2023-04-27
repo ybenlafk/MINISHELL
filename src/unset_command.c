@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/21 00:56:12 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:36:16 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	unset_cmd(t_list *lst, t_env **env)
 	{
 		if (!pars_unset(lst->args[i]))
 		{
-			g_exit_status = 1;
+			gvar.g_exit_status = 1;
 			printf ("unset: `%s': not a valid identifier\n", lst->args[i]);
 		}
 		else if (search_var(lst->args[i], *env))

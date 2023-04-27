@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-// int	g_exit_status = 0;
+// int	gvar.g_exit_status = 0;
 
 int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 {

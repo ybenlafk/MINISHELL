@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 22:56:47 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:36:16 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ void	rslt_excve(int i, t_var *var)
 	if (i)
 	{
 		perror("Minishell>$ ");
-		g_exit_status = ft_exit_status(errno);
-		exit(g_exit_status);
+		gvar.g_exit_status = ft_exit_status(errno);
+		exit(gvar.g_exit_status);
 	}
 	else
 	{
 		ft_putstr_fd("Minishell>$ command not found: ", var->lst->out);
 		ft_putstr_fd(var->lst->cmd, var->lst->out);
 		write (1, "\n", 1);
-		g_exit_status = 127;
-		exit(g_exit_status);
+		gvar.g_exit_status = 127;
+		exit(gvar.g_exit_status);
 	}
 }
  
@@ -175,7 +175,7 @@ void	execution(t_list *list, t_env **env, char **e)
 		p.ext_st = waitpid(pid, &status, 0);
 		while (wait(&status) != -1)
 			WIFEXITED(status);
-		g_exit_status = WEXITSTATUS(status);
+		gvar.g_exit_status = WEXITSTATUS(status);
 		free_all(p.str);
 	}
 }

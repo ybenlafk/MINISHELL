@@ -87,7 +87,7 @@ char	*check_set(t_exp *exp, t_env *env)
 		if (tmp->stat)
 		{
 			if (tmp->stat == 2)
-				s = ft_itoa(g_exit_status);
+				s = ft_itoa(gvar.g_exit_status);
 			else
 				s = set_value(env, tmp->value + 1);
 			res = ft_strjoin(res, s);

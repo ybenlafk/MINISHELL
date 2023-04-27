@@ -12,21 +12,16 @@
 
 #include "../includes/minishell.h"
 
-// void	ctl_c()
-// {
-// 	int in;
-
-// 	in = dup(0);
-// 	close(0);
-
-// 	dup2(in, 0);
-// 	close (in);
-// }
+void	ctl_c()
+{
+	close(0);
+}
 
 int	take_in(t_var *p, t_env *env, int stat)
 {
 	t_exp	*exp;
 	t_var	var;
+	t_var	l;
 	t_cmd	*use;
 
 	if (!stat)
@@ -39,7 +34,7 @@ int	take_in(t_var *p, t_env *env, int stat)
 	while (1)
 	{
 		exp = NULL;
-		// signal(SIGINT, ctl_c);
+		signal(SIGINT, ctl_c);
 		p->s = readline("heredoc> ");
 		if (!p->s)
 			break ;
@@ -63,6 +58,13 @@ int	take_in(t_var *p, t_env *env, int stat)
 	p->tmp->str = ft_strdup("<");
 	p->tmp->type = IN;
 	free(use->str);
+	if (!ttyname(0))
+	{
+		l.s = ttyname(2);
+		l.fd = open(l.s, O_RDONLY);
+		dup2(l.fd, 0);
+		// p->fd = 0;
+	}
 	use->str = ft_strdup(p->file);
 	return (p->fd);
 }

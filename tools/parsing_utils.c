@@ -20,19 +20,28 @@ int	is_special_char(char c)
 	return (0);
 }
 
+int	red_checker(char *s, int i)
+{
+	if (!s[i] || !s[i + 1])
+		return (1);
+	if ((s[i] == '<' && s[i + 1] == '<') || (s[i] == '>' && s[i + 1] == '>'))
+		return (0);
+	return (1);
+}
+
 void	add_special_char(char *s, t_cmd **list_cmd, t_var *p)
 {
-	if (s[p->i] == '>' && redires_checker(list_cmd, s, &p->i))
+	if (s[p->i] == '>' && red_checker(s, p->i))
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(">", OUT, 0));
 		p->i++;
 	}
-	if (s[p->i] == '<' && redires_checker(list_cmd, s, &p->i))
+	if (s[p->i] == '<' && red_checker(s, p->i))
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<", IN, 0));
 		p->i++;
 	}
-	if (s[p->i] == '|' && redires_checker(list_cmd, s, &p->i))
+	if (s[p->i] == '|' && red_checker(s, p->i))
 	{
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("|", PIPE, 0));
 		p->i++;
