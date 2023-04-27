@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 11:36:16 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:18:47 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	exec_cmd(t_var *var, char **e)
 		if (var->lst->out != 1)
 			dup2(var->lst->out, 1);
 		p.s = char_join(ft_strdup(st), '/');
+		printf("--->%s\n",st);
 		execve(ft_strjoin(p.s, var->lst->cmd), var->lst->args, e);
 	}
 	rslt_excve(i, var);
@@ -178,4 +179,6 @@ void	execution(t_list *list, t_env **env, char **e)
 		gvar.g_exit_status = WEXITSTATUS(status);
 		free_all(p.str);
 	}
+	if (gvar.is)
+		gvar.g_exit_status = 1;
 }

@@ -15,6 +15,7 @@
 typedef struct glob
 {
 	int	g_exit_status;
+	int	is;
 	int	fd;
 }			t_gvar;
 

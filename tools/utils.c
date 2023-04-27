@@ -325,7 +325,7 @@ void	i_valid_arg(t_list *tmp, t_var *p)
 		if (i_var(tmp->args[p->i]))
 		{
 			p->l = 1;
-			printf("export: `%s': not a valid identifier\n", tmp->args[p->i]);
+			printf("export: `%s': not a valid identifier\n", tmp->args[p->i]); 
 			tmp->args[p->i] = ft_strdup("");
 		}
 		p->i++;
@@ -339,12 +339,12 @@ void	export_parser(t_list **list)
 
 	tmp = *list;
 	p.j = 0;
-	p.l = 0;
 	while (tmp)
 	{
 		p.i = 1;
 		if (tmp->cmd)
 		{
+			p.l = 0;
 			if (!ft_strcmp(tmp->cmd, "export"))
 				i_valid_arg(tmp, &p);
 			if (!is_empty(tmp) && p.l)
@@ -352,6 +352,7 @@ void	export_parser(t_list **list)
 		}
 		tmp = tmp->next;
 	}
+	gvar.is = p.l;
 }
 
 void	env_parser(t_list **list)

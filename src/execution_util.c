@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:41:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/20 01:48:25 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:02:47 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char	*valid_path(char	**tab, char *str)
 {
 	int		i;
 	char	*st;
+	t_var p;
 
 	i = 0;
 	if (!tab[0])
@@ -77,11 +78,12 @@ char	*valid_path(char	**tab, char *str)
 	while (tab[i])
 	{
 		st = char_join(tab[i], '/');
-		if (access(ft_strjoin(st, str), X_OK) == 0)
+		p.s = ft_strjoin(st, str);
+		if (access(p.s, X_OK) == 0)
 			return (tab[i]);
 		i++;
 	}
-	return (NULL);
+	return (free(p.s), NULL);
 }
 
 char	*ft_strchr(const char *str, int s)

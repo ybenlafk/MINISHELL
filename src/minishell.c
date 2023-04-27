@@ -101,6 +101,7 @@ int	main(int ac, char **av, char **e)
 	(void)ac;
 	(void)av;
 	gvar.g_exit_status = 0;
+	gvar.is = 0;
 	// int fd = open("/dev/urandom", O_RDONLY);
 	// dup2(fd, 0);
 	env = NULL;
