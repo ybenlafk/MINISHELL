@@ -91,12 +91,6 @@ void	flist(t_list **list)
 	}
 }
 
-void f()
-{
-	system("leaks minishell");
-}
-
-
 int	main(int ac, char **av, char **e)
 {
 	t_cmd	cmd;
@@ -106,7 +100,6 @@ int	main(int ac, char **av, char **e)
 
 	(void)ac;
 	(void)av;
-	// atexit(f);
 	// int fd = open("/dev/urandom", O_RDONLY);
 	// dup2(fd, 0);
 	env = NULL;
@@ -116,7 +109,7 @@ int	main(int ac, char **av, char **e)
 		signal(SIGINT, c_hanndler);
 		signal(SIGQUIT, SIG_IGN);
 		p.s = NULL;
-		p.s = 	readline("\e[1;32mMinishell>$ \e[0m");
+		p.s = readline("\e[1;32mMinishell>$ \e[0m");
 		if (!p.s)
 			return (fenv(&env), flist(&list), printf("\e[1;32mexit\e[0m\n"), g_exit_status);
 		add_history(p.s);

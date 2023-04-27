@@ -75,19 +75,6 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	// 	// printf("quotes : |%d|\n", vars.tmp->quote);
 	// 	vars.tmp = vars.tmp->next;
 	// }
-	// printf("<-------------------cmds-list------------------------>\n");
-	// while (list)
-	// {
-	// 	int i = 0;
-	// 	printf("cmd : |%s|\n", list->cmd);
-	// 	if (list->args)
-	// 		while (list->args[i])
-	// 			printf("arg : {%s}\n", list->args[i++]);
-	// 	printf("in : |%d|\n", list->in);
-	// 	printf("out : |%d|\n", list->out);
-	// 	printf("<<<<<<----------------->>>>>>\n");
-	// 	list = list->next;
-	// }
 	list_free(&cmd, ft_lstsize(cmd));
 	return (list);
 }

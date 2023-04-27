@@ -41,7 +41,7 @@ void	new_pwd(char *str, t_env **env)
 	t = *env;
 	s1 = del_slash(str);
 	if (check_pwd(env, "PWD"))
-		s2 = new_pwd_norm(env, s1);
+		s2 = new_pwd_norm(env, ft_strdup(s1));
 	if (check_pwd(env, "OLDPWD"))
 	{
 		if (check_pwd(env, "PWD"))
@@ -76,15 +76,6 @@ char	*change_dr(char	*str)
 	}
 	st[i] = '\0';
 	return (st);
-}
-
-char	*new_dr(char *s1, char *s2)
-{
-	char	*str;
-
-	str = ft_strjoin(s1, "/");
-	str = ft_strjoin(str, s2);
-	return (str);
 }
 
 char	*env_oldpwd(t_env	**env)

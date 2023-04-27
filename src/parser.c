@@ -48,22 +48,20 @@ char **join_args(t_cmd **cmd)
 int parser(t_cmd *cmd, t_list *list)
 {
     t_var p;
-    t_list *res;
 
+    p.lst = list;
     p.tmp = cmd;
-    res = NULL;
     while (cmd)
     {
         p.str = join_args(&cmd);
         if (!p.str)
             return (1);
-        list->cmd = ft_strdup(p.str[0]);
-        list->args = p.str;
+        p.lst->cmd = ft_strdup(p.str[0]);
+        p.lst->args = p.str;
         if (cmd)
             cmd = cmd->next;
-        if (list)
-            list = list->next;
+        if (p.lst)
+            p.lst = p.lst->next;
     }
-    // freedom(p.str);
     return(0);
 }

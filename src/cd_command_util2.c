@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:22:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 17:22:43 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 22:16:49 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	change_path(t_env **env)
 	s1 = ft_strjoin(ft_strdup("PWD="), pwd_cmd());
 	new_pwd(s1, env);
 	g_exit_status = 0;
-	free(s1);
+	// free(s1);
 }
 
 void	old_pwd(char *str, t_env **env)
@@ -40,7 +40,7 @@ void	old_pwd(char *str, t_env **env)
 		}
 		t = t->next;
 	}
-	free(st);
+	// free(st);
 }
 
 char	*del_slash(char *str)
@@ -51,15 +51,16 @@ char	*del_slash(char *str)
 
 	i = 0;
 	j = 0;
-	st = malloc(ft_strlen(str));
+	st = malloc(ft_strlen(str) + 1);
 	if (!str)
-		return (0);
+		return (NULL);
 	while (str[i])
 	{
-		st[j++] = str[i++];
 		if (str[i] == '/' && str[i + 1] == '/')
 			i++;
+		st[j++] = str[i++];
 	}
+	st[j] = 0;
 	return (st);
 }
 

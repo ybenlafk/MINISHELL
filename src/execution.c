@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 18:41:37 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/26 22:56:47 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	rslt_excve(int i, t_var *var)
 	}
 	else
 	{
-		write (1, "Minishell> command not found: ", 32);
+		ft_putstr_fd("Minishell>$ command not found: ", var->lst->out);
 		ft_putstr_fd(var->lst->cmd, var->lst->out);
 		write (1, "\n", 1);
 		g_exit_status = 127;
 		exit(g_exit_status);
 	}
 }
-
+ 
 char	*get_path(char *str)
 {
 	int		i;
@@ -53,6 +53,8 @@ char	*get_path(char *str)
 			break ;
 		i--;
 	}
+	if (str[i] != '/')
+		return (NULL);
 	st = malloc(i);
 	j = -1;
 	while (++j <= i)
@@ -71,8 +73,10 @@ void	exec_cmd(t_var *var, char **e)
 	st = valid_path(var->str, var->lst->cmd);
 	if (ft_strchr(var->lst->cmd, '/') || !st)
 	{
-		if (st)
+		st = get_path(var->lst->cmd);
+		if (!access(st, X_OK) || st)
 			i++;
+		free(st);
 		if (chech_directory(var->lst->cmd) == 1)
 		{
 			ft_putstr_fd("Minishell>$ ", var->lst->out);
@@ -164,7 +168,8 @@ void	execution(t_list *list, t_env **env, char **e)
 	{
 		while (p.lst)
 		{
-			pid = exec_childs(&p, env, e);
+			if (p.lst->cmd)
+				pid = exec_childs(&p, env, e);
 			p.lst = p.lst->next;
 		}
 		p.ext_st = waitpid(pid, &status, 0);

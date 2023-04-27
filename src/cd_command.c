@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 18:38:07 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/26 22:42:49 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ void	norm_cd2(t_env **env, t_list *lst)
 	ft_putstr_fd("directory: getcwd: cannot access parent ", lst->out);
 	ft_putstr_fd("directories: No such file or directory\n", lst->out);
 	s1 = get_pwd(env);
+	s2 = NULL;
 	if (s1)
 	{
 		s2 = ft_strjoin(ft_strdup(s1), "/..");
 		new_pwd(s2, env);
+		free(s2);
 	}
-	free(s2);
 }
 
 int	norm_cd(t_list	*lst, t_env	**env, char *str)
@@ -51,7 +52,7 @@ int	norm_cd(t_list	*lst, t_env	**env, char *str)
 		}
 		s1 = ft_strjoin(ft_strdup("PWD="), pwd_cmd());
 		new_pwd(s1, env);
-		free(s1);
+		// free(s1);
 		return (0);
 	}
 	return (1);
@@ -66,6 +67,7 @@ void	norm_cd1(t_env **env, t_list *lst)
 	ft_putstr_fd("directory: getcwd: cannot access parent ", lst->out);
 	ft_putstr_fd("directories: No such file or directory\n", lst->out);
 	s1 = env_pwd(env);
+	s2 = NULL;
 	if (s1)
 	{
 		s2 = ft_strjoin(ft_strdup(s1), "/.");

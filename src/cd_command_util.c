@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 00:32:42 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/21 16:23:28 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:52:47 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*del_dr(char *str)
 		j++;
 	}
 	st[j] = '\0';
-	return (st);
+	return (free(str), st);
 }
 
 int	new_path(char	*str)

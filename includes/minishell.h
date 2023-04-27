@@ -185,7 +185,6 @@ char				*get_pwd(t_env **env);
 int					new_path(char	*str);
 char				*del_dr(char *str);
 char				*get_home(t_env **env);
-char				*new_dr(char *s1, char *s2);
 char				*change_dr(char	*str);
 void				new_pwd(char *str, t_env **env);
 char				*new_pwd_norm(t_env **env, char	*str);
