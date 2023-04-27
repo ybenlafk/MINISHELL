@@ -55,19 +55,19 @@ char	*char_join(char *str, char c)
 void	get_dil_util(t_var *p, t_cmd **list_cmd, char *s, int *i)
 {
 	p->j = 0;
-	p->s = ft_strdup("");
+	p->s1 = ft_strdup("");
 	while (s[*i] && s[*i] != 39 && s[*i] != 34
 		&& !is_white_sp(s[*i]) && !is_special_char(s[*i]))
 	{
-		p->s = char_join(p->s, s[(*i)++]);
+		p->s1 = char_join(p->s1, s[(*i)++]);
 		p->j = 1;
 	}
 	if (p->j)
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s1, WORD, 0));
 		p->j = 0;
 	}
-	free(p->s);
+	free(p->s1);
 }
 
 int	get_dilemiter(t_cmd **list_cmd, char *s, int *i)
@@ -75,7 +75,6 @@ int	get_dilemiter(t_cmd **list_cmd, char *s, int *i)
 	t_var p;
 	
 	p.i = 0;
-	p.s = ft_strdup("");
 	if (sps_skiper(s, i))
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
 	if (quotes_checker(list_cmd, s, &p))

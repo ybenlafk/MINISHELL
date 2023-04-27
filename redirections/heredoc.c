@@ -43,13 +43,13 @@ int	take_in(t_var *p, t_env *env, int stat)
 			free(p->s);
 			break ;
 		}
-		if (!use->quote)
-		{
-			lexer_pro_max(&exp, p->s, &var);
-			free(p->s);
-			p->s = check_set(exp, env);
-			free_exp(&exp, ft_lstsize_exp(exp));
-		}
+		// if (!use->quote)
+		// {
+		// 	lexer_pro_max(&exp, p->s, &var);
+		// 	free(p->s);
+		// 	p->s = check_set(exp, env);
+		// 	free_exp(&exp, ft_lstsize_exp(exp));
+		// }
 		p->s = char_join(p->s, '\n');
 		write (p->fd, p->s, len(p->s) + 1);
 		free(p->s);

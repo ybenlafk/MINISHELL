@@ -129,8 +129,8 @@ int	main(int ac, char **av, char **e)
 		// 	printf("<<<<<<----------------->>>>>>\n");
 		// 	list = list->next;
 		// }
-		if (list)
-			execution(list, &env, e);
+		// if (list)
+		// 	execution(list, &env, e);
 		flist(&list);
 		free(p.s);
 	}
