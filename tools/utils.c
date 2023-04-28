@@ -157,8 +157,14 @@ t_list	*unused_clear(t_list *list)
 	while (tmp)
 	{
 		if (tmp->cmd)
-			ft_lstadd_back_list(&res, lst_new_list(tmp->cmd, tmp->args, tmp->in,
-						tmp->out));
+		{
+			if (tmp->is)
+				ft_lstadd_back_list(&res, lst_new_list(NULL, tmp->args, tmp->in,
+							tmp->out));
+			else
+				ft_lstadd_back_list(&res, lst_new_list(tmp->cmd, tmp->args, tmp->in,
+							tmp->out));
+		}
 		tmp = tmp->next;
 	}
 	return (res);

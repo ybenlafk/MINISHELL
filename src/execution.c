@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 17:15:07 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:09:00 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,14 +162,14 @@ void	execution(t_list *list, t_env **env, char **e)
 	if (srch_cmd(p.lst) && p.len_ == 1)
 	{
 		free_all(p.str);
-		if (p.lst->cmd)
-			ft_command(p.lst, srch_cmd(p.lst), env);
+		ft_command(p.lst, srch_cmd(p.lst), env);
 	}
 	else
 	{
 		while (p.lst)
 		{
-			pid = exec_childs(&p, env, e);
+			if (!p.lst->is)
+				pid = exec_childs(&p, env, e);
 			if (p.lst->in != 0)
 				close(p.lst->in);
 			if (p.lst->out != 1)
