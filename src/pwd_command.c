@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:31:38 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/20 02:40:37 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/28 15:25:12 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ char	*pwd_cmd(void)
 	if (getcwd(buffer, 1024) != NULL)
 		return (buffer);
 	else
-		return (NULL);
+		return (free(buffer), NULL);
 }

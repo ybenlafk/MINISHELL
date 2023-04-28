@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 15:31:07 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:15:07 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,11 @@ void	norm_exec_childs(t_var *var, t_var *p, t_env **env, char **e)
 			exit(errno);
 	if (srch_cmd(var->lst) && var->len_ > 1)
 	{
-		if (var->lst->cmd && !var->lst->is)
-			ft_command(var->lst, srch_cmd(var->lst), env);
+		ft_command(var->lst, srch_cmd(var->lst), env);
 		exit(errno);
 	}
 	else
-		if (var->lst->cmd && !var->lst->is)
-			exec_cmd(var, e);
+		exec_cmd(var, e);
 }
 
 int	exec_childs(t_var *var, t_env **env, char **e)
@@ -164,15 +162,14 @@ void	execution(t_list *list, t_env **env, char **e)
 	if (srch_cmd(p.lst) && p.len_ == 1)
 	{
 		free_all(p.str);
-		if (p.lst->cmd && !p.lst->is)
+		if (p.lst->cmd)
 			ft_command(p.lst, srch_cmd(p.lst), env);
 	}
 	else
 	{
 		while (p.lst)
 		{
-			if (p.lst->cmd && !p.lst->is)
-				pid = exec_childs(&p, env, e);
+			pid = exec_childs(&p, env, e);
 			if (p.lst->in != 0)
 				close(p.lst->in);
 			if (p.lst->out != 1)

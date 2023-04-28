@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:22:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 23:30:54 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/28 15:01:16 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_pwd(t_env **env, char *str)
 	{
 		while (t)
 		{
-			if (ft_strncmp("OLDPWD", t->e, 6) == 0)
+			if (ft_strncmp("OLDPWD=", t->e, 7) == 0)
 				return (1);
 			t = t->next;
 		}

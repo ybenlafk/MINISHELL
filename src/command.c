@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/26 17:15:07 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/28 15:25:40 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ void	ft_command(t_list *list, int ind, t_env	**env)
 {
 	char *s;
 
+	s = NULL;
 	if (ind == 1)
 		cd_cmd(list, env);
 	if (ind == 2)
 		export_cmd(env, list);
 	if (ind == 3)
 	{
-
 		s = pwd_cmd();
 		if (!s)
 			ft_putstr_fd(env_pwd(env) + del_head(env_pwd(env)), list->out);
 		ft_putstr_fd(s, list->out);
-		ft_putstr_fd("\n", list->out);
 		free(s);
+		ft_putstr_fd("\n", list->out);
 	}
 	if (ind == 4)
 		echo_cmd(list);

@@ -156,7 +156,7 @@ t_list	*unused_clear(t_list *list)
 	tmp = list;
 	while (tmp)
 	{
-		if (tmp->cmd && tmp->args)
+		if (tmp->cmd)
 			ft_lstadd_back_list(&res, lst_new_list(tmp->cmd, tmp->args, tmp->in,
 						tmp->out));
 		tmp = tmp->next;
