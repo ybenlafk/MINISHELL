@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 13:06:37 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 23:46:06 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,9 @@ void	cd_cmd(t_list *lst, t_env **env)
 	if (chdir(lst->args[1]) != 0)
 		check_file(lst);
 	else
+	{
 		change_path(env);
+		free(str);
+	}
 }
+while true; do leaks minishell; done

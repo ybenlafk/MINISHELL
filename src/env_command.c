@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:47:55 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 15:28:52 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:06:11 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	env_cmd(t_list	*list, t_env **env)
 
 	if (!*env)
 		return ;
-	*env = sort_ex(*env);
+	*env = sort_ex(env);
 	t = *env;
 	while (t)
 	{

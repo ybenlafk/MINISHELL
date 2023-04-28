@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:47:41 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/20 01:48:41 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 22:37:49 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ft_envcmp(char	*str)
 	int		i;
 
 	i = 0;
-	st = malloc(5);
 	st = "PATH";
 	while (i < 4)
 	{

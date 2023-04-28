@@ -90,6 +90,7 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
+int					check_v(char *str);
 void				ft_putstr_fd(char *s, int fd);
 void				*ft_calloc(long count, long size);
 void				env_parser(t_list **list);
@@ -163,17 +164,17 @@ void				export_cmd(t_env **env, t_list *lst);
 int					ft_strlen_var(char *str);
 int					ft_strncmp(const char *str1, const char *str2, int n);
 t_env				*ft_lstdelone(t_env **lst, char *str);
+void				ft_lstdelone1(t_env **lst, char *str);
 void				unset_cmd(t_list *lst, t_env **env);
 void				execution(t_list *list, t_env **env, char **e);
 void				ft_command(t_list *list, int ind, t_env **env);
 void				exit_cmd(t_list *lst);
-t_env				*sort_ex(t_env *env);
+t_env				*sort_ex(t_env **env);
 int					ft_lstsize_en(t_env *lst);
 t_env				*ft_lstnew(char *str);
 int					ft_strncmp(const char *str1, const char *str2, int n);
 int					ft_strlen(char *str);
 char				*del_plus(char *str);
-t_env				*sort_ex(t_env *env);
 void				add_plus(t_env **env, char *str, int i);
 void				ft_lstadd_back(t_env **lst, t_env *new);
 void				print_ex(t_env *env, t_list *lst);
@@ -216,5 +217,5 @@ t_cmd				*out_pipe(t_cmd *cmd);
 int					drop_util(int *i, t_var *p, int(*redire)(t_cmd *), int stat);
 void				fenv(t_env **env);
 void				flist(t_list **list);
-void				ft_lstdel(t_env **env, char *str);
+void				del_n(t_env **lst, char	*str);
 #endif

@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 13:12:28 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 23:15:06 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ void	exec_cmd(t_var *var, char **e)
 	t_var	p;
 	int		i;
 	char	*st;
+	char	*s1;
 
 	i = 0;
+	s1 = NULL;
 	st = valid_path(var->str, var->lst->cmd);
 	if (ft_strchr(var->lst->cmd, '/') || !st)
 	{
@@ -95,7 +97,8 @@ void	exec_cmd(t_var *var, char **e)
 		if (var->lst->out != 1)
 			dup2(var->lst->out, 1);
 		p.s = char_join(ft_strdup(st), '/');
-		execve(ft_strjoin(p.s, var->lst->cmd), var->lst->args, e);
+		s1 = ft_strjoin(p.s, var->lst->cmd);
+		execve(s1, var->lst->args, e);
 	}
 	rslt_excve(i, var);
 }
