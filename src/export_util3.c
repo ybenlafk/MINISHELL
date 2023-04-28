@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 23:12:08 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:37:39 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_env	*sort_ex(t_env	**env)
 		if (ft_lstsize_en(new) == ft_lstsize_en(*env))
 			break ;
 	}
-	fenv(env);
+	// fenv(env);
 	// system("leaks minishell");
 	fenv(&tp);
 	return (new);

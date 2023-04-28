@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 23:46:06 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:59:48 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ void	cd_cmd(t_list *lst, t_env **env)
 	str = pwd_cmd();
 	if (!lst->args[1])
 	{
-		if (chdir(get_home(env)) == -1)
+		free(str);
+		s1 = get_home(env);
+		if (chdir(s1) == -1)
 			ft_putstr_fd("cd: HOME not set\n", lst->out);
 		gvar.g_exit_status = 0;
 		return ;
@@ -113,4 +115,3 @@ void	cd_cmd(t_list *lst, t_env **env)
 		free(str);
 	}
 }
-while true; do leaks minishell; done

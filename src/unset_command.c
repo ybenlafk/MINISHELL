@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 11:36:16 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:11:32 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	del_var(int i, t_env **env)
 		if (j == i)
 		{
 			*env = ft_lstdelone(env, t->e);
+			break ;
 		}
 		t = t->next;
 		j++;

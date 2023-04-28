@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:47:55 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 16:06:11 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:47:01 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ int	check_v(char *str)
 void	env_cmd(t_list	*list, t_env **env)
 {
 	t_env	*t;
+	t_env	*new;
 
 	if (!*env)
 		return ;
-	*env = sort_ex(env);
-	t = *env;
+	new = sort_ex(env);
+	t = new;
 	while (t)
 	{
 		if (check_v(t->e))
@@ -43,4 +44,5 @@ void	env_cmd(t_list	*list, t_env **env)
 		}
 		t = t->next;
 	}
+	fenv(&new);
 }
