@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:25:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 16:58:24 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 22:36:11 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,41 +60,94 @@ t_env	*ft_lstdelone(t_env **lst, char	*str)
 	while (tmp)
 	{
 		if (i != j)
-			ft_lstadd_back(&t, ft_lstnew(ft_strdup(tmp->e)));
+			ft_lstadd_back(&t, ft_lstnew(tmp->e));
 		tmp = tmp->next;
 		j++;
 	}
+	fenv(lst);
 	return (t);
+}
+
+void	ft_lstdelone1(t_env **lst, char	*str)
+{
+	t_env	*t1;
+	t_env	*t2;
+	t_env	*tmp;
+	int		i;
+	int		j;
+
+	tmp = *lst;
+	t1 = NULL;
+	t2 = NULL;
+	j = 0;
+	i = ind_str(lst, str);
+	tmp = *lst;
+	while (tmp)
+	{
+		if (i == 0 && j == 0)
+		{
+			t1 = tmp;
+			free(t1->e);
+			*lst = t1->next;
+			free(t1);
+			break ;
+		}
+		else if ( j == i - 1)
+		{
+			t1 = tmp;
+			if (!t1->next)
+				return ;
+			t2 = tmp->next;
+			t1->next = t2->next;
+			free(t2->e);
+			t2->e = NULL;
+			free(t2);
+			t2 = NULL;
+			tmp = *lst;
+			break ;
+		}
+		tmp = tmp->next;
+		j++;
+	}
 }
 
 void	norm_print(int i, char *str, t_list	*lst)
 {
-	char	quotes;
+	char	*s2;
 
-	quotes = '"';
-	ft_putstr_fd(char_to_str(quotes), lst->out);
+	ft_putstr_fd("\"", lst->out);
 	i++;
 	while (str[i])
-		ft_putstr_fd(char_to_str(str[i++]), lst->out);
-	ft_putstr_fd(char_to_str(quotes), lst->out);
+	{
+		s2 = char_to_str(str[i]);
+		ft_putstr_fd(s2, lst->out);
+		free(s2);
+		i++;
+	}
+	ft_putstr_fd("\"", lst->out);
 }
 
 void	ft_print(char *str, t_list *lst)
 {
 	int		i;
 	char	quotes;
+	char	*s1;
+	char	*s2;
 
 	quotes = '"';
 	i = 0;
 	while (str[i])
 	{
-		ft_putstr_fd(char_to_str(str[i]), lst->out);
+		s2 = char_to_str(str[i]);
+		ft_putstr_fd(s2, lst->out);
+		free(s2);
 		if (str[i] == '=')
 		{
 			if (!str[i + 1])
 			{
-				ft_putstr_fd(char_to_str(quotes), lst->out);
-				ft_putstr_fd(char_to_str(quotes), lst->out);
+				ft_putstr_fd("\"", lst->out);
+				ft_putstr_fd("\"", lst->out);
+				free(s1);
 			}
 			if (str[i + 1])
 			{

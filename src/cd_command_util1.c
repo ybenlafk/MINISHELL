@@ -29,6 +29,7 @@ char	*new_pwd_norm(t_env **env, char	*str)
 		}
 		t = t->next;
 	}
+	free(str);
 	return (t->e);
 }
 

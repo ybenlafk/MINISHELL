@@ -64,8 +64,8 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	cmd = all(cmd, &list);
 	cmd = two_to_one(cmd);
 	parser(cmd, list);
-	export_parser(&list);
-	env_parser(&list);
+	// export_parser(&list);
+	// env_parser(&list);
 	// printf("<-------------------tokens-list---------------------->\n");
 	// vars.tmp = cmd;
 	// while (vars.tmp)

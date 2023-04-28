@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:41:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 12:58:23 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:36:20 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*valid_path(char	**tab, char *str)
 {
 	int		i;
 	char	*st;
-	t_var p;
+	t_var 	p;
 
 	i = 0;
 	if (!tab[0])

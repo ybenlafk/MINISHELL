@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 13:25:18 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/28 15:31:07 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ void	exec_cmd(t_var *var, char **e)
 	t_var	p;
 	int		i;
 	char	*st;
+	char	*s1;
 
 	i = 0;
+	s1 = NULL;
 	st = valid_path(var->str, var->lst->cmd);
 	if (ft_strchr(var->lst->cmd, '/') || !st)
 	{
@@ -95,7 +97,8 @@ void	exec_cmd(t_var *var, char **e)
 		if (var->lst->out != 1)
 			dup2(var->lst->out, 1);
 		p.s = char_join(ft_strdup(st), '/');
-		execve(ft_strjoin(p.s, var->lst->cmd), var->lst->args, e);
+		s1 = ft_strjoin(p.s, var->lst->cmd);
+		execve(s1, var->lst->args, e);
 	}
 	rslt_excve(i, var);
 }
@@ -111,12 +114,12 @@ void	norm_exec_childs(t_var *var, t_var *p, t_env **env, char **e)
 			exit(errno);
 	if (srch_cmd(var->lst) && var->len_ > 1)
 	{
-		if (var->lst->cmd)
+		if (var->lst->cmd && !var->lst->is)
 			ft_command(var->lst, srch_cmd(var->lst), env);
 		exit(errno);
 	}
 	else
-		if (var->lst->cmd)
+		if (var->lst->cmd && !var->lst->is)
 			exec_cmd(var, e);
 }
 
@@ -161,15 +164,19 @@ void	execution(t_list *list, t_env **env, char **e)
 	if (srch_cmd(p.lst) && p.len_ == 1)
 	{
 		free_all(p.str);
-		if (p.lst->cmd)
+		if (p.lst->cmd && !p.lst->is)
 			ft_command(p.lst, srch_cmd(p.lst), env);
 	}
 	else
 	{
 		while (p.lst)
 		{
-			if (p.lst->cmd)
+			if (p.lst->cmd && !p.lst->is)
 				pid = exec_childs(&p, env, e);
+			if (p.lst->in != 0)
+				close(p.lst->in);
+			if (p.lst->out != 1)
+				close(p.lst->out);
 			p.lst = p.lst->next;
 		}
 		p.ext_st = waitpid(pid, &status, 0);

@@ -6,23 +6,33 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 17:19:32 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/27 23:12:08 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_env	*sort_ex(t_env	*env)
+void	ft_lst_del(t_env **env, char *str)
+{
+	
+}
+
+t_env	*sort_ex(t_env	**env)
 {
 	t_env	*t;
 	t_env	*tp;
 	t_env	*tmp;
 	t_env	*new;
 
-	t = env;
-	tp = env;
+	t = *env;
+	tp = NULL;
 	tmp = t;
 	new = NULL;
+	while (t)
+	{
+		ft_lstadd_back(&tp, ft_lstnew(t->e));
+		t = t->next;
+	}
 	while (1)
 	{
 		t = tp;
@@ -34,11 +44,13 @@ t_env	*sort_ex(t_env	*env)
 			t = t->next;
 		}
 		ft_lstadd_back(&new, ft_lstnew(tmp->e));
-		tp = ft_lstdelone(&tp, tmp->e);
-		if (ft_lstsize_en(new) == ft_lstsize_en(env))
+		ft_lstdelone1(&tp, tmp->e);
+		if (ft_lstsize_en(new) == ft_lstsize_en(*env))
 			break ;
 	}
-	puts("here");
+	fenv(env);
+	// system("leaks minishell");
+	fenv(&tp);
 	return (new);
 }
 
