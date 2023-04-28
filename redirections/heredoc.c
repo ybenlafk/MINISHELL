@@ -17,20 +17,31 @@ void	ctl_c()
 	close(0);
 }
 
-int	take_in(t_var *p, t_env *env, int stat)
+void	is_tty(t_var *p, t_cmd *use)
+{
+	int fd;
+
+	if (!ttyname(0))
+	{
+		free(p->s);
+		free(use->str);
+		free(p->tmp->str);
+		free(p->file);
+		fd = open(ttyname(2), O_RDONLY);
+		dup2(fd, 0);
+		p->fd = -1;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		ft_putstr_fd("\n", 1);
+	}
+}
+
+void	read_line(t_var *p, t_cmd *use, t_env *env)
 {
 	t_exp	*exp;
 	t_var	var;
-	t_var	l;
-	t_cmd	*use;
 
-	if (!stat)
-		use = p->tmp->next->next;
-	else
-		use = p->tmp->next;
-	p->fd = open(p->file, O_CREAT | O_RDWR | O_APPEND | O_TRUNC, 0777);
-	if (p->fd < 0)
-		return (p->fd);
 	while (1)
 	{
 		exp = NULL;
@@ -43,29 +54,38 @@ int	take_in(t_var *p, t_env *env, int stat)
 			free(p->s);
 			break ;
 		}
-		// if (!use->quote)
-		// {
-		// 	lexer_pro_max(&exp, p->s, &var);
-		// 	free(p->s);
-		// 	p->s = check_set(exp, env);
-		// 	free_exp(&exp, ft_lstsize_exp(exp));
-		// }
+		if (!use->quote)
+		{
+			lexer_pro_max(&exp, p->s, &var);
+			free(p->s);
+			p->s = check_set(exp, env);
+			free_exp(&exp, ft_lstsize_exp(exp));
+		}
 		p->s = char_join(p->s, '\n');
 		write (p->fd, p->s, len(p->s) + 1);
 		free(p->s);
 	}
+}
+
+int	take_in(t_var *p, t_env *env, int stat)
+{
+	t_var	l;
+	t_cmd	*use;
+
+	if (!stat)
+		use = p->tmp->next->next;
+	else
+		use = p->tmp->next;
+	p->fd = open(p->file, O_CREAT | O_RDWR | O_APPEND | O_TRUNC, 0777);
+	if (p->fd < 0)
+		return (p->fd);
+	read_line(p, use, env);
 	free(p->tmp->str);
 	p->tmp->str = ft_strdup("<");
 	p->tmp->type = IN;
 	free(use->str);
-	if (!ttyname(0))
-	{
-		l.s = ttyname(2);
-		l.fd = open(l.s, O_RDONLY);
-		dup2(l.fd, 0);
-		// p->fd = 0;
-	}
 	use->str = ft_strdup(p->file);
+	is_tty(p, use);
 	return (p->fd);
 }
 

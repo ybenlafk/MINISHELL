@@ -1,9 +1,0 @@
-// problem 1:
-
-Minishell>$ ""
-Minishell>$ : Permission denied
-
-// problem 2 (dont happen everytime)
-
-Minishell>$ ls
-Minishell>$ : Not a directory
