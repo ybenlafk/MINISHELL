@@ -133,6 +133,7 @@ int	vars_checker_util(char *s, t_var *p)
 		return (free(p->s), p->s = ft_strdup("$?"), p->i += 2, 1);
 	if (s[p->i] == '$' && (!s[p->i + 1] || is_white_sp(s[p->i + 1])))
 	{
+		free(p->s);
 		p->s = ft_strdup("$");
 		p->i++;
 		return (1);

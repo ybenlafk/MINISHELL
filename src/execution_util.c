@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:41:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 21:36:20 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:06:39 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	lst_size_list(t_list *list)
 
 void	pipe_cases(t_var *var, t_var *p)
 {
+	static int i;
 	if (var->j && !var->lst->next)
 	{
 		dup2(var->stat, 0);
@@ -60,7 +61,10 @@ void	pipe_cases(t_var *var, t_var *p)
 	else
 	{
 		dup2(p->fds[1], 1);
-		dup2(var->stat, 0);
+		// if (!i++)
+		// 	dup2(p->fds[0], 0);
+		// else
+			dup2(var->stat, 0);
 		if (close(p->fds[1]) == -1 || close(p->fds[0]) == -1)
 			exit(errno);
 	}

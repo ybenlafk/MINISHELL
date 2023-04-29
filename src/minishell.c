@@ -119,17 +119,19 @@ int	main(int ac, char **av, char **e)
 		add_history(p.s);
 		list = parsing(&cmd, p, env);
 		// printf("<-------------------cmds-list------------------------>\n");
-		// while (list) 
+		// t_list *t = list;
+		// while (t) 
 		// {
 		// 	int i = 0;
-		// 	printf("cmd : |%s|\n", list->cmd);
-		// 	if (list->args)
-		// 		while (list->args[i])
-		// 			printf("arg : {%s}\n", list->args[i++]);
-		// 	printf("in : |%d|\n", list->in);
-		// 	printf("out : |%d|\n", list->out);
+		// 	printf("cmd : |%s|\n", t->cmd);
+		// 	if (t->args)
+		// 		while (t->args[i])
+		// 			printf("arg : {%s}\n", t->args[i++]);
+		// 	printf("in : |%d|\n", t->in);
+		// 	printf("out : |%d|\n", t->out);
+		// 	printf("is : |%d|\n", t->is);
 		// 	printf("<<<<<<----------------->>>>>>\n");
-		// 	list = list->next;
+		// 	t = t->next;
 		// }
 		if (list)
 			execution(list, &env, e);

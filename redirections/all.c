@@ -111,17 +111,18 @@ int	drop(t_var *p)
 		p->lst->in = p->fd_in;
 	if (p->lst && !p->i)
 		p->lst->out = p->fd_out;
-	p->tmp = p->tmp->next;
 	return (0);
 }
 
 t_cmd	*all(t_cmd *cmd, t_list **list)
 {
 	t_var	p;
+	t_cmd *res;
 
 	if (!cmd)
 		return (NULL);
 	p.j = 0;
+	p.is = 0;
 	p.res = NULL;
 	p.tmp = cmd;
 	p.lst = *list;
@@ -132,8 +133,11 @@ t_cmd	*all(t_cmd *cmd, t_list **list)
 		p.fd_in = 0;
 		p.fd_out = 1;
 		while (p.tmp && p.tmp->type != PIPE)
+		{
 			if (drop(&p))
-				return (list_free(&cmd, ft_lstsize(cmd)), NULL);
+				p.lst->is = 1;
+			p.tmp = p.tmp->next;
+		}
 		p.lst = p.lst->next;
 		if (p.tmp)
 			p.tmp = p.tmp->next;

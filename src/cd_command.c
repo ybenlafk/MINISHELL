@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 21:44:14 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/29 11:46:31 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,3 +120,4 @@ void	cd_cmd(t_list *lst, t_env **env)
 		free(str);
 	}
 }
+// while true; do leaks minishell; done

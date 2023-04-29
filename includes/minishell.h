@@ -37,6 +37,7 @@ typedef struct array
 	char			**args;
 	int				in;
 	int				out;
+	int				is;
 	struct array	*next;
 }					t_list;
 
@@ -212,10 +213,11 @@ t_env				*ft_lstlast_env(t_env *lst);
 t_list				*ft_lstlast_list(t_list *lst);
 int					chech_directory(char *path);
 void				change_path(t_env **env);
-void				ft_free(char **str);
 t_cmd				*out_pipe(t_cmd *cmd);
 int					drop_util(int *i, t_var *p, int(*redire)(t_cmd *), int stat);
 void				fenv(t_env **env);
 void				flist(t_list **list);
 void				del_n(t_env **lst, char	*str);
+t_cmd	*del_err(t_cmd *pev,t_cmd *cmd, int i);
+
 #endif

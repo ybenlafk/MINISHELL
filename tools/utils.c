@@ -156,9 +156,15 @@ t_list	*unused_clear(t_list *list)
 	tmp = list;
 	while (tmp)
 	{
-		if (tmp->cmd && tmp->args)
-			ft_lstadd_back_list(&res, lst_new_list(tmp->cmd, tmp->args, tmp->in,
-						tmp->out));
+		if (tmp->cmd)
+		{
+			if (tmp->is)
+				ft_lstadd_back_list(&res, lst_new_list(NULL, tmp->args, tmp->in,
+							tmp->out));
+			else
+				ft_lstadd_back_list(&res, lst_new_list(tmp->cmd, tmp->args, tmp->in,
+							tmp->out));
+		}
 		tmp = tmp->next;
 	}
 	return (res);
@@ -325,7 +331,8 @@ void	i_valid_arg(t_list *tmp, t_var *p)
 		if (i_var(tmp->args[p->i]))
 		{
 			p->l = 1;
-			printf("export: `%s': not a valid identifier\n", tmp->args[p->i]); 
+			printf("export: `%s': not a valid identifier\n", tmp->args[p->i]);
+			free(tmp->args[p->i]);
 			tmp->args[p->i] = ft_strdup("");
 		}
 		p->i++;
@@ -342,13 +349,17 @@ void	export_parser(t_list **list)
 	while (tmp)
 	{
 		p.i = 1;
-		if (tmp->cmd)
+		if (tmp->cmd && !tmp->is)
 		{
 			p.l = 0;
 			if (!ft_strcmp(tmp->cmd, "export"))
 				i_valid_arg(tmp, &p);
 			if (!is_empty(tmp) && p.l)
+			{
+				free(tmp->cmd);
+				free_all(tmp->args);
 				tmp->cmd = NULL;
+			}
 		}
 		tmp = tmp->next;
 	}
@@ -362,7 +373,7 @@ void	env_parser(t_list **list)
 	tmp = *list;
 	while (tmp)
 	{
-		if (tmp->cmd)
+		if (tmp->cmd && !tmp->is)
 		{
 			if (!ft_strcmp(tmp->cmd, "env"))
 			{
@@ -403,4 +414,27 @@ t_cmd	*out_pipe(t_cmd *cmd)
 		tmp = tmp->next;
 	}
 	return (list_free(&cmd, ft_lstsize(cmd)), res);
+}
+
+t_cmd	*del_err(t_cmd *pev, t_cmd *cmd, int i)
+{
+	t_cmd *tmp;
+	t_cmd *tmp1;
+	t_cmd *res;
+
+	tmp = cmd;
+	tmp1 = pev;
+	res = NULL;
+	// printf (">>%d\n", i--);
+	while (tmp1 && i--)
+	{
+		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp1->str, tmp1->type, tmp1->quote));
+		tmp1 = tmp1->next;
+	}
+	while (tmp)
+	{
+		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote));
+		tmp = tmp->next;
+	}
+	return (res);
 }
