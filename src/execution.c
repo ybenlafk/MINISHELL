@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/29 13:07:53 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:13:16 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*get_path(char *str)
 	st[j] = '\0';
 	return (st);
 }
+
 void	c_hndl()
 {
 	exit(130);
@@ -171,7 +172,8 @@ void	execution(t_list *list, t_env **env, char **e)
 	if (srch_cmd(p.lst) && p.len_ == 1)
 	{
 		free_all(p.str);
-		ft_command(p.lst, srch_cmd(p.lst), env);
+		if (!p.lst->is)
+			ft_command(p.lst, srch_cmd(p.lst), env);
 	}
 	else
 	{

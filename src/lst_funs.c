@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_funs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:20:13 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/28 15:27:08 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:18:47 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ t_list	*lst_new_list(char *cmd, char **args, int in, int out)
 	new->args = args;
 	new->in = in;
 	new->out = out;
-	new->is = 0;
+	if (new->in == -1)
+		new->is = 1;
+	else
+		new->is = 0;
 	new->next = NULL;
 	return (new);
 }
