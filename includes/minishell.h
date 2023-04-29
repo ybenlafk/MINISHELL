@@ -91,6 +91,7 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
+int					pipe_count(t_cmd *cmd);
 int					check_v(char *str);
 void				ft_putstr_fd(char *s, int fd);
 void				*ft_calloc(long count, long size);

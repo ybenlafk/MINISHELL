@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2023/03/16 22:57:56 by ybenlafk          #+#    #+#             */
 /*   Updated: 2023/04/10 18:16:41 by nouahidi         ###   ########.fr       */
 /*                                                                            */
@@ -12,7 +15,6 @@
 
 #include "../includes/minishell.h"
 
-// int	gvar.g_exit_status = 0;
 
 int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 {
@@ -42,9 +44,9 @@ int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 
 t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 {
-	t_var	vars;
-	t_list	*list;
-	char	*syn;
+	t_var vars;
+	t_list *list;
+	char *syn;
 
 	vars.i = 0;
 	(void)env;
@@ -59,6 +61,8 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	if (syn)
 		return (list_free(&cmd, ft_lstsize(cmd)), error(syn), NULL);
 	cmd = lst_join(cmd);
+	if (pipe_count(cmd) >= 540)
+		return (ft_putstr_fd("Minishell: fork: Resource temporarily unavailable\n", 2), NULL);
 	list = create_list(cmd);
 	cmd = redire_heredoc(cmd, env);
 	cmd = all(cmd, &list);

@@ -170,13 +170,12 @@ t_list	*unused_clear(t_list *list)
 	return (res);
 }
 // created a linked list where each node represente a command : type {t_list}
-t_list	*create_list(t_cmd *cmd)
+
+int	pipe_count(t_cmd *cmd)
 {
 	t_var p;
-	t_list *res;
 
 	p.i = 0;
-	res = NULL;
 	p.tmp = cmd;
 	while (p.tmp)
 	{
@@ -184,11 +183,22 @@ t_list	*create_list(t_cmd *cmd)
 			p.i++;
 		p.tmp = p.tmp->next;
 	}
+	return (p.i);
+}
+
+t_list	*create_list(t_cmd *cmd)
+{
+	t_var p;
+	t_list *res;
+
+	res = NULL;
+	p.i = pipe_count(cmd);
 	p.i++;
 	while (p.i--)
 		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, 0, 0));
 	return (res);
 }
+
 void	add_new(t_var *p, t_cmd **res)
 {
 	while (p->tmp)
