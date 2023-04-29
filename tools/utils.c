@@ -156,17 +156,20 @@ t_list	*unused_clear(t_list *list)
 	tmp = list;
 	while (tmp)
 	{
-		if (tmp->cmd && !tmp->is)
+		if (tmp->cmd)
 		{
-			// if (tmp->is)
-			// 	ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, tmp->in,
-			// 				tmp->out));
-			// else
+			if (tmp->is)
+				ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, tmp->in,
+							tmp->out));
+			else
 				ft_lstadd_back_list(&res, lst_new_list(ft_strdup(tmp->cmd), duplicate(tmp->args), tmp->in,
 							tmp->out));
 		}
 		tmp = tmp->next;
 	}
+	tmp = list;
+	if (ft_lstlast_list(tmp)->is)
+		gvar.is = 1;
 	return (flist(&list), res);
 }
 // created a linked list where each node represente a command : type {t_list}
