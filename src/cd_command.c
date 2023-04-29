@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 14:59:48 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/28 21:44:14 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	norm_cd2(t_env **env, t_list *lst)
 		s2 = ft_strjoin(ft_strdup(s1), "/..");
 		new_pwd(s2, env);
 		free(s2);
+		free(s1);
 	}
 }
 
@@ -35,6 +36,7 @@ int	norm_cd(t_list	*lst, t_env	**env, char *str)
 	char			*pwd_path;
 	static int		i;
 	char			*s1;
+	char			*s2;
 
 	if (!str && !ft_strcmp("..", lst->args[1]))
 	{
@@ -50,9 +52,11 @@ int	norm_cd(t_list	*lst, t_env	**env, char *str)
 			if (!new_path(pwd_path))
 				return (ft_putstr_fd("HOME not set\n", lst->out), 0);
 		}
-		s1 = ft_strjoin(ft_strdup("PWD="), pwd_cmd());
+		s2 = pwd_cmd();
+		s1 = ft_strjoin(ft_strdup("PWD="), s2);
 		new_pwd(s1, env);
-		// free(s1);
+		free(s1);
+		free(s2);
 		return (0);
 	}
 	return (1);
@@ -76,8 +80,9 @@ void	norm_cd1(t_env **env, t_list *lst)
 	}
 }
 
-void	check_file(t_list *lst)
+void	check_file(t_list *lst, char *str)
 {
+	free(str);
 	if (chech_directory(lst->args[1]) == 2)
 		printf("Minishell> cd: %s: Not a directory\n", lst->args[1]);
 	else
@@ -108,7 +113,7 @@ void	cd_cmd(t_list *lst, t_env **env)
 	if (!norm_cd(lst, env, str))
 		return ;
 	if (chdir(lst->args[1]) != 0)
-		check_file(lst);
+		check_file(lst, str);
 	else
 	{
 		change_path(env);
