@@ -62,7 +62,7 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 		return (list_free(&cmd, ft_lstsize(cmd)), error(syn), NULL);
 	cmd = lst_join(cmd);
 	if (pipe_count(cmd) >= 540)
-		return (ft_putstr_fd("Minishell: fork: Resource temporarily unavailable\n", 2), NULL);
+		return (list_free(&cmd, ft_lstsize(cmd)), ft_putstr_fd("Minishell: fork: Resource temporarily unavailable\n", 2), NULL);
 	list = create_list(cmd);
 	cmd = redire_heredoc(cmd, env);
 	cmd = all(cmd, &list);
@@ -80,6 +80,6 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	// 	// printf("quotes : |%d|\n", vars.tmp->quote);
 	// 	vars.tmp = vars.tmp->next;
 	// }
-	list_free(&cmd, ft_lstsize(cmd));
+	list_free(&cmd, ft_lstsize(cmd));                              
 	return (list);
 }

@@ -52,7 +52,7 @@ SRCS= tools/utils.c\
 	redirections/all_util.c \
 
 OBGJ= $(SRCS:.c=.o)
-CC = gcc
+CC = cc
 CFLAGS =  -g
 R_L = "-L/Users/ybenlafk/.brew/opt/readline/lib"
 R_I = "-I/Users/ybenlafk/.brew/opt/readline/include"
