@@ -83,6 +83,7 @@ char	*is_quotes(char *s, int *i, int stat)
 		return (error("'"), free(str), NULL);
 	return (error("\""), free(str), NULL);
 }
+
 int	quotes_checker(t_cmd **list_cmd, char *s, t_var *p)
 {
 	p->j = 0;
@@ -266,6 +267,7 @@ t_cmd	*lst_join(t_cmd *cmd)
 	p.res = NULL;
 	p.tmp = cmd;
 	p.i = 0;
+	p.j = 0;
 	if (!cmd)
 		return (NULL);
 	while (p.tmp->next)

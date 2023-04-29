@@ -76,7 +76,7 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	// while (vars.tmp)
 	// {
 	// 	printf("value : |%s|\n", vars.tmp->str);
-	// 	// printf("type : |%d|\n", vars.tmp->type);
+	// 	printf("type : |%d|\n", vars.tmp->type);
 	// 	// printf("quotes : |%d|\n", vars.tmp->quote);
 	// 	vars.tmp = vars.tmp->next;
 	// }
