@@ -71,7 +71,7 @@ typedef struct var
 	int				is;
 	int				fd;
 	int				fds[2];
-	int				pid;
+	pid_t			pid;
 	int				len;
 	int				len_;
 	int				stat;
@@ -91,6 +91,8 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
+char** 				duplicate(char** list);
+int					pipe_count(t_cmd *cmd);
 int					check_v(char *str);
 void				ft_putstr_fd(char *s, int fd);
 void				*ft_calloc(long count, long size);

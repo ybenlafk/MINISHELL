@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 19:09:00 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/29 13:07:53 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,15 @@ char	*get_path(char *str)
 	st[j] = '\0';
 	return (st);
 }
+void	c_hndl()
+{
+	exit(130);
+}
+void	q_hndl()
+{
+	ft_putstr_fd("Quit\n", 1);
+	exit(131);
+}
 
 void	exec_cmd(t_var *var, char **e)
 {
@@ -70,6 +79,8 @@ void	exec_cmd(t_var *var, char **e)
 	char	*st;
 	char	*s1;
 
+	signal(SIGINT, c_hndl);
+	signal(SIGQUIT, q_hndl);
 	i = 0;
 	s1 = NULL;
 	st = valid_path(var->str, var->lst->cmd);
@@ -105,8 +116,6 @@ void	exec_cmd(t_var *var, char **e)
 
 void	norm_exec_childs(t_var *var, t_var *p, t_env **env, char **e)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	if (var->len_ > 1)
 		pipe_cases(var, p);
 	else

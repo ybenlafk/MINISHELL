@@ -159,24 +159,23 @@ t_list	*unused_clear(t_list *list)
 		if (tmp->cmd)
 		{
 			if (tmp->is)
-				ft_lstadd_back_list(&res, lst_new_list(NULL, tmp->args, tmp->in,
+				ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, tmp->in,
 							tmp->out));
 			else
-				ft_lstadd_back_list(&res, lst_new_list(tmp->cmd, tmp->args, tmp->in,
+				ft_lstadd_back_list(&res, lst_new_list(ft_strdup(tmp->cmd), duplicate(tmp->args), tmp->in,
 							tmp->out));
 		}
 		tmp = tmp->next;
 	}
-	return (res);
+	return (flist(&list), res);
 }
 // created a linked list where each node represente a command : type {t_list}
-t_list	*create_list(t_cmd *cmd)
+
+int	pipe_count(t_cmd *cmd)
 {
 	t_var p;
-	t_list *res;
 
 	p.i = 0;
-	res = NULL;
 	p.tmp = cmd;
 	while (p.tmp)
 	{
@@ -184,11 +183,22 @@ t_list	*create_list(t_cmd *cmd)
 			p.i++;
 		p.tmp = p.tmp->next;
 	}
+	return (p.i);
+}
+
+t_list	*create_list(t_cmd *cmd)
+{
+	t_var p;
+	t_list *res;
+
+	res = NULL;
+	p.i = pipe_count(cmd);
 	p.i++;
 	while (p.i--)
 		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, 0, 0));
 	return (res);
 }
+
 void	add_new(t_var *p, t_cmd **res)
 {
 	while (p->tmp)
@@ -437,4 +447,32 @@ t_cmd	*del_err(t_cmd *pev, t_cmd *cmd, int i)
 		tmp = tmp->next;
 	}
 	return (res);
+}
+
+int count_el(char **s)
+{
+	int i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+char** duplicate(char** list)
+{
+	t_var p;
+    p.str = malloc(count_el(list) * sizeof(char*) + 1);
+    if (!p.str)
+		return (NULL);
+    p.i = 0;
+    while (p.i < count_el(list)) 
+	{
+        p.str[p.i] = ft_strdup(list[p.i]);
+        if (!p.str[p.i])
+			return (free_all(p.str), NULL);
+        p.i++;
+    }
+	p.str[p.i] = NULL;
+    return (p.str);
 }

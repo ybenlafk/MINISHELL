@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:39:09 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/26 18:38:20 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/29 11:22:40 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	exit_cmd(t_list *lst)
 		norm_exit_cmd(lst, lst->args[1]);
 	else
 	{
-		ft_putstr_fd("exit\n", lst->out);
+		ft_putstr_fd("exit\n", 1);
 		exit(0);
 	}
 }
