@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 00:32:42 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 14:52:25 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:14:11 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,21 @@ char	*del_dr(char *str)
 
 int	new_path(char	*str)
 {
-	int	i;
+	int		i;
+	char	*st;
 
+	st = ft_strdup(str);
 	i = 0;
 	while (1)
 	{
-		if (!str[0])
+		if (!st[0])
 			return (0);
-		if (chdir(str) != -1)
-			return (free(str), 1);
+		if (chdir(st) != -1)
+			return (free(st), 1);
 		else
-			str = del_dr(ft_strdup(str));
+			st = del_dr(st);
 	}
-	return (0);
+	return (free(st), 0);
 }
 
 char	*get_pwd(t_env **env)

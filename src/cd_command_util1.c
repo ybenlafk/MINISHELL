@@ -15,17 +15,18 @@
 char	*new_pwd_norm(t_env **env, char	*str)
 {
 	t_env	*t;
+	char	*s1;
 
 	t = *env;
 	while (t)
 	{
-		if (ft_strncmp("PWD=", t->e, 4) == 0)
+		if (ft_strncmp("PWD", t->e, 3) == 0)
 		{
 			if (!ft_strcmp("PWD=/", t->e) && !ft_strcmp("PWD=/", str))
 				break ;
+			s1 = t->e;
 			ft_lstadd_back(env, ft_lstnew(str));
-			*env = ft_lstdelone(env, t->e);
-			return (free(str), t->e);
+			return (free(str), s1);
 		}
 		t = t->next;
 	}
