@@ -156,12 +156,12 @@ t_list	*unused_clear(t_list *list)
 	tmp = list;
 	while (tmp)
 	{
-		if (tmp->cmd)
+		if (tmp->cmd && !tmp->is)
 		{
-			if (tmp->is)
-				ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, tmp->in,
-							tmp->out));
-			else
+			// if (tmp->is)
+			// 	ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, tmp->in,
+			// 				tmp->out));
+			// else
 				ft_lstadd_back_list(&res, lst_new_list(ft_strdup(tmp->cmd), duplicate(tmp->args), tmp->in,
 							tmp->out));
 		}

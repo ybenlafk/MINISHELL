@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/29 14:13:16 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:50:17 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	rslt_excve(int i, t_var *var)
 	}
 	else
 	{
-		ft_putstr_fd("Minishell>$ command not found: ", var->lst->out);
-		ft_putstr_fd(var->lst->cmd, var->lst->out);
-		write (1, "\n", 1);
+		ft_putstr_fd("Minishell>$ command not found: ", 2);
+		ft_putstr_fd(var->lst->cmd, 2);
+		ft_putstr_fd("\n", 2);
 		gvar.g_exit_status = 127;
 		exit(gvar.g_exit_status);
 	}
