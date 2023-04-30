@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:22:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 17:19:03 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/30 18:13:26 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	change_path(t_env **env)
 	pwd = pwd_cmd();
 	s1 = ft_strjoin(ft_strdup("PWD="), pwd);
 	new_pwd(s1, env);
-	gvar.g_exit_status = 0;
+	g_var.g_exit_status = 0;
 	free(s1);
 	free(pwd);
 }

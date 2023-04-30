@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/29 11:46:31 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 18:13:26 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	check_file(t_list *lst, char *str)
 		printf("Minishell> cd: %s: Not a directory\n", lst->args[1]);
 	else
 		printf("Minishell> cd: %s: No such file or directory\n", lst->args[1]);
-	gvar.g_exit_status = 1;
+	g_var.g_exit_status = 1;
 }
 
 void	cd_cmd(t_list *lst, t_env **env)
@@ -102,7 +102,7 @@ void	cd_cmd(t_list *lst, t_env **env)
 		s1 = get_home(env);
 		if (chdir(s1) == -1)
 			ft_putstr_fd("cd: HOME not set\n", lst->out);
-		gvar.g_exit_status = 0;
+		g_var.g_exit_status = 0;
 		return ;
 	}
 	if (!str && !ft_strcmp(".", lst->args[1]))

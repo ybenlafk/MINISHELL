@@ -19,7 +19,7 @@ typedef struct glob
 	char	*pwd;
 }			t_gvar;
 
-extern t_gvar gvar;
+extern t_gvar g_var;
 
 # define WORD 0
 # define HEREDOC 1
@@ -91,6 +91,9 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
+char				*get_value(char *s);
+char				*is_var(char *s);
+void				get_var(t_var *p);
 void				add_new(t_var *p, t_cmd **res);
 int					count_fds(t_cmd *cmd, int type, int stat);
 t_cmd				*del_cmd(t_cmd **lst, char *str);
@@ -130,7 +133,6 @@ t_exp				*ft_lstlast_exp(t_exp *lst);
 t_env				*lst_new_env(char *e);
 void				rl_replace_line(const char *text, int clear_undo);
 void				ft_lstadd_back_exp(t_exp **lst, t_exp *new);
-void				free_env(t_env **philos, int len);
 t_cmd				*expanding(t_env *env, t_cmd *cmd);
 void				list_free(t_cmd **cmd, int len);
 void				ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);

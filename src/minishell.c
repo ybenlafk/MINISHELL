@@ -12,11 +12,14 @@
 
 #include "../includes/minishell.h"
 
-t_gvar gvar;
+t_gvar	g_var;
 
-void	c_hanndler()
+void	c_hanndler(int i)
 {
-	int	flag = 0;
+	int	flag;
+
+	flag = 0;
+	(void)i;
 	if (waitpid(-1, NULL, WNOHANG) == 0)
 		flag = 1;
 	if (!flag)
@@ -26,7 +29,7 @@ void	c_hanndler()
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	gvar.g_exit_status = 1;
+	g_var.g_exit_status = 1;
 }
 
 void	fill_env(t_env **env, char **e)
@@ -55,23 +58,6 @@ void	fill_env(t_env **env, char **e)
 	free(p.s);
 }
 
-void	fenv(t_env **env)
-{
-	t_env	*p1;
-	t_env	*p;
-
-	p1 = *env;
-	while (p1)
-	{
-		free(p1->e);
-		p = p1;
-		p1 = p1->next;
-		free(p);
-		p = NULL;
-	}
-	env = NULL;
-}
-
 void	flist(t_list **list)
 {
 	t_list	*p;
@@ -93,46 +79,36 @@ void	flist(t_list **list)
 	}
 }
 
+int	main_norm(t_var *p, t_env **env, t_list **list)
+{
+	p->s = NULL;
+	p->s = readline("\e[1;32mMinishell>$ \e[0m");
+	if (!p->s)
+		return (fenv(env), flist(list), printf("\e[1;32mexit\e[0m\n"), 1);
+	add_history(p->s);
+	return (0);
+}
+
 int	main(int ac, char **av, char **e)
 {
 	t_cmd	cmd;
-	t_list *list;
+	t_list	*list;
 	t_env	*env;
 	t_var	p;
 
 	(void)ac;
 	(void)av;
-	gvar.g_exit_status = 0;
-	gvar.is = 0;
-	// int fd = open("/dev/urandom", O_RDONLY);
-	// dup2(fd, 0);
+	g_var.g_exit_status = 0;
+	g_var.is = 0;
 	env = NULL;
 	fill_env(&env, e);
 	while (1)
 	{
 		signal(SIGINT, c_hanndler);
 		signal(SIGQUIT, SIG_IGN);
-		p.s = NULL;
-		p.s = readline("\e[1;32mMinishell>$ \e[0m");
-		if (!p.s)
-			return (fenv(&env), flist(&list), printf("\e[1;32mexit\e[0m\n"), gvar.g_exit_status);
-		add_history(p.s);
+		if (main_norm(&p, &env, &list))
+			return (g_var.g_exit_status);
 		list = parsing(&cmd, p, env);
-		// printf("<-------------------cmds-list------------------------>\n");
-		// t_list *t = list;
-		// while (t) 
-		// {
-		// 	int i = 0;
-		// 	printf("cmd : |%s|\n", t->cmd);
-		// 	if (t->args)
-		// 		while (t->args[i])
-		// 			printf("arg : {%s}\n", t->args[i++]);
-		// 	printf("in : |%d|\n", t->in);
-		// 	printf("out : |%d|\n", t->out);
-		// 	printf("is : |%d|\n", t->is);
-		// 	printf("<<<<<<----------------->>>>>>\n");
-		// 	t = t->next;
-		// }
 		if (list)
 			execution(list, &env, e);
 		flist(&list);

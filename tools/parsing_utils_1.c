@@ -14,7 +14,7 @@
 
 void	error(char *e)
 {
-	gvar.g_exit_status = 258;
+	g_var.g_exit_status = 258;
 	printf("Minishell: syntax error near unexpected token `%s'\n", e);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/30 16:53:14 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/30 18:13:26 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_list	*unused_clear(t_list *list)
 	}
 	tmp = list;
 	if (ft_lstlast_list(tmp)->is)
-		gvar.is = 1;
+		g_var.is = 1;
 	return (flist(&list), res);
 }
 

@@ -2,23 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2023/03/10 22:03:19 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/10 18:16:41 by nouahidi         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/30 18:29:59 by ybenlafk          #+#    #+#             */
+/*   Updated: 2023/04/30 18:29:59 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
 char	*is_var(char *s)
 {
-	t_var p;
+	t_var	p;
 
 	p.i = 0;
 	while (s[p.i] && s[p.i] != '=')
@@ -38,7 +34,7 @@ char	*is_var(char *s)
 
 char	*get_value(char *s)
 {
-	t_var p;
+	t_var	p;
 
 	p.i = 0;
 	p.j = 0;
@@ -64,47 +60,10 @@ char	*get_value(char *s)
 	return (p.s);
 }
 
-char	*set_value(t_env *env, char *rep)
-{
-	t_var p;
-
-	p.i = 0;
-	while (env)
-	{
-		p.s = is_var(env->e);
-		if (!ft_strcmp(rep, p.s))
-			return (free(p.s), get_value(env->e));
-		env = env->next;
-		free(p.s);
-	}
-	return (ft_strdup(""));
-}
-
-void	get_var(t_var *p)
-{
-	p->j = 0;
-	p->i = 0;
-	while (p->tmp->str[p->i] && !is_special_char(p->tmp->str[p->i]))
-	{
-		if ((p->tmp->str[p->i] == '$') && (ft_isalpha(p->tmp->str[p->i + 1])
-				|| p->tmp->str[p->i + 1] == '_'))
-		{
-			p->j = 1;
-			p->i++;
-		}
-		if ((p->j) && p->tmp->str[p->i] != '$' && (ft_isalnum(p->tmp->str[p->i])
-				|| p->tmp->str[p->i] == '_'))
-			p->s = char_join(p->s, p->tmp->str[p->i]);
-		else if (p->j)
-			break ;
-		p->i++;
-	}
-}
-
 void	split_var(t_var *p, t_cmd **res, t_env *env)
 {
-	int i;
-	char *s;
+	int		i;
+	char	*s;
 
 	s = set_value(env, p->s);
 	if (!s)
@@ -125,29 +84,33 @@ void	split_var(t_var *p, t_cmd **res, t_env *env)
 	}
 }
 
+void	exp_norm(t_var *p, t_cmd **res, t_env *env)
+{
+	if (p->tmp->type == VAR)
+		get_var(p);
+	if (p->s)
+		split_var(p, res, env);
+	else
+		ft_lstadd_back_cmd(res, lst_new_cmd(p->tmp->str, p->tmp->type,
+				p->tmp->quote));
+}
+
 t_cmd	*expanding(t_env *env, t_cmd *cmd)
 {
-	t_var p;
-	t_cmd *res;
+	t_var	p;
+	t_cmd	*res;
 
 	res = NULL;
 	p.tmp = cmd;
 	while (p.tmp)
 	{
 		p.s = NULL;
-		p.s1 = ft_itoa(gvar.g_exit_status);
+		p.s1 = ft_itoa(g_var.g_exit_status);
 		if (p.tmp->type == EXIT_ST)
-			ft_lstadd_back_cmd(&res, lst_new_cmd(p.s1, p.tmp->type, p.tmp->quote));
+			ft_lstadd_back_cmd(&res, lst_new_cmd(p.s1, p.tmp->type,
+					p.tmp->quote));
 		else
-		{
-			if (p.tmp->type == VAR)
-				get_var(&p);
-			if (p.s)
-				split_var(&p, &res, env);
-			else
-				ft_lstadd_back_cmd(&res, lst_new_cmd(p.tmp->str, p.tmp->type,
-							p.tmp->quote));
-		}
+			exp_norm(&p, &res, env);
 		free(p.s1);
 		p.tmp = p.tmp->next;
 	}
