@@ -91,10 +91,22 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
+char				*is_var(char *s);
+void				check_file(t_list *lst, char *str);
+void				add_new(t_var *p, t_cmd **res);
+int					count_fds(t_cmd *cmd, int type, int stat);
+t_cmd				*del_cmd(t_cmd **lst, char *str);
+int					i_var(char *s);
+char				**del_null(char **str);
+int					is_empty(t_list *tmp);
+int					count_el(char **s);
+void				i_valid_arg(t_list *tmp, t_var *p);
+void				get_dil_util(t_var *p, t_cmd **list_cmd, char *s, int *i);
+int					is_quoted(t_cmd **list_cmd, char *s, t_var *p, int *i);
 int					utils_pro_max(char *s, t_var *p);
 void				vars_checker_pro_max(t_var *p, t_exp **exp, char *s);
 void				words_checker_pro_max(t_var *p, t_exp **exp, char *s);
-char** 				duplicate(char** list);
+char				**duplicate(char **list);
 int					pipe_count(t_cmd *cmd);
 int					check_v(char *str);
 void				ft_putstr_fd(char *s, int fd);
@@ -219,10 +231,11 @@ t_list				*ft_lstlast_list(t_list *lst);
 int					chech_directory(char *path);
 void				change_path(t_env **env);
 t_cmd				*out_pipe(t_cmd *cmd);
-int					drop_util(int *i, t_var *p, int(*redire)(t_cmd *), int stat);
+int					drop_util(int *i, t_var *p, int (*redire)\
+					(t_cmd *), int stat);
 void				fenv(t_env **env);
 void				flist(t_list **list);
 void				del_n(t_env **lst, char	*str);
-t_cmd	*del_err(t_cmd *pev,t_cmd *cmd, int i);
+t_cmd				*del_err(t_cmd *pev, t_cmd *cmd, int i);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 11:58:36 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:02:25 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ void	rslt_excve(int i, t_var *var)
 		ft_putstr_fd(var->lst->cmd, 2);
 		ft_putstr_fd("\n", 2);
 		gvar.g_exit_status = 127;
-		// printf(">>%d\n", gvar.g_exit_status);
 		exit(gvar.g_exit_status);
 	}
 }
- 
+
 char	*get_path(char *str)
 {
 	int		i;
@@ -64,12 +63,15 @@ char	*get_path(char *str)
 	return (st);
 }
 
-void	c_hndl()
+void	c_hndl(int sig)
 {
+	(void) sig;
 	exit(130);
 }
-void	q_hndl()
+
+void	q_hndl(int sig)
 {
+	(void) sig;
 	ft_putstr_fd("Quit\n", 1);
 	exit(131);
 }
@@ -86,6 +88,12 @@ void	exec_cmd(t_var *var, char **e)
 	i = 0;
 	s1 = NULL;
 	st = valid_path(var->str, var->lst->cmd);
+	if (!var->lst->cmd[0])
+	{
+		free(st);
+		ft_putstr_fd("Minishell>$ : : command not found\n", 2);
+		exit(127);
+	}
 	if (ft_strchr(var->lst->cmd, '/') || !st)
 	{
 		st = get_path(var->lst->cmd);

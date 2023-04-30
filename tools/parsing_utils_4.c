@@ -34,10 +34,8 @@ void	add_back(t_var *p, t_cmd **list_cmd)
 	}
 }
 
-int	vars_checker_util(char *s, t_var *p)
+int	norm_vars(char *s, t_var *p)
 {
-	if (s[p->i] == '$' && s[p->i + 1] == '?')
-		return (free(p->s), p->s = ft_strdup("$?"), p->i += 2, 1);
 	if (s[p->i] == '$' && (!s[p->i + 1] || is_white_sp(s[p->i + 1])))
 	{
 		free(p->s);
@@ -52,6 +50,15 @@ int	vars_checker_util(char *s, t_var *p)
 		else
 			p->l = 0;
 	}
+	return (0);
+}
+
+int	vars_checker_util(char *s, t_var *p)
+{
+	if (s[p->i] == '$' && s[p->i + 1] == '?')
+		return (free(p->s), p->s = ft_strdup("$?"), p->i += 2, 1);
+	if (norm_vars(s, p))
+		return (1);
 	if (!p->l && s[p->i + 1] != 34 && s[p->i + 1] != 39)
 		return (p->i += 2, 1);
 	else if (!p->l && (s[p->i + 1] == 34 || s[p->i + 1] == 39))

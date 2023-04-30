@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-
 static void	freedom(char **p, int i)
 {
 	while (i >= 0)

@@ -15,10 +15,16 @@ NAME= minishell
 HEADER= minishell.h
 
 SRCS= tools/utils.c\
+	tools/utils_1.c\
+	tools/utils_2.c\
+	tools/utils_3.c\
+	tools/utils_4.c\
+	tools/utils_5.c\
 	src/lst_funs.c\
 	src/parsing.c\
 	tools/libft.c\
 	tools/libft_1.c\
+	tools/parsing_utils_5.c\
 	tools/parsing_utils_4.c\
 	tools/parsing_utils_3.c\
 	tools/parsing_utils_2.c\
@@ -57,7 +63,7 @@ SRCS= tools/utils.c\
 
 OBGJ= $(SRCS:.c=.o)
 CC = cc
-CFLAGS =  -g
+CFLAGS =  -g -Wall -Wextra -Werror
 R_L = "-L/Users/nouahidi/.brew/opt/readline/lib"
 R_I = "-I/Users/nouahidi/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline

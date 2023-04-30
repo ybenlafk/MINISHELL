@@ -6,16 +6,11 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 11:37:39 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:29:21 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	ft_lst_del(t_env **env, char *str)
-{
-	
-}
 
 t_env	*sort_ex(t_env	**env)
 {
@@ -96,7 +91,6 @@ void	norm_add(char *se, char *str, t_env	**env)
 void	add_plus(t_env **env, char *str, int i)
 {
 	int		j;
-	char	*st;
 	t_env	*t;
 
 	j = 1;

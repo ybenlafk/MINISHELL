@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/29 15:54:29 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:07:39 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	norm_cd2(t_env **env, t_list *lst)
 		s2 = ft_strjoin(ft_strdup(s1), "/..");
 		new_pwd(s2, env);
 		free(s2);
-		// free(s1);
 	}
 }
 
@@ -80,14 +79,15 @@ void	norm_cd1(t_env **env, t_list *lst)
 	}
 }
 
-void	check_file(t_list *lst, char *str)
+void	norm_cd_fi(t_env **env, t_list *lst, char *str)
 {
-	free(str);
-	if (chech_directory(lst->args[1]) == 2)
-		printf("Minishell> cd: %s: Not a directory\n", lst->args[1]);
+	if (chdir(lst->args[1]) != 0)
+		check_file(lst, str);
 	else
-		printf("Minishell> cd: %s: No such file or directory\n", lst->args[1]);
-	gvar.g_exit_status = 1;
+	{
+		change_path(env);
+		free(str);
+	}
 }
 
 void	cd_cmd(t_list *lst, t_env **env)
@@ -115,12 +115,5 @@ void	cd_cmd(t_list *lst, t_env **env)
 		free(str);
 		return ;
 	}
-	if (chdir(lst->args[1]) != 0)
-		check_file(lst, str);
-	else
-	{
-		change_path(env);
-		free(str);
-	}
+	norm_cd_fi(env, lst, str);
 }
-// while true; do leaks minishell; done

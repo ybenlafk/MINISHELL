@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/28 15:25:40 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:22:33 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*env_pwd(t_env **env)
 
 void	ft_command(t_list *list, int ind, t_env	**env)
 {
-	char *s;
+	char	*s;
 
 	s = NULL;
 	if (ind == 1)

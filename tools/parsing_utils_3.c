@@ -17,8 +17,8 @@
 
 char	*jwan(char *s1, char *s2, char *s3)
 {
-	char *s;
-	t_var p;
+	char	*s;
+	t_var	p;
 
 	p.i = 0;
 	p.j = 0;
@@ -76,7 +76,7 @@ void	lst_join_u(t_var *p)
 	ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->s, WORD, p->j));
 	if (p->tmp->type != VAR && p->tmp->type != WORD && p->tmp->type != EXIT_ST)
 		ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->tmp->str, p->tmp->type,
-					p->tmp->quote));
+				p->tmp->quote));
 	p->i = 1;
 }
 
@@ -84,14 +84,14 @@ void	lst_join_u1(t_var *p)
 {
 	if (!p->i)
 		ft_lstadd_back_cmd(&p->res, lst_new_cmd(p->tmp->str, p->tmp->type,
-					p->tmp->quote));
+				p->tmp->quote));
 	p->i = 0;
 	p->tmp = p->tmp->next;
 }
 
 t_cmd	*lst_join(t_cmd *cmd)
 {
-	t_var p;
+	t_var	p;
 
 	p.res = NULL;
 	p.tmp = cmd;
@@ -112,7 +112,7 @@ t_cmd	*lst_join(t_cmd *cmd)
 	}
 	if (!p.i)
 		ft_lstadd_back_cmd(&p.res, lst_new_cmd(p.tmp->str, p.tmp->type,
-					p.tmp->quote));
+				p.tmp->quote));
 	list_free(&cmd, ft_lstsize(cmd));
 	return (p.res);
 }

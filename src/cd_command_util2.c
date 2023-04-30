@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:22:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 14:48:27 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:29:33 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	change_path(t_env **env)
 void	old_pwd(char *str, t_env **env)
 {
 	t_env	*t;
-	int		i;
 	char	*st;
 
 	t = *env;
@@ -70,14 +69,16 @@ char	*del_slash(char *str)
 int	check_pwd(t_env **env, char *str)
 {
 	t_env	*t;
+	char	*s;
 
 	t = *env;
+	s = is_var(t->e);
 	if (ft_strlen(str) == 3)
 	{
 		while (t)
 		{
-			if (ft_strncmp("PWD", t->e, 3) == 0)
-				return (1);
+			if (ft_strcmp("PWD", s) == 0)
+				return (free(s), 1);
 			t = t->next;
 		}
 	}
@@ -85,12 +86,12 @@ int	check_pwd(t_env **env, char *str)
 	{
 		while (t)
 		{
-			if (ft_strncmp("OLDPWD", t->e, 6) == 0)
-				return (1);
+			if (ft_strcmp("OLDPWD", s) == 0)
+				return (free(s), 1);
 			t = t->next;
 		}
 	}
-	return (0);
+	return (free(s), 0);
 }
 
 int	chech_directory(char *path)

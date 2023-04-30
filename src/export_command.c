@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:51:37 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 11:49:30 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:28:23 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	check_var(char *str, t_env **env)
 {
 	t_env	*t;
 	int		i;
-	int		j;
 
 	t = *env;
 	i = 1;
@@ -78,7 +77,6 @@ void	add_exp(t_list	*lst, t_env	**env)
 {
 	int		i;
 	char	*str;
-	int		j;
 
 	i = 1;
 	while (lst->args[i])
@@ -89,7 +87,6 @@ void	add_exp(t_list	*lst, t_env	**env)
 		{
 			str = del_plus(lst->args[i]);
 			ft_lstadd_back(env, ft_lstnew(str));
-			// free(str);
 			i++;
 		}
 	}

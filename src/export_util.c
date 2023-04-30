@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:25:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 22:36:11 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:28:50 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	ft_print(char *str, t_list *lst)
 	char	*s2;
 
 	quotes = '"';
+	s1 = NULL;
 	i = 0;
 	while (str[i])
 	{
