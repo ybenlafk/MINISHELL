@@ -91,6 +91,16 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
+void				add_new(t_var *p, t_cmd **res);
+int					count_fds(t_cmd *cmd, int type, int stat);
+t_cmd				*del_cmd(t_cmd **lst, char *str);
+int					i_var(char *s);
+char				**del_null(char **str);
+int					is_empty(t_list *tmp);
+int 				count_el(char **s);
+void				i_valid_arg(t_list *tmp, t_var *p);
+void				get_dil_util(t_var *p, t_cmd **list_cmd, char *s, int *i);
+int					is_quoted(t_cmd **list_cmd, char *s, t_var *p, int *i);
 int					utils_pro_max(char *s, t_var *p);
 void				vars_checker_pro_max(t_var *p, t_exp **exp, char *s);
 void				words_checker_pro_max(t_var *p, t_exp **exp, char *s);
