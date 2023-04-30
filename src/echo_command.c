@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:43:48 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 11:36:16 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/30 18:13:26 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	echo_cmd(t_list *list)
 	}
 	if (check_args(list) == 1)
 		ft_putstr_fd ("\n", list->out);
-	gvar.g_exit_status = 0;
+	g_var.g_exit_status = 0;
 }

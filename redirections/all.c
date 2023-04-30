@@ -108,9 +108,7 @@ int	drop(t_var *p)
 t_cmd	*all(t_cmd *cmd, t_list **list)
 {
 	t_var	p;
-	t_cmd	*res;
 
-	res = NULL;
 	if (!cmd)
 		return (NULL);
 	p.j = 0;

@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 16:07:39 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 18:49:00 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,13 @@ void	norm_cd1(t_env **env, t_list *lst)
 	}
 }
 
-void	norm_cd_fi(t_env **env, t_list *lst, char *str)
+void	norm_cd_fi(t_list *lst, char *str)
 {
 	if (chdir(lst->args[1]) != 0)
 		check_file(lst, str);
 	else
-	{
-		change_path(env);
-		free(str);
-	}
+		printf("Minishell> cd: %s: No such file or directory\n", lst->args[1]);
+	g_var.g_exit_status = 1;
 }
 
 void	cd_cmd(t_list *lst, t_env **env)
@@ -102,7 +100,7 @@ void	cd_cmd(t_list *lst, t_env **env)
 		s1 = get_home(env);
 		if (chdir(s1) == -1)
 			ft_putstr_fd("cd: HOME not set\n", lst->out);
-		gvar.g_exit_status = 0;
+		g_var.g_exit_status = 0;
 		return ;
 	}
 	if (!str && !ft_strcmp(".", lst->args[1]))
@@ -115,5 +113,5 @@ void	cd_cmd(t_list *lst, t_env **env)
 		free(str);
 		return ;
 	}
-	norm_cd_fi(env, lst, str);
+	norm_cd_fi(lst, str);
 }

@@ -41,11 +41,23 @@ int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 	return (0);
 }
 
+void	parsing_norm(t_cmd **cmd, t_list **list, t_env *env)
+{
+	*list = create_list(*cmd);
+	*cmd = redire_heredoc(*cmd, env);
+	*cmd = all(*cmd, list);
+	*cmd = two_to_one(*cmd);
+	parser(*cmd, *list);
+	export_parser(list);
+	env_parser(list);
+	*list = unused_clear(*list);
+}
+
 t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 {
-	t_var vars;
-	t_list *list;
-	char *syn;
+	t_var	vars;
+	t_list	*list;
+	char	*syn;
 
 	vars.i = 0;
 	(void)env;
@@ -56,29 +68,15 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	cmd = expanding(env, cmd);
 	quotes_expander(cmd, env);
 	cmd = out_pipe(cmd);
-	syn = syntax_checker(cmd, p.s);
+	syn = syntax_checker(cmd);
 	if (syn)
 		return (list_free(&cmd, ft_lstsize(cmd)), error(syn), NULL);
 	cmd = lst_join(cmd);
 	if (pipe_count(cmd) >= 540)
-		return (list_free(&cmd, ft_lstsize(cmd)), ft_putstr_fd("Minishell: fork: Resource temporarily unavailable\n", 2), NULL);
-	list = create_list(cmd);
-	cmd = redire_heredoc(cmd, env);
-	cmd = all(cmd, &list);
-	cmd = two_to_one(cmd);
-	parser(cmd, list);
-	export_parser(&list);
-	env_parser(&list);
-	list = unused_clear(list);
-	// printf("<-------------------tokens-list---------------------->\n");
-	// vars.tmp = cmd;
-	// while (vars.tmp)
-	// {
-	// 	printf("value : |%s|\n", vars.tmp->str);
-	// 	// printf("type : |%d|\n", vars.tmp->type);
-	// 	printf("quotes : |%d|\n", vars.tmp->quote);
-	// 	vars.tmp = vars.tmp->next;
-	// }
-	list_free(&cmd, ft_lstsize(cmd));                              
+		return (list_free(&cmd, ft_lstsize(cmd)),
+			ft_putstr_fd("Minishell: fork: Resource temporarily unavailable\n",
+				2), NULL);
+	parsing_norm(&cmd, &list, env);
+	list_free(&cmd, ft_lstsize(cmd));
 	return (list);
 }

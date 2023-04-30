@@ -19,7 +19,7 @@ typedef struct glob
 	char	*pwd;
 }			t_gvar;
 
-extern t_gvar gvar;
+extern t_gvar g_var;
 
 # define WORD 0
 # define HEREDOC 1
@@ -91,8 +91,10 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
-char				*is_var(char *s);
 void				check_file(t_list *lst, char *str);
+char				*get_value(char *s);
+char				*is_var(char *s);
+void				get_var(t_var *p);
 void				add_new(t_var *p, t_cmd **res);
 int					count_fds(t_cmd *cmd, int type, int stat);
 t_cmd				*del_cmd(t_cmd **lst, char *str);
@@ -132,7 +134,6 @@ t_exp				*ft_lstlast_exp(t_exp *lst);
 t_env				*lst_new_env(char *e);
 void				rl_replace_line(const char *text, int clear_undo);
 void				ft_lstadd_back_exp(t_exp **lst, t_exp *new);
-void				free_env(t_env **philos, int len);
 t_cmd				*expanding(t_env *env, t_cmd *cmd);
 void				list_free(t_cmd **cmd, int len);
 void				ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);
@@ -155,7 +156,7 @@ char				*char_join(char *str, char c);
 char				*set_value(t_env *env, char *rep);
 char				*ft_strjoin(char *s1, char *s2);
 char				*check_set(t_exp *exp, t_env *env);
-char				*syntax_checker(t_cmd *cmd, char *str);
+char				*syntax_checker(t_cmd *cmd);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 char				*generate_name(void);
@@ -167,7 +168,6 @@ int					len(char *str);
 int					ft_isalnum(int i);
 int					ft_isalpha(int i);
 int					is_special_char(char c);
-int					check_or(char *s, char c);
 int					quotes_checker(t_cmd **list_cmd, char *s, t_var *p);
 int					sps_skiper(char *s, int *i);
 int					redires_checker(t_cmd **list_cmd, char *s, int *i);

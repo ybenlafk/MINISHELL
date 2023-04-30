@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 17:04:11 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 18:45:46 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,17 @@ void	rslt_excve(int i, t_var *var)
 	if (i)
 	{
 		perror("Minishell> ");
-		gvar.g_exit_status = ft_exit_status(errno);
-		exit(gvar.g_exit_status);
+		g_var.g_exit_status = ft_exit_status(errno);
+		exit(g_var.g_exit_status);
 	}
 	else
 	{
 		ft_putstr_fd("Minishell>$ command not found: ", 2);
 		ft_putstr_fd(var->lst->cmd, 2);
 		ft_putstr_fd("\n", 2);
-		gvar.g_exit_status = 127;
-		exit(gvar.g_exit_status);
+		g_var.g_exit_status = 127;
+		// printf(">>%d\n", g_var.g_exit_status);
+		exit(g_var.g_exit_status);
 	}
 }
 
@@ -138,7 +139,7 @@ void	norm_exec_childs(t_var *var, t_var *p, t_env **env, char **e)
 	{
 		if (!var->lst->is)
 			ft_command(var->lst, srch_cmd(var->lst), env);
-		exit(gvar.g_exit_status);
+		exit(g_var.g_exit_status);
 	}
 	else
 		if (!var->lst->is)
@@ -203,9 +204,9 @@ void	execution(t_list *list, t_env **env, char **e)
 		p.ext_st = waitpid(pid, &status, 0);
 		WIFEXITED(status);
 		while (wait(NULL) != -1);
-		gvar.g_exit_status = WEXITSTATUS(status);
+		g_var.g_exit_status = WEXITSTATUS(status);
 		free_all(p.str);
 	}
-	if (gvar.is)
-		gvar.g_exit_status = 1;
+	if (g_var.is)
+		g_var.g_exit_status = 1;
 }

@@ -107,5 +107,5 @@ void	check_file(t_list *lst, char *str)
 		printf("Minishell> cd: %s: Not a directory\n", lst->args[1]);
 	else
 		printf("Minishell> cd: %s: No such file or directory\n", lst->args[1]);
-	gvar.g_exit_status = 1;
+	g_var.g_exit_status = 1;
 }
