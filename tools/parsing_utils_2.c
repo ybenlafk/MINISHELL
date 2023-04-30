@@ -42,22 +42,6 @@ int	is_white_sp(char c)
 	return (0);
 }
 
-int	check_or(char *s, char c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		qutes_skiper(s + i, &i, 34);
-		qutes_skiper(s + i, &i, 39);
-		if (s[i] == c && s[i + 1] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 char	*is_quotes(char *s, int *i, int stat)
 {
 	t_var	p;

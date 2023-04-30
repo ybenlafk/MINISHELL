@@ -48,7 +48,6 @@ t_cmd	*del_redires(t_cmd *cmd)
 	return (list_free(&cmd, ft_lstsize(cmd)), p.res);
 }
 
-
 int	drop_util(int *i, t_var *p, int(*redire)(t_cmd *), int stat)
 {
 	(*i)--;

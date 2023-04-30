@@ -69,7 +69,6 @@ void	read_line(t_var *p, t_cmd *use, t_env *env)
 
 int	take_in(t_var *p, t_env *env, int stat)
 {
-	t_var	l;
 	t_cmd	*use;
 
 	if (!stat)

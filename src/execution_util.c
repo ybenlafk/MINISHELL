@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:41:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/29 14:42:00 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:19:13 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	lst_size_list(t_list *list)
 
 void	pipe_cases(t_var *var, t_var *p)
 {
-	static int i;
 	if (var->j && !var->lst->next)
 	{
 		dup2(var->stat, 0);

@@ -54,6 +54,8 @@ int pipe_checker(t_cmd *cmd)
     p.tmp = cmd;
     if (!cmd)
         return (0);
+    if (p.tmp->type == PIPE && p.tmp->next->type == PIPE)
+        return (1);
     if (p.tmp->type == PIPE)
         if (!p.tmp->next)
             return (1);
@@ -73,15 +75,13 @@ int pipe_checker(t_cmd *cmd)
     return (0);
 }
 
-char    *syntax_checker(t_cmd *cmd, char *str)
+char    *syntax_checker(t_cmd *cmd)
 {
     t_var p;
 
     p.tmp = cmd;
     if (pipe_checker(p.tmp))
         return ("|");
-    // if (check_or(str, '|'))
-	// 	return ("||");
     while (p.tmp)
     {
         if (redire_checker(&p.tmp, IN))

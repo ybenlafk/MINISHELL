@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command_util2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:22:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 22:26:43 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:19:03 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	change_path(t_env **env)
 void	old_pwd(char *str, t_env **env)
 {
 	t_env	*t;
-	int		i;
 	char	*st;
 
 	t = *env;

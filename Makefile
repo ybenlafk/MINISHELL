@@ -63,7 +63,7 @@ SRCS= tools/utils.c\
 
 OBGJ= $(SRCS:.c=.o)
 CC = cc
-CFLAGS =  -g
+CFLAGS =  -Wall -Wextra -Werror
 R_L = "-L/Users/ybenlafk/.brew/opt/readline/lib"
 R_I = "-I/Users/ybenlafk/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline

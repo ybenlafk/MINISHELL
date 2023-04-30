@@ -56,7 +56,7 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	cmd = expanding(env, cmd);
 	quotes_expander(cmd, env);
 	cmd = out_pipe(cmd);
-	syn = syntax_checker(cmd, p.s);
+	syn = syntax_checker(cmd);
 	if (syn)
 		return (list_free(&cmd, ft_lstsize(cmd)), error(syn), NULL);
 	cmd = lst_join(cmd);

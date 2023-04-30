@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:25:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/27 22:36:11 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:18:25 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ void	ft_print(char *str, t_list *lst)
 {
 	int		i;
 	char	quotes;
-	char	*s1;
 	char	*s2;
 
 	quotes = '"';
@@ -147,7 +146,6 @@ void	ft_print(char *str, t_list *lst)
 			{
 				ft_putstr_fd("\"", lst->out);
 				ft_putstr_fd("\"", lst->out);
-				free(s1);
 			}
 			if (str[i + 1])
 			{
