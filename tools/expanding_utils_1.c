@@ -102,4 +102,3 @@ void	lexer_pro_max(t_exp **exp, char *s, t_var *p)
 		vars_checker_pro_max(p, exp, s);
 	}
 }
-

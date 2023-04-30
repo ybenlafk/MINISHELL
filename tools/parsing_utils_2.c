@@ -17,7 +17,7 @@
 
 void	qutes_skiper(char *s, int *i, int type)
 {
-	int is;
+	int	is;
 
 	is = 0;
 	while (s[*i])
@@ -44,7 +44,7 @@ int	is_white_sp(char c)
 
 int	check_or(char *s, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -60,8 +60,8 @@ int	check_or(char *s, char c)
 
 char	*is_quotes(char *s, int *i, int stat)
 {
-	t_var p;
-	char *str;
+	t_var	p;
+	char	*str;
 
 	p.j = 0;
 	if (!stat)

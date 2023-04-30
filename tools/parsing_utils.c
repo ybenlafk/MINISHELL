@@ -89,15 +89,3 @@ char	*d_quote_trim(char *str)
 	s[j] = '\0';
 	return (free(str), s);
 }
-
-char	*char_to_str(char c)
-{
-	char	*str;
-
-	str = malloc(sizeof(char) * 2);
-	if (!str)
-		return (NULL);
-	str[0] = c;
-	str[1] = '\0';
-	return (str);
-}
