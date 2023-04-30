@@ -16,7 +16,7 @@ typedef struct glob
 {
 	int	g_exit_status;
 	int	is;
-	int	fd;
+	char	*pwd;
 }			t_gvar;
 
 extern t_gvar gvar;
@@ -91,6 +91,9 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
+int					utils_pro_max(char *s, t_var *p);
+void				vars_checker_pro_max(t_var *p, t_exp **exp, char *s);
+void				words_checker_pro_max(t_var *p, t_exp **exp, char *s);
 char** 				duplicate(char** list);
 int					pipe_count(t_cmd *cmd);
 int					check_v(char *str);

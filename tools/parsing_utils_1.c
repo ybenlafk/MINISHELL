@@ -70,6 +70,32 @@ void	get_dil_util(t_var *p, t_cmd **list_cmd, char *s, int *i)
 	free(p->s1);
 }
 
+int	is_quoted(t_cmd **list_cmd, char *s, t_var *p, int *i)
+{
+	char *str;
+
+	str = NULL;
+	if (s[*i] == 39)
+	{
+		str = is_quotes(s, i, 0);
+		if (!str)
+			return (1);
+		p->w = s_quote_trim(str);
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, -1));
+		free(p->w);
+	}
+	if (s[*i] == 34)
+	{
+		str = is_quotes(s, i, 1);
+		if (!str)
+			return (1);
+		p->w = d_quote_trim(str);
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, -1));
+		free(p->w);
+	}
+	return (0);
+}
+
 int	get_dilemiter(t_cmd **list_cmd, char *s, int *i)
 {
 	t_var p;
@@ -77,9 +103,14 @@ int	get_dilemiter(t_cmd **list_cmd, char *s, int *i)
 	p.i = 0;
 	if (sps_skiper(s, i))
 		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
-	if (quotes_checker(list_cmd, s, &p))
-		return (1);
-	get_dil_util(&p, list_cmd, s, i);
+	while (s[*i] && !is_white_sp(s[*i]) && !is_special_char(s[*i]))
+	{
+		if (is_quoted(list_cmd, s, &p, i))
+			return (1);
+		get_dil_util(&p, list_cmd, s, i);
+		if (is_quoted(list_cmd, s, &p, i))
+			return (1);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:41:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 19:06:39 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:42:00 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ void	pipe_cases(t_var *var, t_var *p)
 	else
 	{
 		dup2(p->fds[1], 1);
-		// if (!i++)
-		// 	dup2(p->fds[0], 0);
-		// else
-			dup2(var->stat, 0);
+		dup2(var->stat, 0);
 		if (close(p->fds[1]) == -1 || close(p->fds[0]) == -1)
 			exit(errno);
 	}

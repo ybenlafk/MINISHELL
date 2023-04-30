@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/29 14:13:16 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 11:58:36 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,17 @@ void	rslt_excve(int i, t_var *var)
 {
 	if (i)
 	{
-		perror("Minishell>$ ");
+		perror("Minishell> ");
 		gvar.g_exit_status = ft_exit_status(errno);
 		exit(gvar.g_exit_status);
 	}
 	else
 	{
-		ft_putstr_fd("Minishell>$ command not found: ", var->lst->out);
-		ft_putstr_fd(var->lst->cmd, var->lst->out);
-		write (1, "\n", 1);
+		ft_putstr_fd("Minishell>$ command not found: ", 2);
+		ft_putstr_fd(var->lst->cmd, 2);
+		ft_putstr_fd("\n", 2);
 		gvar.g_exit_status = 127;
+		// printf(">>%d\n", gvar.g_exit_status);
 		exit(gvar.g_exit_status);
 	}
 }
@@ -93,7 +94,7 @@ void	exec_cmd(t_var *var, char **e)
 		free(st);
 		if (chech_directory(var->lst->cmd) == 1)
 		{
-			ft_putstr_fd("Minishell>$ ", var->lst->out);
+			ft_putstr_fd("Minishell> ", var->lst->out);
 			ft_putstr_fd(var->lst->cmd, var->lst->out);
 			ft_putstr_fd(": is a directory\n", var->lst->out);
 			exit(126);
@@ -109,6 +110,7 @@ void	exec_cmd(t_var *var, char **e)
 		if (var->lst->out != 1)
 			dup2(var->lst->out, 1);
 		p.s = char_join(ft_strdup(st), '/');
+		free(st);
 		s1 = ft_strjoin(p.s, var->lst->cmd);
 		execve(s1, var->lst->args, e);
 	}
@@ -124,11 +126,13 @@ void	norm_exec_childs(t_var *var, t_var *p, t_env **env, char **e)
 			exit(errno);
 	if (srch_cmd(var->lst) && var->len_ > 1)
 	{
-		ft_command(var->lst, srch_cmd(var->lst), env);
-		exit(errno);
+		if (!var->lst->is)
+			ft_command(var->lst, srch_cmd(var->lst), env);
+		exit(gvar.g_exit_status);
 	}
 	else
-		exec_cmd(var, e);
+		if (!var->lst->is)
+			exec_cmd(var, e);
 }
 
 int	exec_childs(t_var *var, t_env **env, char **e)
@@ -179,8 +183,7 @@ void	execution(t_list *list, t_env **env, char **e)
 	{
 		while (p.lst)
 		{
-			if (!p.lst->is)
-				pid = exec_childs(&p, env, e);
+			pid = exec_childs(&p, env, e);
 			if (p.lst->in != 0)
 				close(p.lst->in);
 			if (p.lst->out != 1)
@@ -188,8 +191,8 @@ void	execution(t_list *list, t_env **env, char **e)
 			p.lst = p.lst->next;
 		}
 		p.ext_st = waitpid(pid, &status, 0);
-		while (wait(&status) != -1)
-			WIFEXITED(status);
+		WIFEXITED(status);
+		while (wait(NULL) != -1);
 		gvar.g_exit_status = WEXITSTATUS(status);
 		free_all(p.str);
 	}

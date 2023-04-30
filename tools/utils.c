@@ -48,6 +48,14 @@ char	*ft_strdup(char *s)
 	return (str);
 }
 
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	while (*s)
+		write(fd, &*s++, 1);
+}
+
 int	ft_lstsize(t_cmd *lst)
 {
 	t_cmd *tmp;
@@ -167,6 +175,9 @@ t_list	*unused_clear(t_list *list)
 		}
 		tmp = tmp->next;
 	}
+	tmp = list;
+	if (ft_lstlast_list(tmp)->is)
+		gvar.is = 1;
 	return (flist(&list), res);
 }
 // created a linked list where each node represente a command : type {t_list}
