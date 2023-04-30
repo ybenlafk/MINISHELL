@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_util3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 11:37:39 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:59:26 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,11 @@ char	*del_plus(char *str)
 
 	i = 0;
 	if (check_plus(str))
+	{
 		st = malloc(ft_strlen(str) - 1);
+		if (!st)
+			return (NULL);
+	}
 	else
 		return (st = str, st);
 	j = 0;

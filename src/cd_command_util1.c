@@ -70,6 +70,8 @@ char	*change_dr(char	*str)
 		return ("/");
 	j = i - j;
 	st = malloc(j);
+	if (!st)
+		return (NULL);
 	i = 0;
 	while (j > i)
 	{

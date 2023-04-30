@@ -15,7 +15,6 @@
 
 #include "../includes/minishell.h"
 
-
 int	lexer(t_cmd **list_cmd, char *s, t_var *p)
 {
 	p->i = 0;

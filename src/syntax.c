@@ -80,10 +80,8 @@ char    *syntax_checker(t_cmd *cmd, char *str)
     p.tmp = cmd;
     if (pipe_checker(p.tmp))
         return ("|");
-    if (check_or(str, '|'))
-		return ("||");
-	if (check_or(str, '&'))
-		return ("&&");
+    // if (check_or(str, '|'))
+	// 	return ("||");
     while (p.tmp)
     {
         if (redire_checker(&p.tmp, IN))

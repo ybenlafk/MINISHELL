@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command_util.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 00:32:42 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 16:14:11 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:58:48 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*del_dr(char *str)
 	}
 	i--;
 	st = malloc(i + 1);
+	if (!st)
+		return (NULL);
 	j = 0;
 	while (j <= i)
 	{
