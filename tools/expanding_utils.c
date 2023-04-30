@@ -12,44 +12,6 @@
 
 #include "../includes/minishell.h"
 
-t_exp	*ft_lstlast_exp(t_exp *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
-
-void	ft_lstadd_back_exp(t_exp **lst, t_exp *new)
-{
-	t_exp	*p;
-
-	if (lst && new)
-	{
-		if (!*lst)
-			*lst = new;
-		else
-		{
-			p = ft_lstlast_exp(*lst);
-			p->next = new;
-		}
-	}
-}
-
-t_exp	*lst_new_exp(char *value, int stat)
-{
-	t_exp	*new;
-
-	new = malloc(sizeof(t_exp));
-	if (!new)
-		return (NULL);
-	new->value = ft_strdup(value);
-	new->stat = stat;
-	new->next = NULL;
-	return (new);
-}
-
 void	get_var_pro_max(t_var *p)
 {
 	p->i = 0;
@@ -80,7 +42,7 @@ char	*check_set(t_exp *exp, t_env *env)
 
 	if (!env)
 		return (NULL);
-	tmp = exp;	
+	tmp = exp;
 	res = ft_strdup("");
 	while (tmp)
 	{
@@ -99,6 +61,7 @@ char	*check_set(t_exp *exp, t_env *env)
 	}
 	return (res);
 }
+
 int	ft_lstsize_exp(t_exp *lst)
 {
 	t_exp	*tmp;
@@ -115,6 +78,7 @@ int	ft_lstsize_exp(t_exp *lst)
 	}
 	return (len);
 }
+
 void	free_exp(t_exp **cmd, int len)
 {
 	t_exp	*tmp;
@@ -130,7 +94,7 @@ void	free_exp(t_exp **cmd, int len)
 
 void	quotes_expander(t_cmd *cmd, t_env *env)
 {
-	t_var 	p;
+	t_var	p;
 	t_exp	*exp;
 	char	*s;
 

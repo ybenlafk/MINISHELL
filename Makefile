@@ -18,16 +18,20 @@ SRCS= tools/utils.c\
 	src/lst_funs.c\
 	src/parsing.c\
 	tools/libft.c\
-	tools/expanding_utils_1.c\
-	tools/parsing_utils_1.c\
+	tools/libft_1.c\
+	tools/parsing_utils_4.c\
+	tools/parsing_utils_3.c\
 	tools/parsing_utils_2.c\
-	tools/expanding_utils.c\
+	tools/parsing_utils_1.c\
 	tools/parsing_utils.c\
 	tools/split.c\
 	redirections/all.c\
 	redirections/heredoc.c\
 	src/syntax.c\
 	src/parser.c\
+	tools/expanding_utils_2.c\
+	tools/expanding_utils_1.c\
+	tools/expanding_utils.c\
 	src/expanding.c\
 	src/command.c\
 	src/execution.c\

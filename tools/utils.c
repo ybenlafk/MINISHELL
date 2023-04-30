@@ -48,6 +48,14 @@ char	*ft_strdup(char *s)
 	return (str);
 }
 
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	while (*s)
+		write(fd, &*s++, 1);
+}
+
 int	ft_lstsize(t_cmd *lst)
 {
 	t_cmd *tmp;
