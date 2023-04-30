@@ -24,7 +24,7 @@ char	*new_pwd_norm(t_env **env, char	*str)
 		{
 			if (!ft_strcmp("PWD=/", t->e) && !ft_strcmp("PWD=/", str))
 				break ;
-			s1 = t->e;
+			s1 = ft_strdup(t->e);
 			ft_lstadd_back(env, ft_lstnew(str));
 			*env = ft_lstdelone(env, t->e);
 			return (free(str), s1);
@@ -48,7 +48,10 @@ void	new_pwd(char *str, t_env **env)
 	if (check_pwd(env, "OLDPWD"))
 	{
 		if (check_pwd(env, "PWD") && s2)
+		{
 			old_pwd(s2 + 4, env);
+			free(s2);
+		}
 		else
 			old_pwd("", env);
 	}
