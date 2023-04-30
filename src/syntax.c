@@ -82,8 +82,6 @@ char    *syntax_checker(t_cmd *cmd, char *str)
         return ("|");
     if (check_or(str, '|'))
 		return ("||");
-	if (check_or(str, '&'))
-		return ("&&");
     while (p.tmp)
     {
         if (redire_checker(&p.tmp, IN))

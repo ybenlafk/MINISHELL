@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/30 16:48:26 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:04:51 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ t_list	*unused_clear(t_list *list)
 {
 	t_list	*res;
 	t_list	*tmp;
+	char	*s[2];
 
+	s[0] = "";
+	s[1] = NULL;
 	res = NULL;
 	tmp = list;
 	while (tmp)
@@ -74,7 +77,7 @@ t_list	*unused_clear(t_list *list)
 		if (tmp->cmd)
 		{
 			if (tmp->is)
-				ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, tmp->in,
+				ft_lstadd_back_list(&res, lst_new_list(NULL, s, tmp->in,
 						tmp->out));
 			else
 				ft_lstadd_back_list(&res, lst_new_list(ft_strdup(tmp->cmd),

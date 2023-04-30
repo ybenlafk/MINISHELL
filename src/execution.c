@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 17:02:25 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:04:11 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	*get_path(char *str)
 	if (str[i] != '/')
 		return (NULL);
 	st = malloc(i);
+	if (!st)
+		return (NULL);
 	j = -1;
 	while (++j <= i)
 		st[j] = str[j];

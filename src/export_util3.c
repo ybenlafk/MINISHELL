@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 16:29:21 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:04:22 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,11 @@ char	*del_plus(char *str)
 
 	i = 0;
 	if (check_plus(str))
+	{
 		st = malloc(ft_strlen(str) - 1);
+		if (!st)
+			return (NULL);
+	}
 	else
 		return (st = str, st);
 	j = 0;
