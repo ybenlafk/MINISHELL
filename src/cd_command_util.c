@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 00:32:42 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 16:14:11 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/29 15:54:52 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	new_path(char	*str)
 	while (1)
 	{
 		if (!st[0])
-			return (0);
+			return (free(st), 0);
 		if (chdir(st) != -1)
 			return (free(st), 1);
 		else

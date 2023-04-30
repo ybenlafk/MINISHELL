@@ -26,6 +26,7 @@ char	*new_pwd_norm(t_env **env, char	*str)
 				break ;
 			s1 = t->e;
 			ft_lstadd_back(env, ft_lstnew(str));
+			*env = ft_lstdelone(env, t->e);
 			return (free(str), s1);
 		}
 		t = t->next;

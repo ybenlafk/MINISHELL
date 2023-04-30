@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/29 11:46:31 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/29 15:54:29 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	norm_cd2(t_env **env, t_list *lst)
 		s2 = ft_strjoin(ft_strdup(s1), "/..");
 		new_pwd(s2, env);
 		free(s2);
-		free(s1);
+		// free(s1);
 	}
 }
 
@@ -50,7 +50,7 @@ int	norm_cd(t_list	*lst, t_env	**env, char *str)
 			i = 0;
 			pwd_path = env_pwd(env) + del_head(env_pwd(env));
 			if (!new_path(pwd_path))
-				return (ft_putstr_fd("HOME not set\n", lst->out), 0);
+				return (chdir(getenv("PWD")), 0);
 		}
 		s2 = pwd_cmd();
 		s1 = ft_strjoin(ft_strdup("PWD="), s2);
@@ -111,7 +111,10 @@ void	cd_cmd(t_list *lst, t_env **env)
 		return ;
 	}
 	if (!norm_cd(lst, env, str))
+	{
+		free(str);
 		return ;
+	}
 	if (chdir(lst->args[1]) != 0)
 		check_file(lst, str);
 	else
