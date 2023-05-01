@@ -118,10 +118,7 @@ t_cmd	*all(t_cmd *cmd, t_list **list)
 	p.lst = *list;
 	while (p.tmp)
 	{
-		p.l = count_fds(p.tmp, IN, 0);
-		p.i = count_fds(p.tmp, OUT, 1);
-		p.fd_in = 0;
-		p.fd_out = 1;
+		fds_init(&p);
 		while (p.tmp && p.tmp->type != PIPE)
 		{
 			if (drop(&p))

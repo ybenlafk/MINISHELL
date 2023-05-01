@@ -32,6 +32,7 @@ SRCS= tools/utils.c\
 	tools/parsing_utils.c\
 	tools/split.c\
 	redirections/all.c\
+	redirections/heredoc_util.c\
 	redirections/heredoc.c\
 	src/syntax.c\
 	src/parser.c\

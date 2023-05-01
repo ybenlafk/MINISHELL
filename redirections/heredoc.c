@@ -12,39 +12,13 @@
 
 #include "../includes/minishell.h"
 
-void	ctl_c()
-{
-	close(0);
-}
-
-void	is_tty(t_var *p, t_cmd *use)
-{
-	int fd;
-
-	if (!ttyname(0))
-	{
-		free(p->s);
-		free(use->str);
-		free(p->tmp->str);
-		free(p->file);
-		fd = open(ttyname(2), O_RDONLY);
-		dup2(fd, 0);
-		p->fd = -1;
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		ft_putstr_fd("\n", 1);
-	}
-}
-
 void	read_line(t_var *p, t_cmd *use, t_env *env)
 {
-	t_exp	*exp;
 	t_var	var;
 
 	while (1)
 	{
-		exp = NULL;
+		var.exp = NULL;
 		signal(SIGINT, ctl_c);
 		p->s = readline("heredoc> ");
 		if (!p->s)
@@ -56,10 +30,10 @@ void	read_line(t_var *p, t_cmd *use, t_env *env)
 		}
 		if (!use->quote)
 		{
-			lexer_pro_max(&exp, p->s, &var);
+			lexer_pro_max(&var.exp, p->s, &var);
 			free(p->s);
-			p->s = check_set(exp, env);
-			free_exp(&exp, ft_lstsize_exp(exp));
+			p->s = check_set(var.exp, env);
+			free_exp(&var.exp, ft_lstsize_exp(var.exp));
 		}
 		p->s = char_join(p->s, '\n');
 		write (p->fd, p->s, len(p->s) + 1);
@@ -88,6 +62,23 @@ int	take_in(t_var *p, t_env *env, int stat)
 	return (p->fd);
 }
 
+int	herdoc_norm(t_var *p, t_env *env)
+{
+	if (p->tmp->next->type == SPACE)
+	{
+		p->fd = take_in(p, env, 0);
+		if (p->fd < 0)
+			return (1);
+	}
+	else
+	{
+		p->fd = take_in(p, env, 1);
+		if (p->fd < 0)
+			return (1);
+	}
+	return (0);
+}
+
 t_cmd	*redire_heredoc(t_cmd *cmd, t_env *env)
 {
 	t_var	p;
@@ -103,18 +94,7 @@ t_cmd	*redire_heredoc(t_cmd *cmd, t_env *env)
 		if (p.tmp->type == HEREDOC)
 		{
 			p.file = generate_name();
-			if (p.tmp->next->type == SPACE)
-			{
-				p.fd = take_in(&p, env, 0);
-				if (p.fd < 0)
-					return (NULL);
-			}
-			else
-			{
-				p.fd = take_in(&p, env, 1);
-				if (p.fd < 0)
-					return (NULL);
-			}
+			herdoc_norm(&p, env);
 			free(p.file);
 			close(p.fd);
 		}
