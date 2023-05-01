@@ -54,7 +54,7 @@ void	scapes(char *str, int *i)
 
 long long	ft_atoi(const char *st)
 {
-	int			i;
+	long		i;
 	long long	r;
 	long long	nb;
 
