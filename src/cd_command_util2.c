@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:22:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 18:43:06 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/04/30 23:40:20 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,29 @@ int	check_pwd(t_env **env, char *str)
 	char	*s;
 
 	t = *env;
-	s = is_var(t->e);
 	if (ft_strlen(str) == 3)
 	{
 		while (t)
 		{
+			s = is_var(t->e);
 			if (ft_strcmp("PWD", s) == 0)
 				return (free(s), 1);
 			t = t->next;
+			free(s);
 		}
 	}
 	else
 	{
 		while (t)
 		{
+			s = is_var(t->e);
 			if (ft_strcmp("OLDPWD", s) == 0)
 				return (free(s), 1);
 			t = t->next;
+			free(s);
 		}
 	}
-	return (free(s), 0);
+	return (0);
 }
 
 int	chech_directory(char *path)

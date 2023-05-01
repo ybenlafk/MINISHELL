@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/01 13:29:42 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:21:21 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,16 @@ void	norm_cd1(t_env **env, t_list *lst)
 	}
 }
 
-void	norm_cd_fi(t_list *lst, char *str)
+void	norm_cd_fi(t_list *lst, char *str, t_env **env)
 {
 	if (lst->args && chdir(lst->args[1]) != 0)
 		check_file(lst, str);
-	else if (lst->args)
-		printf("Minishell> cd: %s: No such file or directory\n", lst->args[1]);
-	g_var.g_exit_status = 1;
+	else
+	{
+		free(str);
+		change_path(env);
+		g_var.g_exit_status = 1;
+	}
 }
 
 void	cd_cmd(t_list *lst, t_env **env)
@@ -113,5 +116,5 @@ void	cd_cmd(t_list *lst, t_env **env)
 		free(str);
 		return ;
 	}
-	norm_cd_fi(lst, str);
+	norm_cd_fi(lst, str, env);
 }
