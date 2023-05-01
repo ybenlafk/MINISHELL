@@ -42,18 +42,17 @@ void	new_pwd(char *str, t_env **env)
 	char	*s1;
 
 	t = *env;
+	s2 = NULL;
 	s1 = del_slash(str);
 	if (check_pwd(env, "PWD"))
 		s2 = new_pwd_norm(env, ft_strdup(s1));
 	if (check_pwd(env, "OLDPWD"))
 	{
-		if (check_pwd(env, "PWD") && s2)
-		{
+		if (check_pwd(env, "PWD") && check_v(s2))
 			old_pwd(s2 + 4, env);
-			free(s2);
-		}
 		else
 			old_pwd("", env);
+		free(s2);
 	}
 	free(s1);
 }
