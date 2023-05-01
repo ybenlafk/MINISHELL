@@ -104,6 +104,7 @@ int	main(int ac, char **av, char **e)
 	env = NULL;
 	list = NULL;
 	fill_env(&env, e);
+	env = NULL;
 	while (1)
 	{
 		signal(SIGINT, c_hanndler);

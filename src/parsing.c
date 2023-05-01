@@ -57,7 +57,6 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	char	*syn;
 
 	vars.i = 0;
-	(void)env;
 	cmd = NULL;
 	list = NULL;
 	if (lexer(&cmd, p.s, &vars))

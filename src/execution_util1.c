@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:47:41 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/29 12:49:15 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 23:43:49 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	**path_research(t_env	**env)
 	int		i;
 
 	i = 0;
+	// puts("--\n");
 	t = *env;
 	while (t)
 	{
