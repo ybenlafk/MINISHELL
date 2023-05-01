@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 22:23:37 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/01 10:36:28 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:47:00 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct glob
 {
 	int		g_exit_status;
 	int		is;
-	char	*pwd;
+	int		err;
 }			t_gvar;
 
 extern t_gvar	g_var;
@@ -77,6 +77,7 @@ typedef struct var
 {
 	int				ext_st;
 	int				i;
+	int				ii;
 	int				j;
 	int				l;
 	int				is;
@@ -130,7 +131,7 @@ t_env				*sort_ex(t_env **env);
 t_env				*ft_lstnew(char *str);
 void				ctl_c(int i);
 void				fds_init(t_var *p);
-void				is_tty(t_var *p, t_cmd *use);
+void				is_tty(t_var *p);
 void				check_file(t_list *lst, char *str);
 void				get_var(t_var *p);
 void				add_new(t_var *p, t_cmd **res);

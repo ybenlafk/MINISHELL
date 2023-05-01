@@ -58,7 +58,7 @@ int	take_in(t_var *p, t_env *env, int stat)
 	p->tmp->type = IN;
 	free(use->str);
 	use->str = ft_strdup(p->file);
-	is_tty(p, use);
+	is_tty(p);
 	return (p->fd);
 }
 

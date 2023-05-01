@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 18:49:00 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/01 13:29:42 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	norm_cd(t_list	*lst, t_env	**env, char *str)
 	char			*s1;
 	char			*s2;
 
-	if (!str && !ft_strcmp("..", lst->args[1]))
+	if (lst->args && !str && !ft_strcmp("..", lst->args[1]))
 	{
 		if (i == 0)
 		{
@@ -81,9 +81,9 @@ void	norm_cd1(t_env **env, t_list *lst)
 
 void	norm_cd_fi(t_list *lst, char *str)
 {
-	if (chdir(lst->args[1]) != 0)
+	if (lst->args && chdir(lst->args[1]) != 0)
 		check_file(lst, str);
-	else
+	else if (lst->args)
 		printf("Minishell> cd: %s: No such file or directory\n", lst->args[1]);
 	g_var.g_exit_status = 1;
 }
@@ -94,7 +94,7 @@ void	cd_cmd(t_list *lst, t_env **env)
 	char			*s1;
 
 	str = pwd_cmd();
-	if (!lst->args[1])
+	if (lst->args && !lst->args[1])
 	{
 		free(str);
 		s1 = get_home(env);
@@ -103,7 +103,7 @@ void	cd_cmd(t_list *lst, t_env **env)
 		g_var.g_exit_status = 0;
 		return ;
 	}
-	if (!str && !ft_strcmp(".", lst->args[1]))
+	if (lst->args &&!str && !ft_strcmp(".", lst->args[1]))
 	{
 		norm_cd1(env, lst);
 		return ;

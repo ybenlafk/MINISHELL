@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/30 14:43:58 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 13:06:19 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*create_list(t_cmd *cmd)
 	p.i = pipe_count(cmd);
 	p.i++;
 	while (p.i--)
-		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, 0, 0));
+		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, 0, 1));
 	return (res);
 }
 

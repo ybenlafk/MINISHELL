@@ -18,16 +18,13 @@ void	ctl_c(int i)
 	close(0);
 }
 
-void	is_tty(t_var *p, t_cmd *use)
+void	is_tty(t_var *p)
 {
 	int	fd;
 
 	if (!ttyname(0))
 	{
 		free(p->s);
-		free(use->str);
-		free(p->tmp->str);
-		free(p->file);
 		fd = open(ttyname(2), O_RDONLY);
 		dup2(fd, 0);
 		p->fd = -1;
