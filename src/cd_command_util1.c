@@ -52,8 +52,8 @@ void	new_pwd(char *str, t_env **env)
 			old_pwd(s2 + 4, env);
 		else
 			old_pwd("", env);
-		free(s2);
 	}
+	free(s2);
 	free(s1);
 }
 
