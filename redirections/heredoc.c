@@ -28,7 +28,7 @@ void	read_line(t_var *p, t_cmd *use, t_env *env)
 			free(p->s);
 			break ;
 		}
-		if (!use->quote)
+		if (use && !use->quote)
 		{
 			lexer_pro_max(&var.exp, p->s, &var);
 			free(p->s);
@@ -45,7 +45,7 @@ int	take_in(t_var *p, t_env *env, int stat)
 {
 	t_cmd	*use;
 
-	if (!stat)
+	if (p->tmp->next->next && !stat)
 		use = p->tmp->next->next;
 	else
 		use = p->tmp->next;
@@ -64,7 +64,7 @@ int	take_in(t_var *p, t_env *env, int stat)
 
 int	herdoc_norm(t_var *p, t_env *env)
 {
-	if (p->tmp->next->type == SPACE)
+	if (p->tmp->next && p->tmp->next->type == SPACE)
 	{
 		p->fd = take_in(p, env, 0);
 		if (p->fd < 0)

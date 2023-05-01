@@ -17,22 +17,20 @@ int	in(t_cmd *cmd)
 	int	fd;
 
 	fd = 0;
-	cmd = cmd->next;
+	if (cmd)
+		cmd = cmd->next;
+	if (cmd && cmd->type == SPACE)
+		cmd = cmd->next;
 	if (cmd)
 	{
 		if (cmd->type == SPACE)
 			cmd = cmd->next;
-		if (cmd)
-		{
-			if (cmd->type == SPACE)
-				cmd = cmd->next;
-			if (cmd && cmd->type != AMBG)
-				fd = open(cmd->str, O_RDWR);
-			else
-				fd = -2;
-		}
+		if (cmd && cmd->type != AMBG)
+			fd = open(cmd->str, O_RDWR);
+		else
+			fd = -2;
 	}
-	if (fd == -1)
+	if (cmd && fd == -1)
 		printf("%s : no such file or directory\n", cmd->str);
 	return (fd);
 }
@@ -42,22 +40,20 @@ int	out(t_cmd *cmd)
 	int	fd;
 
 	fd = 0;
-	cmd = cmd->next;
+	if (cmd)
+		cmd = cmd->next;
+	if (cmd && cmd->type == SPACE)
+		cmd = cmd->next;
 	if (cmd)
 	{
 		if (cmd->type == SPACE)
 			cmd = cmd->next;
-		if (cmd)
-		{
-			if (cmd->type == SPACE)
-				cmd = cmd->next;
-			if (cmd && cmd->type != AMBG)
-				fd = open(cmd->str, O_CREAT | O_RDWR, 0777);
-			else
-				fd = -2;
-		}
+		if (cmd && cmd->type != AMBG)
+			fd = open(cmd->str, O_CREAT | O_RDWR, 0777);
+		else
+			fd = -2;
 	}
-	if (fd == -1)
+	if (cmd && fd == -1)
 		printf("%s : no such file or directory\n", cmd->str);
 	return (fd);
 }
@@ -67,22 +63,20 @@ int	append(t_cmd *cmd)
 	int	fd;
 
 	fd = 0;
-	cmd = cmd->next;
+	if (cmd)
+		cmd = cmd->next;
+	if (cmd && cmd->type == SPACE)
+		cmd = cmd->next;
 	if (cmd)
 	{
 		if (cmd->type == SPACE)
 			cmd = cmd->next;
-		if (cmd)
-		{
-			if (cmd->type == SPACE)
-				cmd = cmd->next;
-			if (cmd && cmd->type != AMBG)
-				fd = open(cmd->str, O_CREAT | O_APPEND | O_RDWR, 0777);
-			else
-				fd = -2;
-		}
+		if (cmd && cmd->type != AMBG)
+			fd = open(cmd->str, O_CREAT | O_APPEND | O_RDWR, 0777);
+		else
+			fd = -2;
 	}
-	if (fd == -1)
+	if (cmd && fd == -1)
 		printf("%s : no such file or directory\n", cmd->str);
 	return (fd);
 }
@@ -132,12 +126,13 @@ t_cmd	*all(t_cmd *cmd, t_list **list)
 		{
 			if (drop(&p))
 				p.lst->is = 1;
-			p.tmp = p.tmp->next;
+			if (p.tmp)
+				p.tmp = p.tmp->next;
 		}
-		p.lst = p.lst->next;
+		if (p.lst)
+			p.lst = p.lst->next;
 		if (p.tmp)
 			p.tmp = p.tmp->next;
 	}
-	// printf("---%d\n",(*list)->in);
 	return (del_redires(cmd));
 }

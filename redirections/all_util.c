@@ -29,19 +29,17 @@ t_cmd	*del_redires(t_cmd *cmd)
 
 	p.tmp = cmd;
 	p.res = NULL;
+	if (!cmd)
+		return (NULL);
 	while (p.tmp)
 	{
 		if (p.tmp->type == OUT || p.tmp->type == IN || p.tmp->type == APPEND)
 		{
 			p.tmp = p.tmp->next;
-			if (p.tmp)
-			{
-				if (p.tmp->type == SPACE)
-					p.tmp = p.tmp->next;
-				if (p.tmp)
-					if (p.tmp->type == WORD || p.tmp->type == VAR)
-						p.tmp = p.tmp->next;
-			}
+			if (p.tmp && p.tmp->type == SPACE)
+				p.tmp = p.tmp->next;
+			if (p.tmp && (p.tmp->type == WORD || p.tmp->type == VAR))
+				p.tmp = p.tmp->next;
 		}
 		del_util(&p);
 	}

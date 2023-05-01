@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/01 20:08:30 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 22:18:34 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ t_list	*unused_clear(t_list *list)
 {
 	t_list	*res;
 	t_list	*tmp;
-	char	*s[2];
 
-	s[0] = "";
-	s[1] = NULL;
 	res = NULL;
 	tmp = list;
 	while (tmp)
@@ -83,7 +80,7 @@ t_list	*unused_clear(t_list *list)
 	tmp = list;
 	if (ft_lstlast_list(tmp)->is)
 		g_var.is = 1;
-	return (res);
+	return (flist(&list), res);
 }
 
 int	pipe_count(t_cmd *cmd)

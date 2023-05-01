@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:39:09 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/01 20:39:20 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:46:53 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	norm_exit_cmd(t_list *lst, char *str)
 	if (!ft_isnum(str))
 		print_cmnt(str);
 	nb = ft_atoi(str);
-	// printf("%lld", nb);
 	if (nb <= LONG_MIN || nb >= LONG_MAX)
 		print_cmnt(str);
 	else

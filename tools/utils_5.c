@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/01 20:12:32 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 21:54:08 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,12 @@ int	split_it(t_var *p, t_env *env)
 	char	*s;
 
 	s = set_value(env, p->s);
-	p->s1 = ft_strdup(s);
 	if (!s)
 		return(-1);
 	p->str = ft_split(s, ' ');
 	free(s);
 	i = array_len(p->str);
-	// free(p->s);
+	free(p->s);
 	free_all(p->str);
 	return (i);
 }
@@ -114,14 +113,8 @@ void	where_norm(t_var *p, t_env *env)
 	while (p->tmp && p->tmp->type != PIPE)
 	{
 		if (p->tmp->type == VAR)
-		{
 			if (ch_norm(p, env) != 1)
-			{
 				p->tmp->type = AMBG;
-				free(p->s1);
-				free(p->s);
-			}
-		}
 		if (p->tmp)
 			p->tmp = p->tmp->next;
 	}
