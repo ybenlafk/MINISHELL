@@ -32,6 +32,7 @@ SRCS= tools/utils.c\
 	tools/parsing_utils.c\
 	tools/split.c\
 	redirections/all.c\
+	redirections/heredoc_util.c\
 	redirections/heredoc.c\
 	src/syntax.c\
 	src/parser.c\
@@ -63,9 +64,9 @@ SRCS= tools/utils.c\
 
 OBGJ= $(SRCS:.c=.o)
 CC = cc
-CFLAGS =   -Wall -Wextra -Werror
-R_L = "-L/Users/nouahidi/.brew/opt/readline/lib"
-R_I = "-I/Users/nouahidi/.brew/opt/readline/include"
+CFLAGS = -g -Wall -Wextra -Werror
+R_L = "-L/Users/ybenlafk/.brew/opt/readline/lib"
+R_I = "-I/Users/ybenlafk/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline
 FRM = rm -rf
 

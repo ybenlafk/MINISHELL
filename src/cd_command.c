@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 23:12:29 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:21:21 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	norm_cd(t_list	*lst, t_env	**env, char *str)
 	char			*s1;
 	char			*s2;
 
-	if (!str && !ft_strcmp("..", lst->args[1]))
+	if (lst->args && !str && !ft_strcmp("..", lst->args[1]))
 	{
 		if (i == 0)
 		{
@@ -81,7 +81,7 @@ void	norm_cd1(t_env **env, t_list *lst)
 
 void	norm_cd_fi(t_list *lst, char *str, t_env **env)
 {
-	if (chdir(lst->args[1]) != 0)
+	if (lst->args && chdir(lst->args[1]) != 0)
 		check_file(lst, str);
 	else
 	{
@@ -97,7 +97,7 @@ void	cd_cmd(t_list *lst, t_env **env)
 	char			*s1;
 
 	str = pwd_cmd();
-	if (!lst->args[1])
+	if (lst->args && !lst->args[1])
 	{
 		free(str);
 		s1 = get_home(env);
@@ -106,7 +106,7 @@ void	cd_cmd(t_list *lst, t_env **env)
 		g_var.g_exit_status = 0;
 		return ;
 	}
-	if (!str && !ft_strcmp(".", lst->args[1]))
+	if (lst->args &&!str && !ft_strcmp(".", lst->args[1]))
 	{
 		norm_cd1(env, lst);
 		return ;

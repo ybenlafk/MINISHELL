@@ -50,7 +50,7 @@ void	parsing_norm(t_cmd **cmd, t_list **list, t_env *env)
 	parser(*cmd, *list);
 	export_parser(list);
 	env_parser(list);
-	*list = unused_clear(*list);
+	// *list = unused_clear(*list);
 }
 
 t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
@@ -77,6 +77,15 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 			ft_putstr_fd("Minishell: fork: Resource temporarily unavailable\n",
 				2), NULL);
 	parsing_norm(&cmd, &list, env);
+	// printf("<-------------------tokens-list---------------------->\n");
+	// vars.tmp = cmd;
+	// while (vars.tmp)
+	// {
+	// 	printf("value : |%s|\n", vars.tmp->str);
+	// 	// printf("type : |%d|\n", vars.tmp->type);
+	// 	// printf("quotes : |%d|\n", vars.tmp->quote);
+	// 	vars.tmp = vars.tmp->next;
+	// }
 	list_free(&cmd, ft_lstsize(cmd));
 	return (list);
 }

@@ -85,18 +85,21 @@ int	drop(t_var *p)
 {
 	if (p->tmp->type == IN)
 	{
-		if (drop_util(&p->l, p, in, 1))
-			return (1);
+		if (!p->lst->is)
+			if (drop_util(&p->l, p, in, 1))
+				return (1);
 	}
 	else if (p->tmp->type == OUT)
 	{
-		if (drop_util(&p->i, p, out, 0))
-			return (1);
+		if (!p->lst->is)
+			if (drop_util(&p->i, p, out, 0))
+				return (1);
 	}
 	else if (p->tmp->type == APPEND)
 	{
-		if (drop_util(&p->i, p, append, 0))
-			return (1);
+		if (!p->lst->is)
+			if (drop_util(&p->i, p, append, 0))
+				return (1);
 	}
 	if (p->lst && !p->l)
 		p->lst->in = p->fd_in;
@@ -118,10 +121,7 @@ t_cmd	*all(t_cmd *cmd, t_list **list)
 	p.lst = *list;
 	while (p.tmp)
 	{
-		p.l = count_fds(p.tmp, IN, 0);
-		p.i = count_fds(p.tmp, OUT, 1);
-		p.fd_in = 0;
-		p.fd_out = 1;
+		fds_init(&p);
 		while (p.tmp && p.tmp->type != PIPE)
 		{
 			if (drop(&p))
@@ -132,5 +132,6 @@ t_cmd	*all(t_cmd *cmd, t_list **list)
 		if (p.tmp)
 			p.tmp = p.tmp->next;
 	}
+	// printf("---%d\n",(*list)->in);
 	return (del_redires(cmd));
 }

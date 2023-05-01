@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/30 14:42:50 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 11:27:01 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,29 @@
 void	env_parser(t_list **list)
 {
 	t_list	*tmp;
+	int		i;
 
 	tmp = *list;
 	while (tmp)
 	{
+		i = 0;
 		if (tmp->cmd && !tmp->is)
 		{
 			if (!ft_strcmp(tmp->cmd, "env"))
 			{
 				if (tmp->args[1])
 				{
-					printf("Minishell: env has no options.\n");
+					printf("Minishell: env has no options : %s\n",tmp->args[1]);
 					free(tmp->cmd);
 					tmp->cmd = NULL;
 					free_all(tmp->args);
-					break ;
+					i = 1;
 				}
 			}
 		}
 		tmp = tmp->next;
 	}
+	g_var.is = i;
 }
 
 t_cmd	*out_pipe(t_cmd *cmd)

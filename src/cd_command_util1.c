@@ -102,9 +102,9 @@ char	*env_oldpwd(t_env	**env)
 void	check_file(t_list *lst, char *str)
 {
 	free(str);
-	if (chech_directory(lst->args[1]) == 2)
+	if (lst->args && chech_directory(lst->args[1]) == 2)
 		printf("Minishell> cd: %s: Not a directory\n", lst->args[1]);
-	else
+	else if (lst->args)
 		printf("Minishell> cd: %s: No such file or directory\n", lst->args[1]);
 	g_var.g_exit_status = 1;
 }

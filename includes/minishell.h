@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/30 22:23:37 by ybenlafk          #+#    #+#             */
+/*   Updated: 2023/05/01 12:47:00 by ybenlafk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -11,15 +23,14 @@
 # include <unistd.h>
 # include <sys/stat.h>
 
-
 typedef struct glob
 {
-	int	g_exit_status;
-	int	is;
-	char	*pwd;
+	int		g_exit_status;
+	int		is;
+	int		err;
 }			t_gvar;
 
-extern t_gvar g_var;
+extern t_gvar	g_var;
 
 # define WORD 0
 # define HEREDOC 1
@@ -66,6 +77,7 @@ typedef struct var
 {
 	int				ext_st;
 	int				i;
+	int				ii;
 	int				j;
 	int				l;
 	int				is;
@@ -91,50 +103,49 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
-void				check_file(t_list *lst, char *str);
-char				*get_value(char *s);
-char				*is_var(char *s);
-void				get_var(t_var *p);
-void				add_new(t_var *p, t_cmd **res);
-int					count_fds(t_cmd *cmd, int type, int stat);
-t_cmd				*del_cmd(t_cmd **lst, char *str);
-int					i_var(char *s);
-char				**del_null(char **str);
-int					is_empty(t_list *tmp);
-int					count_el(char **s);
-void				i_valid_arg(t_list *tmp, t_var *p);
-void				get_dil_util(t_var *p, t_cmd **list_cmd, char *s, int *i);
-int					is_quoted(t_cmd **list_cmd, char *s, t_var *p, int *i);
-int					utils_pro_max(char *s, t_var *p);
-void				vars_checker_pro_max(t_var *p, t_exp **exp, char *s);
-void				words_checker_pro_max(t_var *p, t_exp **exp, char *s);
-char				**duplicate(char **list);
-int					pipe_count(t_cmd *cmd);
-int					check_v(char *str);
-void				ft_putstr_fd(char *s, int fd);
-void				*ft_calloc(long count, long size);
-void				env_parser(t_list **list);
-void				export_parser(t_list **list);
-int					ft_lstsize_exp(t_exp *lst);
-void				free_exp(t_exp **cmd, int len);
-t_cmd				*all(t_cmd *cmd, t_list **list);
-t_cmd				*two_to_one(t_cmd *cmd);
 t_list				*parsing(t_cmd *cmd, t_var p, t_env *env);
 t_list				*unused_clear(t_list *list);
 t_list				*lst_new_list(char *cmd, char **args, int in, int out);
 t_list				*last_lst(t_list *lst);
 t_list				*create_list(t_cmd *cmd);
+t_list				*ft_lstlast_list(t_list *lst);
+t_cmd				*all(t_cmd *cmd, t_list **list);
+t_cmd				*two_to_one(t_cmd *cmd);
 t_cmd				*redire_heredoc(t_cmd *cmd, t_env *env);
 t_cmd				*ft_lstlast_cmd(t_cmd *lst);
 t_cmd				*lst_dup(t_cmd *cmd);
+t_cmd				*del_cmd(t_cmd **lst, char *str);
+t_cmd				*expanding(t_env *env, t_cmd *cmd);
 t_cmd				*lst_join(t_cmd *cmd);
 t_cmd				*lst_new_cmd(char *cmd, int type, int quote);
+t_cmd				*del_redires(t_cmd *cmd);
+t_cmd				*all(t_cmd *cmd, t_list **list);
+t_cmd				*out_pipe(t_cmd *cmd);
+t_cmd				*del_err(t_cmd *pev, t_cmd *cmd, int i);
 t_exp				*lst_new_exp(char *value, int stat);
 t_exp				*ft_lstlast_exp(t_exp *lst);
+t_env				*ft_lstlast_env(t_env *lst);
 t_env				*lst_new_env(char *e);
+t_env				*ft_lstdelone(t_env **lst, char *str);
+t_env				*sort_ex(t_env **env);
+t_env				*ft_lstnew(char *str);
+void				ctl_c(int i);
+void				fds_init(t_var *p);
+void				is_tty(t_var *p);
+void				check_file(t_list *lst, char *str);
+void				get_var(t_var *p);
+void				add_new(t_var *p, t_cmd **res);
+void				i_valid_arg(t_list *tmp, t_var *p);
+void				get_dil_util(t_var *p, t_cmd **list_cmd, char *s, int *i);
+void				vars_checker_pro_max(t_var *p, t_exp **exp, char *s);
+void				words_checker_pro_max(t_var *p, t_exp **exp, char *s);
+void				ft_putstr_fd(char *s, int fd);
+void				*ft_calloc(long count, long size);
+void				env_parser(t_list **list);
+void				export_parser(t_list **list);
+void				free_exp(t_exp **cmd, int len);
 void				rl_replace_line(const char *text, int clear_undo);
 void				ft_lstadd_back_exp(t_exp **lst, t_exp *new);
-t_cmd				*expanding(t_env *env, t_cmd *cmd);
 void				list_free(t_cmd **cmd, int len);
 void				ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);
 void				ft_lstadd_back_env(t_env **lst, t_env *new);
@@ -146,6 +157,28 @@ void				quotes_expander(t_cmd *cmd, t_env *env);
 void				lexer_pro_max(t_exp **exp, char *s, t_var *p);
 void				error(char *e);
 void				ft_lstadd_back_list(t_list **lst, t_list *new);
+void				cd_cmd(t_list *list, t_env **env);
+void				echo_cmd(t_list *list);
+void				env_cmd(t_list *list, t_env **env);
+void				export_cmd(t_env **env, t_list *lst);
+void				ft_lstdelone1(t_env **lst, char *str);
+void				unset_cmd(t_list *lst, t_env **env);
+void				execution(t_list *list, t_env **env, char **e);
+void				ft_command(t_list *list, int ind, t_env **env);
+void				exit_cmd(t_list *lst);
+void				add_plus(t_env **env, char *str, int i);
+void				ft_lstadd_back(t_env **lst, t_env *new);
+void				print_ex(t_env *env, t_list *lst);
+void				ft_print(char *str, t_list *lst);
+void				add_exp(t_list *lst, t_env **env);
+void				del_util(t_var *p);
+void				new_pwd(char *str, t_env **env);
+void				old_pwd(char *str, t_env **env);
+void				pipe_cases(t_var *var, t_var *p);
+void				change_path(t_env **env);
+void				fenv(t_env **env);
+void				flist(t_list **list);
+void				del_n(t_env **lst, char	*str);
 char				*ft_strdup(char *s);
 char				*char_to_str(char c);
 char				*s_quote_trim(char *str);
@@ -160,8 +193,24 @@ char				*syntax_checker(t_cmd *cmd);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 char				*generate_name(void);
+char				*pwd_cmd(void);
+char				*del_plus(char *str);
+char				*get_home(t_env **env);
+char				*env_pwd(t_env **env);
+char				*get_pwd(t_env **env);
+char				*del_dr(char *str);
+char				*get_home(t_env **env);
+char				*change_dr(char	*str);
+char				*new_pwd_norm(t_env **env, char	*str);
+char				*del_slash(char *str);
+char				*ft_strchr(const char *str, int s);
+char				*valid_path(char	**tab, char *str);
+char				**path_research(t_env	**env);
+char				*get_value(char *s);
+char				*is_var(char *s);
+char				**del_null(char **str);
+char				**duplicate(char **list);
 int					count_fds(t_cmd *cmd, int type, int stat);
-long long			ft_atoi(const char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_lstsize(t_cmd *lst);
 int					len(char *str);
@@ -174,68 +223,34 @@ int					redires_checker(t_cmd **list_cmd, char *s, int *i);
 int					env_size(t_env *lst);
 int					parser(t_cmd *cmd, t_list *list);
 int					is_white_sp(char c);
-void				cd_cmd(t_list *list, t_env **env);
-char				*pwd_cmd(void);
-void				echo_cmd(t_list *list);
-void				env_cmd(t_list *list, t_env **env);
-void				export_cmd(t_env **env, t_list *lst);
 int					ft_strlen_var(char *str);
 int					ft_strncmp(const char *str1, const char *str2, int n);
-t_env				*ft_lstdelone(t_env **lst, char *str);
-void				ft_lstdelone1(t_env **lst, char *str);
-void				unset_cmd(t_list *lst, t_env **env);
-void				execution(t_list *list, t_env **env, char **e);
-void				ft_command(t_list *list, int ind, t_env **env);
-void				exit_cmd(t_list *lst);
-t_env				*sort_ex(t_env **env);
 int					ft_lstsize_en(t_env *lst);
-t_env				*ft_lstnew(char *str);
 int					ft_strncmp(const char *str1, const char *str2, int n);
 int					ft_strlen(char *str);
-char				*del_plus(char *str);
-void				add_plus(t_env **env, char *str, int i);
-void				ft_lstadd_back(t_env **lst, t_env *new);
-void				print_ex(t_env *env, t_list *lst);
-void				ft_print(char *str, t_list *lst);
 int					check_plus(char *str);
 int					check_rot(t_env *env, char *str);
-void				add_exp(t_list *lst, t_env **env);
 int					norm_exp(t_env **env, char *str, int i);
-t_cmd				*del_redires(t_cmd *cmd);
-t_cmd				*all(t_cmd *cmd, t_list **list);
-void				del_util(t_var *p);
 int					drop(t_var *p);
-char				*get_home(t_env **env);
-char				*env_pwd(t_env **env);
 int					del_head(char *str);
 int					del_head(char *str);
-char				*get_pwd(t_env **env);
 int					new_path(char	*str);
-char				*del_dr(char *str);
-char				*get_home(t_env **env);
-char				*change_dr(char	*str);
-void				new_pwd(char *str, t_env **env);
-char				*new_pwd_norm(t_env **env, char	*str);
 int					check_pwd(t_env **env, char *str);
-char				*del_slash(char *str);
-void				old_pwd(char *str, t_env **env);
 int					lst_size_list(t_list *list);
-void				pipe_cases(t_var *var, t_var *p);
-char				*ft_strchr(const char *str, int s);
 int					ft_envcmp(char	*str);
-char				*valid_path(char	**tab, char *str);
-char				**path_research(t_env	**env);
 int					srch_cmd(t_list *list);
-t_env				*ft_lstlast_env(t_env *lst);
-t_list				*ft_lstlast_list(t_list *lst);
 int					chech_directory(char *path);
-void				change_path(t_env **env);
-t_cmd				*out_pipe(t_cmd *cmd);
-int					drop_util(int *i, t_var *p, int (*redire)\
+int					drop_util(int *i, t_var *p, int (*redire)
 					(t_cmd *), int stat);
-void				fenv(t_env **env);
-void				flist(t_list **list);
-void				del_n(t_env **lst, char	*str);
-t_cmd				*del_err(t_cmd *pev, t_cmd *cmd, int i);
+int					count_fds(t_cmd *cmd, int type, int stat);
+int					i_var(char *s);
+int					is_empty(t_list *tmp);
+int					count_el(char **s);
+int					is_quoted(t_cmd **list_cmd, char *s, t_var *p, int *i);
+int					utils_pro_max(char *s, t_var *p);
+int					pipe_count(t_cmd *cmd);
+int					check_v(char *str);
+int					ft_lstsize_exp(t_exp *lst);
+long long			ft_atoi(const char *str);
 
 #endif
