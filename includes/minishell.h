@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 22:23:37 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/01 12:47:00 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 18:43:47 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ extern t_gvar	g_var;
 # define SPACE 6
 # define VAR 7
 # define EXIT_ST 8
+# define AMBG 9
+
 
 typedef struct array
 {
@@ -57,6 +59,7 @@ typedef struct list
 	char			*str;
 	int				type;
 	int				quote;
+	int				is;
 	struct list		*next;
 }					t_cmd;
 
@@ -103,6 +106,7 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
+void					del_gus(t_list **list);
 t_list				*parsing(t_cmd *cmd, t_var p, t_env *env);
 t_list				*unused_clear(t_list *list);
 t_list				*lst_new_list(char *cmd, char **args, int in, int out);
@@ -117,7 +121,7 @@ t_cmd				*lst_dup(t_cmd *cmd);
 t_cmd				*del_cmd(t_cmd **lst, char *str);
 t_cmd				*expanding(t_env *env, t_cmd *cmd);
 t_cmd				*lst_join(t_cmd *cmd);
-t_cmd				*lst_new_cmd(char *cmd, int type, int quote);
+t_cmd				*lst_new_cmd(char *cmd, int type, int quote, int is);
 t_cmd				*del_redires(t_cmd *cmd);
 t_cmd				*all(t_cmd *cmd, t_list **list);
 t_cmd				*out_pipe(t_cmd *cmd);
@@ -129,6 +133,7 @@ t_env				*lst_new_env(char *e);
 t_env				*ft_lstdelone(t_env **lst, char *str);
 t_env				*sort_ex(t_env **env);
 t_env				*ft_lstnew(char *str);
+void				split_var(t_var *p, t_cmd **res, t_env *env);
 void				ctl_c(int i);
 void				fds_init(t_var *p);
 void				is_tty(t_var *p);
@@ -251,6 +256,7 @@ int					utils_pro_max(char *s, t_var *p);
 int					pipe_count(t_cmd *cmd);
 int					check_v(char *str);
 int					ft_lstsize_exp(t_exp *lst);
+int					array_len(char **s);
 long long			ft_atoi(const char *str);
-
+int					check_exp(t_cmd *cmd, t_env *env);
 #endif

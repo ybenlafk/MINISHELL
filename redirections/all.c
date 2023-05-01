@@ -26,11 +26,13 @@ int	in(t_cmd *cmd)
 		{
 			if (cmd->type == SPACE)
 				cmd = cmd->next;
-			if (cmd)
+			if (cmd && cmd->type != AMBG)
 				fd = open(cmd->str, O_RDWR);
+			else
+				fd = -2;
 		}
 	}
-	if (fd < 0)
+	if (fd == -1)
 		printf("%s : no such file or directory\n", cmd->str);
 	return (fd);
 }
@@ -49,11 +51,13 @@ int	out(t_cmd *cmd)
 		{
 			if (cmd->type == SPACE)
 				cmd = cmd->next;
-			if (cmd)
+			if (cmd && cmd->type != AMBG)
 				fd = open(cmd->str, O_CREAT | O_RDWR, 0777);
+			else
+				fd = -2;
 		}
 	}
-	if (fd < 0)
+	if (fd == -1)
 		printf("%s : no such file or directory\n", cmd->str);
 	return (fd);
 }
@@ -72,11 +76,13 @@ int	append(t_cmd *cmd)
 		{
 			if (cmd->type == SPACE)
 				cmd = cmd->next;
-			if (cmd)
+			if (cmd && cmd->type != AMBG)
 				fd = open(cmd->str, O_CREAT | O_APPEND | O_RDWR, 0777);
+			else
+				fd = -2;
 		}
 	}
-	if (fd < 0)
+	if (fd == -1)
 		printf("%s : no such file or directory\n", cmd->str);
 	return (fd);
 }

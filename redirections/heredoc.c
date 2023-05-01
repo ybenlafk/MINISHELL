@@ -99,7 +99,7 @@ t_cmd	*redire_heredoc(t_cmd *cmd, t_env *env)
 			close(p.fd);
 		}
 		ft_lstadd_back_cmd(&res,
-			lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote));
+			lst_new_cmd(p.tmp->str, p.tmp->type, p.tmp->quote, p.tmp->is));
 		p.tmp = p.tmp->next;
 	}
 	list_free(&cmd, ft_lstsize(cmd));

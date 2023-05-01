@@ -99,8 +99,10 @@ int	main(int ac, char **av, char **e)
 	(void)ac;
 	(void)av;
 	g_var.g_exit_status = 0;
+	g_var.err = 0;
 	g_var.is = 0;
 	env = NULL;
+	list = NULL;
 	fill_env(&env, e);
 	while (1)
 	{

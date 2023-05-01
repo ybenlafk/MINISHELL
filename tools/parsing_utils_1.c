@@ -63,7 +63,7 @@ void	get_dil_util(t_var *p, t_cmd **list_cmd, char *s, int *i)
 	}
 	if (p->j)
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s1, WORD, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s1, WORD, 0, 0));
 		p->j = 0;
 	}
 	free(p->s1);
@@ -80,7 +80,7 @@ int	is_quoted(t_cmd **list_cmd, char *s, t_var *p, int *i)
 		if (!str)
 			return (1);
 		p->w = s_quote_trim(str);
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, -1));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, -1, 0));
 		free(p->w);
 	}
 	if (s[*i] == 34)
@@ -89,7 +89,7 @@ int	is_quoted(t_cmd **list_cmd, char *s, t_var *p, int *i)
 		if (!str)
 			return (1);
 		p->w = d_quote_trim(str);
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, -1));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, -1, 0));
 		free(p->w);
 	}
 	return (0);

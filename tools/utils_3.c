@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/01 13:06:19 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:01:43 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ void	add_new(t_var *p, t_cmd **res)
 			else
 			{
 				ft_lstadd_back_cmd(res, lst_new_cmd(p->tmp->str, p->tmp->type,
-						p->tmp->quote));
+						p->tmp->quote, p->tmp->is));
 				p->tmp = p->tmp->next;
 			}
 		}
 		else
 		{
 			ft_lstadd_back_cmd(res, lst_new_cmd(p->tmp->str, p->tmp->type,
-					p->tmp->quote));
+					p->tmp->quote, p->tmp->is));
 			p->tmp = p->tmp->next;
 		}
 	}
@@ -94,7 +94,7 @@ t_cmd	*del_cmd(t_cmd **lst, char *str)
 	{
 		if (ft_strcmp(str, tmp->str) != 0)
 			ft_lstadd_back_cmd(&t, lst_new_cmd(tmp->str, tmp->type,
-					tmp->quote));
+					tmp->quote, tmp->is));
 		tmp = tmp->next;
 	}
 	return (t);

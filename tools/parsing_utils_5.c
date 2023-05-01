@@ -21,7 +21,7 @@ int	get_dilemiter(t_cmd **list_cmd, char *s, int *i)
 
 	p.i = 0;
 	if (sps_skiper(s, i))
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(" ", SPACE, 0, 0));
 	while (s[*i] && !is_white_sp(s[*i]) && !is_special_char(s[*i]))
 	{
 		if (is_quoted(list_cmd, s, &p, i))
@@ -39,14 +39,14 @@ int	redires_checker(t_cmd **list_cmd, char *s, int *i)
 		return (0);
 	if (s[*i] == '<' && s[*i + 1] == '<')
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<<", HEREDOC, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<<", HEREDOC, 0, 0));
 		*i += 2;
 		if (get_dilemiter(list_cmd, s, i))
 			return (1);
 	}
 	if (s[*i] == '>' && s[*i + 1] == '>')
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(">>", APPEND, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(">>", APPEND, 0, 0));
 		*i += 2;
 	}
 	return (0);
