@@ -33,17 +33,17 @@ void	add_special_char(char *s, t_cmd **list_cmd, t_var *p)
 {
 	if (s[p->i] == '>' && red_checker(s, p->i))
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(">", OUT, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(">", OUT, 0, 0));
 		p->i++;
 	}
 	if (s[p->i] == '<' && red_checker(s, p->i))
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<", IN, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("<", IN, 0, 0));
 		p->i++;
 	}
 	if (s[p->i] == '|' && red_checker(s, p->i))
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("|", PIPE, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd("|", PIPE, 0, 0));
 		p->i++;
 	}
 }

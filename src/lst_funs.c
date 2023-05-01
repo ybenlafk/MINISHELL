@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_funs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:20:13 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/29 14:18:47 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/01 19:37:04 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_lstadd_back_list(t_list **lst, t_list *new)
 	}
 }
 
-t_cmd	*lst_new_cmd(char *cmd, int type, int quote)
+t_cmd	*lst_new_cmd(char *cmd, int type, int quote, int is)
 {
 	t_cmd	*new;
 
@@ -54,6 +54,7 @@ t_cmd	*lst_new_cmd(char *cmd, int type, int quote)
 	new->str = ft_strdup(cmd);
 	new->quote = quote;
 	new->type = type;
+	new->is = is;
 	new->next = NULL;
 	return (new);
 }
@@ -81,7 +82,7 @@ t_list	*lst_new_list(char *cmd, char **args, int in, int out)
 	new->args = args;
 	new->in = in;
 	new->out = out;
-	if (new->in == -1)
+	if (new->in < 0 || new->out < 0)
 		new->is = 1;
 	else
 		new->is = 0;

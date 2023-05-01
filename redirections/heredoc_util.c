@@ -24,7 +24,7 @@ void	is_tty(t_var *p)
 
 	if (!ttyname(0))
 	{
-		free(p->s);
+		// free(p->s);
 		fd = open(ttyname(2), O_RDONLY);
 		dup2(fd, 0);
 		p->fd = -1;

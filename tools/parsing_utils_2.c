@@ -77,7 +77,7 @@ int	quotes_checker(t_cmd **list_cmd, char *s, t_var *p)
 		if (!p->s)
 			return (1);
 		p->w = s_quote_trim(p->s);
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, 1));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, 1, 0));
 		free(p->w);
 	}
 	if (s[p->i] == 34)
@@ -86,7 +86,7 @@ int	quotes_checker(t_cmd **list_cmd, char *s, t_var *p)
 		if (!p->s)
 			return (1);
 		p->w = d_quote_trim(p->s);
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, 2));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->w, WORD, 2, 0));
 		free(p->w);
 	}
 	return (0);

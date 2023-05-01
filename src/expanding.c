@@ -76,15 +76,15 @@ void	split_var(t_var *p, t_cmd **res, t_env *env)
 	{
 		while (p->str[i])
 		{
-			ft_lstadd_back_cmd(res, lst_new_cmd(p->str[i++], WORD, 0));
+			ft_lstadd_back_cmd(res, lst_new_cmd(p->str[i++], WORD, 0, 0));
 			if (p->str[i])
-				ft_lstadd_back_cmd(res, lst_new_cmd(" ", SPACE, 0));
+				ft_lstadd_back_cmd(res, lst_new_cmd(" ", SPACE, 0, 0));
 		}
 		free_all(p->str);
 	}
 }
 
-void	exp_norm(t_var *p, t_cmd **res, t_env *env)
+int	exp_norm(t_var *p, t_cmd **res, t_env *env)
 {
 	if (p->tmp->type == VAR)
 		get_var(p);
@@ -92,7 +92,8 @@ void	exp_norm(t_var *p, t_cmd **res, t_env *env)
 		split_var(p, res, env);
 	else
 		ft_lstadd_back_cmd(res, lst_new_cmd(p->tmp->str, p->tmp->type,
-				p->tmp->quote));
+				p->tmp->quote, p->tmp->is));
+	return (0);
 }
 
 t_cmd	*expanding(t_env *env, t_cmd *cmd)
@@ -108,7 +109,7 @@ t_cmd	*expanding(t_env *env, t_cmd *cmd)
 		p.s1 = ft_itoa(g_var.g_exit_status);
 		if (p.tmp->type == EXIT_ST)
 			ft_lstadd_back_cmd(&res, lst_new_cmd(p.s1, p.tmp->type,
-					p.tmp->quote));
+					p.tmp->quote, p.tmp->is));
 		else
 			exp_norm(&p, &res, env);
 		free(p.s1);

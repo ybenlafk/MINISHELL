@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:39:09 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/01 13:29:52 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:46:53 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	print_cmnt(char *str)
 {
 	printf ("Minishell> exit: %s: numeric argument required\n", str);
-	exit(0);
+	exit(255);
 }
 
 int	ft_isnum(char	*str)
@@ -48,17 +48,20 @@ void	norm_exit_cmd(t_list *lst, char *str)
 	if (!ft_isnum(str))
 		print_cmnt(str);
 	nb = ft_atoi(str);
-	if (nb <= LONG_MIN && nb >= LONG_MAX)
+	if (nb <= LONG_MIN || nb >= LONG_MAX)
 		print_cmnt(str);
 	else
 	{
-		if (!lst->args[2])
+		if (lst->args && !lst->args[2])
 		{
 			ft_putstr_fd("exit\n", lst->out);
 			exit(nb % 256);
 		}
 		else
+		{
 			ft_putstr_fd("Minishell>$ exit: too many arguments\n", lst->out);
+			g_var.g_exit_status = 1;
+		}
 	}
 }
 

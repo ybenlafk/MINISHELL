@@ -65,6 +65,7 @@ SRCS= tools/utils.c\
 OBGJ= $(SRCS:.c=.o)
 CC = cc
 CFLAGS = -g -Wall -Wextra -Werror
+# CFLAGS = -g 
 R_L = "-L/Users/nouahidi/.brew/opt/readline/lib"
 R_I = "-I/Users/nouahidi/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline

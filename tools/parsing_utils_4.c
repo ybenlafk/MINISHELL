@@ -20,17 +20,17 @@ void	add_back(t_var *p, t_cmd **list_cmd)
 	if (p->l)
 	{
 		if (!ft_strcmp(p->s, "$?"))
-			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, EXIT_ST, 0));
+			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, EXIT_ST, 0, 0));
 		else
-			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, VAR, 0));
+			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, VAR, 0, 0));
 		p->l = 0;
 	}
 	else if (p->s[0])
 	{
 		if (!ft_strcmp(p->s, "$?"))
-			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, EXIT_ST, 0));
+			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, EXIT_ST, 0, 0));
 		else
-			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0));
+			ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0, 0));
 	}
 }
 
@@ -95,7 +95,7 @@ void	words_checker(t_var *p, t_cmd **list_cmd, char *s)
 	}
 	if (p->j)
 	{
-		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0));
+		ft_lstadd_back_cmd(list_cmd, lst_new_cmd(p->s, WORD, 0, 0));
 		p->j = 0;
 	}
 	free(p->s);
