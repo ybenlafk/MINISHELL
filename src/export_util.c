@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:25:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 18:49:24 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:35:44 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_env	*ft_lstdelone(t_env **lst, char	*str)
 	while (tmp)
 	{
 		if (i != j)
-			ft_lstadd_back(&t, ft_lstnew(tmp->e));
+			ft_lstadd_back_env(&t, lst_new_env(tmp->e, 0));
 		tmp = tmp->next;
 		j++;
 	}

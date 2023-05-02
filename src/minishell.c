@@ -41,16 +41,16 @@ void	fill_env(t_env **env, char **e)
 	if (!e[p.i])
 	{
 		p.s1 = ft_strjoin(ft_strdup("PWD="), p.s);
-		ft_lstadd_back_env(env, lst_new_env("OLDPWD"));
-		ft_lstadd_back_env(env, lst_new_env(p.s1));
-		ft_lstadd_back_env(env, lst_new_env("SHLVL=1"));
-		ft_lstadd_back_env(env, lst_new_env("_=/usr/bin/env"));
+		ft_lstadd_back_env(env, lst_new_env("OLDPWD", 0));
+		ft_lstadd_back_env(env, lst_new_env(p.s1, 0));
+		ft_lstadd_back_env(env, lst_new_env("SHLVL=1", 0));
+		ft_lstadd_back_env(env, lst_new_env("_=/usr/bin/env", 0));
 	}
 	else
 	{
 		while (e[p.i])
 		{
-			ft_lstadd_back_env(env, lst_new_env(e[p.i]));
+			ft_lstadd_back_env(env, lst_new_env(e[p.i], 0));
 			p.i++;
 		}
 	}
@@ -69,10 +69,8 @@ void	flist(t_list **list)
 			p = *list;
 			*list = p->next;
 			if (p->cmd)
-			{
 				free(p->cmd);
-				free_all(p->args);
-			}
+			free_all(p->args);
 			free(p);
 		}
 		p = NULL;
@@ -98,9 +96,7 @@ int	main(int ac, char **av, char **e)
 
 	(void)ac;
 	(void)av;
-	g_var.g_exit_status = 0;
-	g_var.err = 0;
-	g_var.is = 0;
+	glob_init();
 	env = NULL;
 	list = NULL;
 	fill_env(&env, e);

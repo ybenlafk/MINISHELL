@@ -27,3 +27,28 @@ int	is_in_out(t_var *p)
 		return (1);
 	return (0);
 }
+
+char	**env_geter(t_env *env)
+{
+	t_var	p;
+
+	p.tmp_e = env;
+	p.i = 0;
+	p.str = malloc(sizeof(char *) * ft_lstsize_en(env) + 1);
+	if (!p.str)
+		return (NULL);
+	while (p.tmp_e)
+	{
+		p.str[p.i++] = ft_strdup(p.tmp_e->e);
+		p.tmp_e = p.tmp_e->next;
+	}
+	p.str[p.i] = NULL;
+	return (p.str);
+}
+
+void	glob_init(void)
+{
+	g_var.g_exit_status = 0;
+	g_var.err = 0;
+	g_var.is = 0;
+}

@@ -55,7 +55,6 @@ SRCS= tools/utils.c\
 	src/export_util.c\
 	src/export_util2.c\
 	src/export_util3.c\
-	src/export_util1.c\
 	src/cd_command_util.c\
 	src/cd_command_util1.c\
 	src/cd_command_util2.c\
@@ -66,8 +65,7 @@ SRCS= tools/utils.c\
 
 OBGJ= $(SRCS:.c=.o)
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
-# CFLAGS = -g 
+# CFLAGS = -g -Wall -Wextra -Werror
 R_L = "-L/Users/ybenlafk/.brew/opt/readline/lib"
 R_I = "-I/Users/ybenlafk/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline

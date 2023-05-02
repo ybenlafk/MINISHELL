@@ -69,7 +69,7 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	quotes_expander(cmd, env);
 	cmd = out_pipe(cmd);
 	cmd = lst_join(cmd);
-	if (pipe_count(cmd) >= 540)
+	if (pipe_count(cmd) >= 500)
 		return (list_free(&cmd, ft_lstsize(cmd)),
 			ft_putstr_fd("Minishell: fork: Resource temporarily unavailable\n",
 				2), NULL);

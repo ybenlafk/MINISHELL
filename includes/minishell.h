@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 22:23:37 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/02 12:32:39 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 21:52:09 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ extern t_gvar	g_var;
 # define VAR 7
 # define EXIT_ST 8
 # define AMBG 9
-
+# define PATH "/Users/ybenlafk/.brew/bin:/usr/local/bin:/usr/bin:/bin:\
+			/usr/sbin:/sbin:/usr/local/munki:/Users/ybenlafk/.brew/bin"
 
 typedef struct array
 {
@@ -66,6 +67,7 @@ typedef struct list
 typedef struct env
 {
 	char			*e;
+	int				is;
 	struct env		*next;
 }					t_env;
 
@@ -104,13 +106,9 @@ typedef struct var
 	t_list			*lst;
 	t_cmd			*tmp;
 	t_exp			*exp;
+	t_env			*tmp_e;
 }					t_var;
 
-void	lst_join_u(t_var *p);
-void	lst_join_u1(t_var *p);
-void	join_norm(t_var *p);
-int					is_in_out(t_var *p);
-void				del_gus(t_list **list);
 t_list				*parsing(t_cmd *cmd, t_var p, t_env *env);
 t_list				*unused_clear(t_list *list);
 t_list				*lst_new_list(char *cmd, char **args, int in, int out);
@@ -133,10 +131,13 @@ t_cmd				*del_err(t_cmd *pev, t_cmd *cmd, int i);
 t_exp				*lst_new_exp(char *value, int stat);
 t_exp				*ft_lstlast_exp(t_exp *lst);
 t_env				*ft_lstlast_env(t_env *lst);
-t_env				*lst_new_env(char *e);
+t_env				*lst_new_env(char *e, int is);
 t_env				*ft_lstdelone(t_env **lst, char *str);
 t_env				*sort_ex(t_env **env);
-t_env				*ft_lstnew(char *str);
+void				lst_join_u(t_var *p);
+void				lst_join_u1(t_var *p);
+void				join_norm(t_var *p);
+void				del_gus(t_list **list);
 void				split_var(t_var *p, t_cmd **res, t_env *env);
 void				ctl_c(int i);
 void				fds_init(t_var *p);
@@ -176,7 +177,7 @@ void				execution(t_list *list, t_env **env, char **e);
 void				ft_command(t_list *list, int ind, t_env **env);
 void				exit_cmd(t_list *lst);
 void				add_plus(t_env **env, char *str, int i);
-void				ft_lstadd_back(t_env **lst, t_env *new);
+void				ft_lstadd_back_env(t_env **lst, t_env *new);
 void				print_ex(t_env *env, t_list *lst);
 void				ft_print(char *str, t_list *lst);
 void				add_exp(t_list *lst, t_env **env);
@@ -187,7 +188,8 @@ void				pipe_cases(t_var *var, t_var *p);
 void				change_path(t_env **env);
 void				fenv(t_env **env);
 void				flist(t_list **list);
-void				del_n(t_env **lst, char	*str);
+void				glob_init(void);
+char				**env_geter(t_env *env);
 char				*ft_strdup(char *s);
 char				*char_to_str(char c);
 char				*s_quote_trim(char *str);
@@ -249,8 +251,8 @@ int					lst_size_list(t_list *list);
 int					ft_envcmp(char	*str);
 int					srch_cmd(t_list *list);
 int					chech_directory(char *path);
-int					drop_util(int *i, t_var *p, int (*redire)
-					(t_cmd *), int stat);
+int					drop_util(int *i, t_var *p, int (*redire)(t_cmd *, int),
+						int stat);
 int					count_fds(t_cmd *cmd, int type, int stat);
 int					i_var(char *s);
 int					is_empty(t_list *tmp);
@@ -261,6 +263,8 @@ int					pipe_count(t_cmd *cmd);
 int					check_v(char *str);
 int					ft_lstsize_exp(t_exp *lst);
 int					array_len(char **s);
-long long			ft_atoi(const char *str);
+int					is_in_out(t_var *p);
 int					check_exp(t_cmd *cmd, t_env *env);
+long long			ft_atoi(const char *str);
+
 #endif

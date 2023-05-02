@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/02 11:56:11 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 21:19:46 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	env_parser(t_list **list)
 			{
 				if (tmp->args[1])
 				{
-					printf("Minishell: env has no options : %s\n",tmp->args[1]);
+					printf("Minishell: env has no options : %s\n", tmp->args[1]);
 					free(tmp->cmd);
 					tmp->cmd = NULL;
 					free_all(tmp->args);
@@ -85,7 +85,8 @@ t_cmd	*del_err(t_cmd *pev, t_cmd *cmd, int i)
 	}
 	while (tmp)
 	{
-		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote, tmp->is));
+		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type,
+				tmp->quote, tmp->is));
 		tmp = tmp->next;
 	}
 	return (res);

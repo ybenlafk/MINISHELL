@@ -40,6 +40,7 @@ int	utils_pro_max(char *s, t_var *p)
 		return (free(p->s), p->s = ft_strdup("$?"), p->i += 2, 1);
 	if (s[p->i] == '$' && (!s[p->i + 1] || is_white_sp(s[p->i + 1])))
 	{
+		free(p->s);
 		p->s = ft_strdup("$");
 		p->i++;
 		return (1);
@@ -67,10 +68,8 @@ void	vars_checker_pro_max(t_var *p, t_exp **exp, char *s)
 	p->s = ft_strdup("");
 	while (s[p->i] && s[p->i] != 39 && s[p->i] != 34 && !is_white_sp(s[p->i])
 		&& !is_special_char(s[p->i]))
-	{
 		if (utils_pro_max(s, p))
 			break ;
-	}
 	add_back_exp(p, exp);
 	free(p->s);
 }

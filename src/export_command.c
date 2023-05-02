@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:51:37 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/01 13:30:06 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:35:44 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	norm_exp(t_env	**env, char *str, int i)
 				add_plus(env, str, check_var(str, env));
 				break ;
 			}
-			ft_lstadd_back(env, ft_lstnew(str));
+			ft_lstadd_back_env(env, lst_new_env(str, 0));
 			*env = ft_lstdelone(env, t->e);
 			break ;
 		}
@@ -86,7 +86,7 @@ void	add_exp(t_list	*lst, t_env	**env)
 		else
 		{
 			str = del_plus(lst->args[i]);
-			ft_lstadd_back(env, ft_lstnew(str));
+			ft_lstadd_back_env(env, lst_new_env(str, 0));
 			i++;
 		}
 	}

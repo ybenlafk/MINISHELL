@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command_util2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:22:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 23:40:20 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:35:44 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	old_pwd(char *str, t_env **env)
 	{
 		if (ft_strncmp("OLDPWD", t->e, 6) == 0)
 		{
-			ft_lstadd_back(env, ft_lstnew(st));
+			ft_lstadd_back_env(env, lst_new_env(st, 0));
 			*env = ft_lstdelone(env, t->e);
 			break ;
 		}

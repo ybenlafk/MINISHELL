@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:20:13 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/01 19:37:04 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:35:44 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_cmd	*lst_new_cmd(char *cmd, int type, int quote, int is)
 	return (new);
 }
 
-t_env	*lst_new_env(char *e)
+t_env	*lst_new_env(char *e, int is)
 {
 	t_env	*new;
 
@@ -67,6 +67,7 @@ t_env	*lst_new_env(char *e)
 	if (!new)
 		return (NULL);
 	new->e = ft_strdup(e);
+	new->is = is;
 	new->next = NULL;
 	return (new);
 }

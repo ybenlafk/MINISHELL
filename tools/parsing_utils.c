@@ -50,42 +50,48 @@ void	add_special_char(char *s, t_cmd **list_cmd, t_var *p)
 
 char	*s_quote_trim(char *str)
 {
-	int		i;
-	int		j;
-	char	*s;
+	t_var	p;
 
-	i = 0;
-	j = 0;
-	s = malloc(len(str) + 1);
-	if (!s)
+	p.i = 0;
+	p.j = 0;
+	p.l = 0;
+	while (str[p.i])
+		if (str[p.i++] == 39)
+			p.l++;
+	p.s = malloc((len(str) - p.l) + 1);
+	if (!p.s)
 		return (NULL);
-	while (str[i])
+	p.i = 0;
+	while (str[p.i])
 	{
-		if (str[i] != 39)
-			s[j++] = str[i];
-		i++;
+		if (str[p.i] != 39)
+			p.s[p.j++] = str[p.i];
+		p.i++;
 	}
-	s[j] = '\0';
-	return (free(str), s);
+	p.s[p.j] = '\0';
+	return (free(str), p.s);
 }
 
 char	*d_quote_trim(char *str)
 {
-	int		i;
-	int		j;
-	char	*s;
+	t_var	p;
 
-	i = 0;
-	j = 0;
-	s = malloc(len(str) + 1);
-	if (!s)
+	p.i = 0;
+	p.j = 0;
+	p.l = 0;
+	while (str[p.i])
+		if (str[p.i++] == 34)
+			p.l++;
+	p.s = malloc((len(str) - p.l) + 1);
+	if (!p.s)
 		return (NULL);
-	while (str[i])
+	p.i = 0;
+	while (str[p.i])
 	{
-		if (str[i] != 34)
-			s[j++] = str[i];
-		i++;
+		if (str[p.i] != 34)
+			p.s[p.j++] = str[p.i];
+		p.i++;
 	}
-	s[j] = '\0';
-	return (free(str), s);
+	p.s[p.j] = '\0';
+	return (free(str), p.s);
 }

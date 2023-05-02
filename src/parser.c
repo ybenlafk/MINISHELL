@@ -17,14 +17,16 @@
 
 int	lst_len(t_cmd *cmd)
 {
-	int	i;
+	t_cmd	*tmp;
+	int		i;
 
+	tmp = cmd;
 	i = 0;
-	while (cmd && cmd->type != PIPE)
+	while (tmp && tmp->type != PIPE)
 	{
-		if (cmd->type != SPACE)
+		if (tmp->type != SPACE)
 			i++;
-		cmd = cmd->next;
+		tmp = tmp->next;
 	}
 	return (i);
 }
@@ -32,20 +34,19 @@ int	lst_len(t_cmd *cmd)
 char	**join_args(t_cmd **cmd)
 {
 	t_var	p;
-	char	**res;
 
 	p.i = 0;
-	res = (char **)malloc((lst_len(*cmd) + 1) * sizeof(char *));
-	if (!res)
+	p.str = (char **)malloc((lst_len(*cmd) * sizeof(char *)) + 1);
+	if (!p.str)
 		return (NULL);
 	while ((*cmd) && (*cmd)->type != PIPE)
 	{
 		if ((*cmd)->type != SPACE)
-			res[p.i++] = ft_strdup((*cmd)->str);
+			p.str[p.i++] = ft_strdup((*cmd)->str);
 		(*cmd) = (*cmd)->next;
 	}
-	res[p.i] = NULL;
-	return (res);
+	p.str[p.i] = NULL;
+	return (p.str);
 }
 
 int	parser(t_cmd *cmd, t_list *list)
@@ -54,15 +55,15 @@ int	parser(t_cmd *cmd, t_list *list)
 
 	p.lst = list;
 	p.tmp = cmd;
-	while (cmd)
+	while (p.tmp)
 	{
-		p.str = join_args(&cmd);
+		p.str = join_args(&p.tmp);
 		if (!p.str)
 			return (1);
 		p.lst->cmd = ft_strdup(p.str[0]);
 		p.lst->args = p.str;
-		if (cmd)
-			cmd = cmd->next;
+		if (p.tmp)
+			p.tmp = p.tmp->next;
 		if (p.lst)
 			p.lst = p.lst->next;
 	}
