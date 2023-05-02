@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 22:23:37 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/01 18:43:47 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:32:39 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,11 @@ typedef struct var
 	t_exp			*exp;
 }					t_var;
 
-void					del_gus(t_list **list);
+void	lst_join_u(t_var *p);
+void	lst_join_u1(t_var *p);
+void	join_norm(t_var *p);
+int					is_in_out(t_var *p);
+void				del_gus(t_list **list);
 t_list				*parsing(t_cmd *cmd, t_var p, t_env *env);
 t_list				*unused_clear(t_list *list);
 t_list				*lst_new_list(char *cmd, char **args, int in, int out);

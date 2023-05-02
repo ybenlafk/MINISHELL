@@ -20,10 +20,12 @@ SRCS= tools/utils.c\
 	tools/utils_3.c\
 	tools/utils_4.c\
 	tools/utils_5.c\
+	tools/utils_6.c\
 	src/lst_funs.c\
 	src/parsing.c\
 	tools/libft.c\
 	tools/libft_1.c\
+	tools/parsing_utils_6.c\
 	tools/parsing_utils_5.c\
 	tools/parsing_utils_4.c\
 	tools/parsing_utils_3.c\

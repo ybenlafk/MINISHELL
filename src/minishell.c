@@ -104,7 +104,6 @@ int	main(int ac, char **av, char **e)
 	env = NULL;
 	list = NULL;
 	fill_env(&env, e);
-	env = NULL;
 	while (1)
 	{
 		signal(SIGINT, c_hanndler);
@@ -112,21 +111,6 @@ int	main(int ac, char **av, char **e)
 		if (main_norm(&p, &env, &list))
 			return (g_var.g_exit_status);
 		list = parsing(&cmd, p, env);
-		// t_list *t = list;
-		// printf("<-------------------cmds-list------------------------>\n");
-		// while (t)
-		// {
-		// 	int i = 0;
-		// 	printf("cmd : |%s|\n", t->cmd);
-		// 	if (t->args)
-		// 		while (t->args[i])
-		// 			printf("arg : {%s}\n", t->args[i++]);
-		// 	printf("in : |%d|\n", t->in);
-		// 	printf("out : |%d|\n", t->out);
-		// 	printf("is : |%d|\n", t->is);
-		// 	printf("<<<<<<----------------->>>>>>\n");
-		// 	t = t->next;
-		// }
 		if (list)
 			execution(list, &env, e);
 		flist(&list);
