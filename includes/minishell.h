@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 22:23:37 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/03 16:50:29 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/03 21:59:04 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ extern t_gvar	g_var;
 # define VAR 7
 # define EXIT_ST 8
 # define AMBG 9
-# define PATH "/Users/ybenlafk/.brew/bin:/usr/local/bin:/usr/bin:/bin:\
-			/usr/sbin:/sbin:/usr/local/munki:/Users/ybenlafk/.brew/bin"
 
 typedef struct array
 {
