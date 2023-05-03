@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:39:09 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/03 14:48:28 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:38:00 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,36 @@
 
 void	print_cmnt(char *str)
 {
-	printf ("-->exit\n");
 	printf ("Minishell> exit: %s: numeric argument required\n", str);
 	exit(255);
 }
 
 int	ft_isnum(char	*str)
 {
-	int		i;
-	int		s;
-	char	**tab;
+	t_var	p;
 
-	s = 1;
-	i = 0;
-	tab = ft_split(str, ' ');
-	if (!tab[0])
-		return (free_all(tab), 0);
-	if ((tab[0][0] == '-' || tab[0][0] == '+'))
+	p.j = 1;
+	p.i = 0;
+	p.str = ft_split(str, ' ');
+	if (!p.str)
+		return (1);
+	if (!p.str[0])
+		return (free_all(p.str), 1);
+	if ((p.str[0][0] == '-' || p.str[0][0] == '+'))
 	{
-		if (tab[0][0] == '-')
-			s = -1;
-		i++;
+		if (p.str[0][0] == '-')
+			p.j = -1;
+		p.i++;
 	}
-	while (tab[0][i])
+	while (p.str[0][p.i])
 	{
-		if (!(tab[0][i] >= '0' && tab[0][i] <= '9'))
-			return (free_all(tab), 0);
-		i++;
+		if (!(p.str[0][p.i] >= '0' && p.str[0][p.i] <= '9'))
+			return (free_all(p.str), 0);
+		p.i++;
 	}
-	if (!tab[1] && i <= 20)
-		return (free_all(tab), s);
-	return (free_all(tab), 0);
+	if (!p.str[1] && p.i <= 20)
+		return (free_all(p.str), p.j);
+	return (free_all(p.str), 0);
 }
 
 void	norm_exit_cmd(t_list *lst, char *str)
