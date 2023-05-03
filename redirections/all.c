@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	in(t_cmd *cmd)
+int	in(t_cmd *cmd, int p)
 {
 	int	fd;
 
@@ -30,12 +30,12 @@ int	in(t_cmd *cmd)
 		else
 			fd = -2;
 	}
-	if (cmd && fd == -1)
+	if (cmd && fd == -1 && !p)
 		printf("%s : no such file or directory\n", cmd->str);
 	return (fd);
 }
 
-int	out(t_cmd *cmd)
+int	out(t_cmd *cmd, int p)
 {
 	int	fd;
 
@@ -53,12 +53,12 @@ int	out(t_cmd *cmd)
 		else
 			fd = -2;
 	}
-	if (cmd && fd == -1)
+	if (cmd && fd == -1 && !p)
 		printf("%s : no such file or directory\n", cmd->str);
 	return (fd);
 }
 
-int	append(t_cmd *cmd)
+int	append(t_cmd *cmd, int p)
 {
 	int	fd;
 
@@ -76,7 +76,7 @@ int	append(t_cmd *cmd)
 		else
 			fd = -2;
 	}
-	if (cmd && fd == -1)
+	if (cmd && fd == -1 && !p)
 		printf("%s : no such file or directory\n", cmd->str);
 	return (fd);
 }
@@ -85,21 +85,18 @@ int	drop(t_var *p)
 {
 	if (p->tmp->type == IN)
 	{
-		if (!p->lst->is)
-			if (drop_util(&p->l, p, in, 1))
-				return (1);
+		if (drop_util(&p->l, p, in, 1))
+			return (1);
 	}
 	else if (p->tmp->type == OUT)
 	{
-		if (!p->lst->is)
-			if (drop_util(&p->i, p, out, 0))
-				return (1);
+		if (drop_util(&p->i, p, out, 0))
+			return (1);
 	}
 	else if (p->tmp->type == APPEND)
 	{
-		if (!p->lst->is)
-			if (drop_util(&p->i, p, append, 0))
-				return (1);
+		if (drop_util(&p->i, p, append, 0))
+			return (1);
 	}
 	if (p->lst && !p->l)
 		p->lst->in = p->fd_in;

@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/01 16:01:43 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:40:02 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ t_list	*create_list(t_cmd *cmd)
 	t_list	*res;
 
 	res = NULL;
-	p.i = pipe_count(cmd);
-	p.i++;
+	p.i = pipe_count(cmd) + 1;
 	while (p.i--)
 		ft_lstadd_back_list(&res, lst_new_list(NULL, NULL, 0, 1));
 	return (res);
@@ -29,7 +28,7 @@ void	add_new(t_var *p, t_cmd **res)
 {
 	while (p->tmp)
 	{
-		if (p->tmp->type == SPACE && p->tmp->next)
+		if (p->tmp->next && p->tmp->type == SPACE)
 		{
 			if (p->tmp->next->type == SPACE)
 				p->tmp = p->tmp->next;

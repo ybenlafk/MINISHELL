@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/01 20:08:54 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 21:19:46 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ void	env_parser(t_list **list)
 			{
 				if (tmp->args[1])
 				{
-					printf("Minishell: env has no options : %s\n",tmp->args[1]);
+					printf("Minishell: env has no options : %s\n", tmp->args[1]);
 					free(tmp->cmd);
 					tmp->cmd = NULL;
 					free_all(tmp->args);
+					tmp->args = NULL;
 					i = 1;
 				}
 			}
@@ -45,15 +46,17 @@ t_cmd	*out_pipe(t_cmd *cmd)
 	t_cmd	*tmp;
 	t_cmd	*res;
 
-	tmp = cmd;
 	res = NULL;
+	if (!cmd)
+		return (NULL);
+	tmp = cmd;
 	while (tmp)
 	{
 		if (tmp->type == OUT)
 		{
 			ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type,
 					tmp->quote, tmp->is));
-			if (tmp->next)
+			if (tmp && tmp->next)
 				if (tmp->next->type == PIPE)
 					tmp = tmp->next;
 		}
@@ -82,7 +85,8 @@ t_cmd	*del_err(t_cmd *pev, t_cmd *cmd, int i)
 	}
 	while (tmp)
 	{
-		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type, tmp->quote, tmp->is));
+		ft_lstadd_back_cmd(&res, lst_new_cmd(tmp->str, tmp->type,
+				tmp->quote, tmp->is));
 		tmp = tmp->next;
 	}
 	return (res);

@@ -94,7 +94,9 @@ t_cmd	*redire_heredoc(t_cmd *cmd, t_env *env)
 		if (p.tmp->type == HEREDOC)
 		{
 			p.file = generate_name();
-			herdoc_norm(&p, env);
+			if (herdoc_norm(&p, env))
+				return (free(p.file), list_free(&res, ft_lstsize(res)),
+					list_free(&cmd, ft_lstsize(cmd)), NULL);
 			free(p.file);
 			close(p.fd);
 		}

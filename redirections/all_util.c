@@ -46,12 +46,12 @@ t_cmd	*del_redires(t_cmd *cmd)
 	return (list_free(&cmd, ft_lstsize(cmd)), p.res);
 }
 
-int	drop_util(int *i, t_var *p, int (*redire)(t_cmd *), int stat)
+int	drop_util(int *i, t_var *p, int (*redire)(t_cmd *, int), int stat)
 {
 	(*i)--;
 	if (stat)
 	{
-		p->fd_in = redire(p->tmp);
+		p->fd_in = redire(p->tmp, p->lst->is);
 		if (p->fd_in == -1)
 			return (1);
 		if (*i)
@@ -59,7 +59,7 @@ int	drop_util(int *i, t_var *p, int (*redire)(t_cmd *), int stat)
 	}
 	else
 	{
-		p->fd_out = redire(p->tmp);
+		p->fd_out = redire(p->tmp, p->lst->is);
 		if (p->fd_out == -1)
 			return (1);
 		if (*i)

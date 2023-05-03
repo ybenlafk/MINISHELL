@@ -104,7 +104,7 @@ void	quotes_expander(t_cmd *cmd, t_env *env)
 	p.tmp = cmd;
 	while (p.tmp)
 	{
-		if (p.tmp->quote == 2)
+		if (p.tmp->quote == 2 && ft_strcmp(p.tmp->str, ""))
 		{
 			exp = NULL;
 			lexer_pro_max(&exp, p.tmp->str, &p);

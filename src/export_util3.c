@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/02 12:30:12 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/03 14:01:46 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env	*sort_ex(t_env	**env)
 		return (NULL);
 	while (t)
 	{
-		ft_lstadd_back(&tp, ft_lstnew(t->e));
+		ft_lstadd_back_env(&tp, lst_new_env(t->e, 0));
 		t = t->next;
 	}
 	if (!tp)
@@ -42,7 +42,7 @@ t_env	*sort_ex(t_env	**env)
 				tmp = t;
 			t = t->next;
 		}
-		ft_lstadd_back(&new, ft_lstnew(tmp->e));
+		ft_lstadd_back_env(&new, lst_new_env(tmp->e, 0));
 		ft_lstdelone1(&tp, tmp->e);
 		if (ft_lstsize_en(new) == ft_lstsize_en(*env))
 			break ;
@@ -80,14 +80,14 @@ void	norm_add(char *se, char *str, t_env	**env)
 	{
 		st = ft_strjoin(ft_strdup(se), "=");
 		st = ft_strjoin(st, str + (i + 1));
-		ft_lstadd_back(env, ft_lstnew(st));
+		ft_lstadd_back_env(env, lst_new_env(st, 0));
 		free(st);
 		*env = ft_lstdelone(env, se);
 	}
 	else
 	{
 		st = ft_strjoin(ft_strdup(se), str + (i + 1));
-		ft_lstadd_back(env, ft_lstnew(st));
+		ft_lstadd_back_env(env, lst_new_env(st, 0));
 		free(st);
 		*env = ft_lstdelone(env, se);
 	}

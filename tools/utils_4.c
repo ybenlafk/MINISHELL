@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/01 22:18:34 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 21:20:30 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_cmd	*lst_dup(t_cmd *cmd)
 	res = NULL;
 	while (cmd)
 	{
-		ft_lstadd_back_cmd(&res, lst_new_cmd(cmd->str, cmd->type, cmd->quote, cmd->is));
+		ft_lstadd_back_cmd(&res, lst_new_cmd(cmd->str, cmd->type,
+				cmd->quote, cmd->is));
 		cmd = cmd->next;
 	}
 	return (res);
@@ -72,7 +73,7 @@ t_list	*unused_clear(t_list *list)
 	while (tmp)
 	{
 		if (tmp->in == -2 || tmp->out == -2)
-			ft_putstr_fd("Minishell : ambiguous redirect\n", 2);	
+			ft_putstr_fd("Minishell : ambiguous redirect\n", 2);
 		ft_lstadd_back_list(&res, lst_new_list(ft_strdup(tmp->cmd),
 				duplicate(tmp->args), tmp->in, tmp->out));
 		tmp = tmp->next;

@@ -54,11 +54,11 @@ int	is_doubl_pipe(t_cmd *cmd)
 
 int	pipe_checker_norm(t_var p)
 {
-	if (p.tmp->type == PIPE && p.tmp->next->type == PIPE)
-		return (1);
 	if (p.tmp->type == PIPE)
 		if (!p.tmp->next)
 			return (1);
+	if (p.tmp->next && p.tmp->type == PIPE && p.tmp->next->type == PIPE)
+		return (1);
 	if (p.tmp->next)
 	{
 		if (p.tmp->type == PIPE || (p.tmp->type == SPACE
