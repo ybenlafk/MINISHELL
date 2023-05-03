@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/30 18:44:57 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:30:12 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,15 @@ t_env	*sort_ex(t_env	**env)
 	tp = NULL;
 	tmp = t;
 	new = NULL;
+	if (!env)
+		return (NULL);
 	while (t)
 	{
 		ft_lstadd_back(&tp, ft_lstnew(t->e));
 		t = t->next;
 	}
+	if (!tp)
+		return (NULL);
 	while (1)
 	{
 		t = tp;
@@ -60,6 +64,7 @@ int	check_egl(char	*str)
 			return (1);
 		i++;
 	}
+	puts("here-->");
 	return (0);
 }
 
@@ -98,7 +103,10 @@ void	add_plus(t_env **env, char *str, int i)
 	while (t)
 	{
 		if (j == i)
+		{
 			norm_add(t->e, str, env);
+			break ;
+		}
 		t = t->next;
 		j++;
 	}

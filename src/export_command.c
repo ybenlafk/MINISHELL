@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:51:37 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/01 13:30:06 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:30:04 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,15 @@ void	export_cmd(t_env **env, t_list *lst)
 {
 	t_env	*new;
 
-	if (!*env)
-		return ;
+	// if (!*env)
+	// 	return ;
 	if (lst->args && lst->args[1])
 		add_exp(lst, env);
 	else
 	{
 		new = sort_ex(env);
-		print_ex(new, lst);
+		if (new)
+			print_ex(new, lst);
 		fenv(&new);
 	}
 }

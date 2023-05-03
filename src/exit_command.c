@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:39:09 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/01 20:46:53 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/03 13:51:40 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	print_cmnt(char *str)
 {
+	printf ("-->exit\n");
 	printf ("Minishell> exit: %s: numeric argument required\n", str);
 	exit(255);
 }
@@ -22,33 +23,45 @@ void	print_cmnt(char *str)
 int	ft_isnum(char	*str)
 {
 	int		i;
+	int		s;
 	char	**tab;
 
+	s = 1;
 	i = 0;
 	tab = ft_split(str, ' ');
 	if (!tab[0])
-		return (0);
+		return (free_all(tab), 0);
 	if ((tab[0][0] == '-' || tab[0][0] == '+'))
+	{
+		if (tab[0][0] == '-')
+			s = -1;
 		i++;
+	}
 	while (tab[0][i])
 	{
 		if (!(tab[0][i] >= '0' && tab[0][i] <= '9'))
-			return (0);
+			return (free_all(tab), 0);
 		i++;
 	}
-	if (!tab[1])
-		return (1);
-	return (0);
+	if (!tab[1] && i <= 20)
+		return (free_all(tab), s);
+	return (free_all(tab), 0);
 }
 
 void	norm_exit_cmd(t_list *lst, char *str)
 {
-	long long	nb;
+	long long			nb;
+	long long			n;
+	long long			n1;
+	int					s;
 
-	if (!ft_isnum(str))
+	n = -9223372036854775808U;
+	n1 = 9223372036854775807;
+	s = ft_isnum(str);
+	if (!s)
 		print_cmnt(str);
 	nb = ft_atoi(str);
-	if (nb <= LONG_MIN || nb >= LONG_MAX)
+	if ((nb > 0 && s == -1) || (nb < 0 && s == 1))
 		print_cmnt(str);
 	else
 	{
