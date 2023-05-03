@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command_util2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:22:33 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/02 17:35:44 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:09:24 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,24 @@ char	*del_slash(char *str)
 	return (st);
 }
 
+int	norm_check_pwd(t_env **env)
+{
+	t_env	*t;
+	char	*s;
+
+	t = *env;
+	s = NULL;
+	while (t)
+	{
+		s = is_var(t->e);
+		if (ft_strcmp("OLDPWD", s) == 0)
+			return (free(s), 1);
+		t = t->next;
+		free(s);
+	}
+	return (0);
+}
+
 int	check_pwd(t_env **env, char *str)
 {
 	t_env	*t;
@@ -84,28 +102,7 @@ int	check_pwd(t_env **env, char *str)
 		}
 	}
 	else
-	{
-		while (t)
-		{
-			s = is_var(t->e);
-			if (ft_strcmp("OLDPWD", s) == 0)
-				return (free(s), 1);
-			t = t->next;
-			free(s);
-		}
-	}
-	return (0);
-}
-
-int	chech_directory(char *path)
-{
-	struct stat	file_info;
-
-	if (stat(path, &file_info) != 0)
-		return (0);
-	if (S_ISDIR(file_info.st_mode))
-		return (1);
-	if (S_ISREG(file_info.st_mode))
-		return (2);
+		if (norm_check_pwd(env))
+			return (1);
 	return (0);
 }

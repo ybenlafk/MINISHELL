@@ -12,40 +12,29 @@
 
 #include "../includes/minishell.h"
 
-char	*is_var(char *s)
+int	get_val_norm(char *s, t_var *p)
 {
-	t_var	p;
-
-	p.i = 0;
-	while (s[p.i] && s[p.i] != '=')
-		p.i++;
-	p.s = malloc(p.i + 1);
-	if (!p.s)
-		return (NULL);
-	p.i = 0;
-	while (s[p.i] && s[p.i] != '=')
+	p->i = 0;
+	p->j = 0;
+	while (s[p->i] && s[p->i] != '=')
+		p->i++;
+	if (s[p->i] != '=')
+		return (1);
+	p->i++;
+	while (s[p->i] && s[p->i] != '\n')
 	{
-		p.s[p.i] = s[p.i];
-		p.i++;
+		p->i++;
+		p->j++;
 	}
-	p.s[p.i] = 0;
-	return (p.s);
+	return (0);
 }
 
 char	*get_value(char *s)
 {
 	t_var	p;
 
-	p.i = 0;
-	p.j = 0;
-	while (s[p.i] && s[p.i] != '=')
-		p.i++;
-	p.i++;
-	while (s[p.i] && s[p.i] != '\n')
-	{
-		p.i++;
-		p.j++;
-	}
+	if (get_val_norm(s, &p))
+		return (ft_strdup(""));
 	p.s = malloc(p.j);
 	if (!p.s)
 		return (NULL);

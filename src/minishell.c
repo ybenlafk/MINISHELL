@@ -108,7 +108,7 @@ int	main(int ac, char **av, char **e)
 			return (g_var.g_exit_status);
 		list = parsing(&cmd, p, env);
 		if (list)
-			execution(list, &env, e);
+			execution(list, &env);
 		flist(&list);
 		free(p.s);
 	}

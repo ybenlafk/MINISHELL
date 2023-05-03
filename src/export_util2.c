@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:32:44 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/04/28 11:48:47 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:26:36 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	print_ex(t_env	*env, t_list *lst)
 {
 	t_env	*t;
 	int		i;
-	char	quotes;
 
-	quotes = '"';
 	i = 0;
 	t = env;
 	while (t)

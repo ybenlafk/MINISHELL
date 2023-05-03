@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:25:13 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/02 17:35:44 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:50:25 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,49 +68,6 @@ t_env	*ft_lstdelone(t_env **lst, char	*str)
 	return (t);
 }
 
-void	ft_lstdelone1(t_env **lst, char	*str)
-{
-	t_env	*t1;
-	t_env	*t2;
-	t_env	*tmp;
-	int		i;
-	int		j;
-
-	tmp = *lst;
-	t1 = NULL;
-	t2 = NULL;
-	j = 0;
-	i = ind_str(lst, str);
-	tmp = *lst;
-	while (tmp)
-	{
-		if (i == 0 && j == 0)
-		{
-			t1 = tmp;
-			free(t1->e);
-			*lst = t1->next;
-			free(t1);
-			break ;
-		}
-		else if ( j == i - 1)
-		{
-			t1 = tmp;
-			if (!t1->next)
-				return ;
-			t2 = tmp->next;
-			t1->next = t2->next;
-			free(t2->e);
-			t2->e = NULL;
-			free(t2);
-			t2 = NULL;
-			tmp = *lst;
-			break ;
-		}
-		tmp = tmp->next;
-		j++;
-	}
-}
-
 void	norm_print(int i, char *str, t_list	*lst)
 {
 	char	*s2;
@@ -130,10 +87,8 @@ void	norm_print(int i, char *str, t_list	*lst)
 void	ft_print(char *str, t_list *lst)
 {
 	int		i;
-	char	quotes;
 	char	*s2;
 
-	quotes = '"';
 	i = 0;
 	while (str[i])
 	{

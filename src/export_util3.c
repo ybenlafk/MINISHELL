@@ -6,32 +6,21 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/03 14:01:46 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:49:29 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_env	*sort_ex(t_env	**env)
+t_env	*norm_sort_ex(t_env *tp, t_env **env)
 {
 	t_env	*t;
-	t_env	*tp;
 	t_env	*tmp;
 	t_env	*new;
 
+	tmp = *env;
 	t = *env;
-	tp = NULL;
-	tmp = t;
 	new = NULL;
-	if (!env)
-		return (NULL);
-	while (t)
-	{
-		ft_lstadd_back_env(&tp, lst_new_env(t->e, 0));
-		t = t->next;
-	}
-	if (!tp)
-		return (NULL);
 	while (1)
 	{
 		t = tp;
@@ -43,29 +32,31 @@ t_env	*sort_ex(t_env	**env)
 			t = t->next;
 		}
 		ft_lstadd_back_env(&new, lst_new_env(tmp->e, 0));
-		ft_lstdelone1(&tp, tmp->e);
+		tp = ft_lstdelone(&tp, tmp->e);
 		if (ft_lstsize_en(new) == ft_lstsize_en(*env))
 			break ;
 	}
-	// fenv(env);
-	// system("leaks minishell");
 	fenv(&tp);
 	return (new);
 }
 
-int	check_egl(char	*str)
+t_env	*sort_ex(t_env	**env)
 {
-	int	i;
+	t_env	*t;
+	t_env	*tp;
 
-	i = 0;
-	while (str[i])
+	t = *env;
+	tp = NULL;
+	if (!env)
+		return (NULL);
+	while (t)
 	{
-		if (str[i] == '=')
-			return (1);
-		i++;
+		ft_lstadd_back_env(&tp, lst_new_env(t->e, 0));
+		t = t->next;
 	}
-	puts("here-->");
-	return (0);
+	if (!tp)
+		return (NULL);
+	return (norm_sort_ex(tp, env));
 }
 
 void	norm_add(char *se, char *str, t_env	**env)

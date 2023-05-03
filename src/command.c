@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/02 12:20:58 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:13:53 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ char	*env_pwd(t_env **env)
 	return ("HOME not set");
 }
 
+void	norm_ft_command(int ind, t_list *list, t_env **env)
+{
+	if (ind == 4)
+		echo_cmd(list);
+	if (ind == 5)
+		unset_cmd(list, env);
+	if (ind == 6)
+		env_cmd(list, env);
+	if (ind == 7)
+		exit_cmd(list);
+}
+
 void	ft_command(t_list *list, int ind, t_env	**env)
 {
 	t_var	p;
@@ -56,12 +68,5 @@ void	ft_command(t_list *list, int ind, t_env	**env)
 		ft_putstr_fd(p.s, list->out);
 		free(p.s);
 	}
-	if (ind == 4)
-		echo_cmd(list);
-	if (ind == 5)
-		unset_cmd(list, env);
-	if (ind == 6)
-		env_cmd(list, env);
-	if (ind == 7)
-		exit_cmd(list);
+	norm_ft_command(ind, list, env);
 }
