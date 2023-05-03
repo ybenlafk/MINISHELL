@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/30 18:13:26 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:51:44 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void	export_parser(t_list **list)
 			if (!is_empty(tmp) && p.l)
 			{
 				free(tmp->cmd);
-				free_all(tmp->args);
 				tmp->cmd = NULL;
 			}
 		}
