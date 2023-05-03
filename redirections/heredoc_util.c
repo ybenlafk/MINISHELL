@@ -27,6 +27,7 @@ void	is_tty(t_var *p)
 		fd = open(ttyname(2), O_RDONLY);
 		dup2(fd, 0);
 		p->fd = -1;
+		g_var.g_exit_status = 1;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();

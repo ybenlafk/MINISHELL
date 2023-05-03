@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/02 21:52:59 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:33:33 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,12 +192,11 @@ void	execution(t_list *list, t_env **env, char **e)
 			p.lst = p.lst->next;
 		}
 		p.ext_st = waitpid(pid, &status, 0);
-		// WIFEXITED(status);
-		// if (WIFSIGNALED(status))
-		// 	status += 128;
 		while (wait(NULL) != -1);
-		g_var.g_exit_status = WEXITSTATUS(status);
-		
+		if (WIFEXITED(status))
+			g_var.g_exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			g_var.g_exit_status = 128 + WTERMSIG(status);
 		free_all(p.str);
 	}
 	if (g_var.is == 1)

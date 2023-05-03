@@ -49,7 +49,7 @@ int	out(t_cmd *cmd, int p)
 		if (cmd->type == SPACE)
 			cmd = cmd->next;
 		if (cmd && cmd->type != AMBG)
-			fd = open(cmd->str, O_CREAT | O_RDWR, 0777);
+			fd = open(cmd->str, O_CREAT | O_RDWR | O_TRUNC, 0777);
 		else
 			fd = -2;
 	}

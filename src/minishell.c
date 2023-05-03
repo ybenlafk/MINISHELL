@@ -20,7 +20,7 @@ void	c_hanndler(int i)
 
 	flag = 0;
 	(void)i;
-	if (waitpid(-1, NULL, WNOHANG) == 0)
+	if (!waitpid(-1, NULL, WNOHANG))
 		flag = 1;
 	if (!flag)
 	{

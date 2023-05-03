@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/04/30 18:13:26 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:13:10 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,13 @@ void	export_parser(t_list **list)
 		{
 			p.l = 0;
 			if (!ft_strcmp(tmp->cmd, "export"))
-				i_valid_arg(tmp, &p);
-			if (!is_empty(tmp) && p.l)
 			{
-				free(tmp->cmd);
-				free_all(tmp->args);
-				tmp->cmd = NULL;
+				i_valid_arg(tmp, &p);
+				if (!is_empty(tmp) && p.l)
+				{
+					free(tmp->cmd);
+					tmp->cmd = NULL;
+				}
 			}
 		}
 		tmp = tmp->next;
