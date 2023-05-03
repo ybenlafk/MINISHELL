@@ -52,3 +52,37 @@ void	glob_init(void)
 	g_var.err = 0;
 	g_var.is = 0;
 }
+
+char	*is_var(char *s)
+{
+	t_var	p;
+
+	p.i = 0;
+	while (s[p.i] && s[p.i] != '=')
+		p.i++;
+	p.s = malloc(p.i + 1);
+	if (!p.s)
+		return (NULL);
+	p.i = 0;
+	while (s[p.i] && s[p.i] != '=')
+	{
+		p.s[p.i] = s[p.i];
+		p.i++;
+	}
+	p.s[p.i] = 0;
+	return (p.s);
+}
+
+int	check_egl(char	*str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}

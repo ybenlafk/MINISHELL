@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:39:09 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/03 13:51:40 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/03 14:48:28 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,8 @@ int	ft_isnum(char	*str)
 void	norm_exit_cmd(t_list *lst, char *str)
 {
 	long long			nb;
-	long long			n;
-	long long			n1;
 	int					s;
 
-	n = -9223372036854775808U;
-	n1 = 9223372036854775807;
 	s = ft_isnum(str);
 	if (!s)
 		print_cmnt(str);

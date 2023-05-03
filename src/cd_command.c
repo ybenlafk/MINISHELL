@@ -6,7 +6,7 @@
 /*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/01 23:13:31 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:10:53 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ int	norm_cd(t_list	*lst, t_env	**env, char *str)
 		s2 = pwd_cmd();
 		s1 = ft_strjoin(ft_strdup("PWD="), s2);
 		new_pwd(s1, env);
-		free(s1);
-		free(s2);
-		return (0);
+		return (free(s1), free(s2), 0);
 	}
 	return (1);
 }

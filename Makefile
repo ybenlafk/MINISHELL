@@ -61,11 +61,13 @@ SRCS= tools/utils.c\
 	src/execution_util.c\
 	src/execution_util1.c\
 	src/lst_funs_util.c\
+	src/cd_command_util3.c\
+	src/execution_util2.c\
 	redirections/all_util.c \
 
 OBGJ= $(SRCS:.c=.o)
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 R_L = "-L/Users/nouahidi/.brew/opt/readline/lib"
 R_I = "-I/Users/nouahidi/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 22:23:37 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/02 21:52:09 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:50:29 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct var
 	int				fd;
 	int				fds[2];
 	pid_t			pid;
+	int				status;
 	int				len;
 	int				len_;
 	int				stat;
@@ -171,11 +172,11 @@ void				cd_cmd(t_list *list, t_env **env);
 void				echo_cmd(t_list *list);
 void				env_cmd(t_list *list, t_env **env);
 void				export_cmd(t_env **env, t_list *lst);
-void				ft_lstdelone1(t_env **lst, char *str);
 void				unset_cmd(t_list *lst, t_env **env);
-void				execution(t_list *list, t_env **env, char **e);
+void				execution(t_list *list, t_env **env);
 void				ft_command(t_list *list, int ind, t_env **env);
 void				exit_cmd(t_list *lst);
+void				rslt_excve(int i, t_var *var);
 void				add_plus(t_env **env, char *str, int i);
 void				ft_lstadd_back_env(t_env **lst, t_env *new);
 void				print_ex(t_env *env, t_list *lst);
@@ -240,7 +241,6 @@ int					ft_lstsize_en(t_env *lst);
 int					ft_strncmp(const char *str1, const char *str2, int n);
 int					ft_strlen(char *str);
 int					check_plus(char *str);
-int					check_rot(t_env *env, char *str);
 int					norm_exp(t_env **env, char *str, int i);
 int					drop(t_var *p);
 int					del_head(char *str);
@@ -265,6 +265,9 @@ int					ft_lstsize_exp(t_exp *lst);
 int					array_len(char **s);
 int					is_in_out(t_var *p);
 int					check_exp(t_cmd *cmd, t_env *env);
+int					norm_exec_cmd(t_env *env, t_var *var);
+int					norm_exec_cmd_1(t_env *env, t_var *var, char	*st);
+int					check_egl(char	*str);
 long long			ft_atoi(const char *str);
 
 #endif
