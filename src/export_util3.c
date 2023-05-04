@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_util3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/03 16:49:29 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/03 23:47:27 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	norm_add(char *se, char *str, t_env	**env)
 	char	*st;
 
 	i = 0;
-	while (str[i] != '=' && str[i])
+	while (str[i] && str[i] != '=')
 		i++;
 	if (!check_egl(se))
 	{

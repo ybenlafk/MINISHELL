@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/03 15:10:53 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/04 10:41:44 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ int	norm_cd(t_list	*lst, t_env	**env, char *str)
 	return (1);
 }
 
-void	norm_cd1(t_env **env, t_list *lst)
+void	norm_cd1(t_env **env)
 {
 	char			*s1;
 	char			*s2;
 
-	ft_putstr_fd("cd: error retrieving current ", lst->out);
-	ft_putstr_fd("directory: getcwd: cannot access parent ", lst->out);
-	ft_putstr_fd("directories: No such file or directory\n", lst->out);
+	ft_putstr_fd("cd: error retrieving current ", 2);
+	ft_putstr_fd("directory: getcwd: cannot access parent ", 2);
+	ft_putstr_fd("directories: No such file or directory\n", 2);
 	s1 = env_pwd(env);
 	s2 = NULL;
 	if (s1)
@@ -85,34 +85,34 @@ void	norm_cd_fi(t_list *lst, char *str, t_env **env)
 	{
 		free(str);
 		change_path(env);
-		g_var.g_exit_status = 1;
 	}
 }
 
 void	cd_cmd(t_list *lst, t_env **env)
 {
-	char			*str;
-	char			*s1;
+	t_var	p;
 
-	str = pwd_cmd();
+	p.s = pwd_cmd();
 	if (lst->args && !lst->args[1])
 	{
-		free(str);
-		s1 = get_home(env);
-		if (chdir(s1) == -1)
+		free(p.s);
+		p.s1 = get_home(env);
+		if (chdir(p.s1) == -1)
+		{
 			ft_putstr_fd("cd: HOME not set\n", lst->out);
-		g_var.g_exit_status = 0;
+			g_var.g_exit_status = 1;
+		}
 		return ;
 	}
-	if (lst->args &&!str && !ft_strcmp(".", lst->args[1]))
+	if (lst->args && !p.s && !ft_strcmp(".", lst->args[1]))
 	{
-		norm_cd1(env, lst);
+		norm_cd1(env);
 		return ;
 	}
-	if (!norm_cd(lst, env, str))
+	if (!norm_cd(lst, env, p.s))
 	{
-		free(str);
+		free(p.s);
 		return ;
 	}
-	norm_cd_fi(lst, str, env);
+	norm_cd_fi(lst, p.s, env);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/03 15:13:53 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/03 23:33:32 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ char	*env_pwd(t_env **env)
 			return (t->e);
 		t = t->next;
 	}
-	if (get_home(env))
-		return (get_home(env));
+	if (getenv("PWD"))
+		return (getenv("PWD"));
 	return ("HOME not set");
 }
 
