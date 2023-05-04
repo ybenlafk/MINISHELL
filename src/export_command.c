@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:51:37 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/03 14:39:07 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:55:31 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	add_exp(t_list	*lst, t_env	**env)
 		{
 			str = del_plus(lst->args[i]);
 			ft_lstadd_back_env(env, lst_new_env(str, 0));
+			free(str);
 			i++;
 		}
 	}
