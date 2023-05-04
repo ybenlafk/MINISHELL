@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 22:23:37 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/03 21:59:04 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:06:14 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct glob
 {
 	int		g_exit_status;
 	int		is;
-	int		err;
 }			t_gvar;
 
 extern t_gvar	g_var;
@@ -136,7 +135,6 @@ t_env				*sort_ex(t_env **env);
 void				lst_join_u(t_var *p);
 void				lst_join_u1(t_var *p);
 void				join_norm(t_var *p);
-void				del_gus(t_list **list);
 void				split_var(t_var *p, t_cmd **res, t_env *env);
 void				ctl_c(int i);
 void				fds_init(t_var *p);

@@ -62,17 +62,6 @@ char	*char_to_str(char c)
 	return (str);
 }
 
-void	del_gus(t_list **list)
-{
-	t_list	*tmp;
-
-	tmp = *list;
-	g_var.err--;
-	while (tmp && g_var.err--)
-		tmp = tmp->next;
-	tmp->is = 1;
-}
-
 void	join_norm(t_var *p)
 {
 	if ((p->tmp->type == VAR || p->tmp->type == WORD || p->tmp->type == AMBG

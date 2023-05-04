@@ -43,7 +43,7 @@ void	fill_env(t_env **env, char **e)
 		p.s1 = ft_strjoin(ft_strdup("PWD="), p.s);
 		ft_lstadd_back_env(env, lst_new_env("OLDPWD", 0));
 		ft_lstadd_back_env(env, lst_new_env(p.s1, 0));
-		ft_lstadd_back_env(env, lst_new_env("SHLVL=1", 0));
+		ft_lstadd_back_env(env, lst_new_env("SHLVL=", 0));
 		ft_lstadd_back_env(env, lst_new_env("_=/usr/bin/env", 0));
 	}
 	else

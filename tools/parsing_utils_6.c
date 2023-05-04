@@ -49,7 +49,6 @@ char	**env_geter(t_env *env)
 void	glob_init(void)
 {
 	g_var.g_exit_status = 0;
-	g_var.err = 0;
 	g_var.is = 0;
 }
 
