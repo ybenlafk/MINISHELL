@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 15:52:02 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/03 23:47:27 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:46:15 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	*del_plus(char *str)
 			return (NULL);
 	}
 	else
-		return (st = str, st);
+		return (st = ft_strdup(str), st);
 	j = 0;
 	while (str[i])
 	{
