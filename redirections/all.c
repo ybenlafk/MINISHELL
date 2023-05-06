@@ -111,8 +111,6 @@ t_cmd	*all(t_cmd *cmd, t_list **list)
 
 	if (!cmd)
 		return (NULL);
-	p.j = 0;
-	p.is = 0;
 	p.res = NULL;
 	p.tmp = cmd;
 	p.lst = *list;

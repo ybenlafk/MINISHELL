@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/06 12:41:40 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/06 12:47:54 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ t_list	*unused_clear(t_list *list)
 			ft_putstr_fd("Minishell : ambiguous redirect\n", 2);
 		if (tmp->is)
 			ft_lstadd_back_list(&res, lst_new_list(ft_strdup(tmp->cmd),
-				duplicate(tmp->args), -2, -2));
+					duplicate(tmp->args), -2, -2));
 		else
 			ft_lstadd_back_list(&res, lst_new_list(ft_strdup(tmp->cmd),
-				duplicate(tmp->args), tmp->in, tmp->out));
+					duplicate(tmp->args), tmp->in, tmp->out));
 		tmp = tmp->next;
 	}
 	tmp = list;

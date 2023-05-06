@@ -39,8 +39,6 @@ void	read_line(t_var *p, t_cmd *use, t_env *env)
 		write (p->fd, p->s, len(p->s));
 		free(p->s);
 	}
-
-	// write (p->fd, "\0", 1);
 }
 
 int	take_in(t_var *p, t_env *env, int stat)
