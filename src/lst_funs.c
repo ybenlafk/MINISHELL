@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:20:13 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/06 12:42:01 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:35:44 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_list	*lst_new_list(char *cmd, char **args, int in, int out)
 	new->args = args;
 	new->in = in;
 	new->out = out;
-	if (new->in == -2 || new->out == -2)
+	if (new->in < 0 || new->out < 0)
 		new->is = 1;
 	else
 		new->is = 0;

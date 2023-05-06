@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 22:23:37 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/04 12:06:14 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/06 23:04:07 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ t_env				*ft_lstlast_env(t_env *lst);
 t_env				*lst_new_env(char *e, int is);
 t_env				*ft_lstdelone(t_env **lst, char *str);
 t_env				*sort_ex(t_env **env);
+void				norm_cd_fi(t_list *lst, char *str, t_env **env);
 void				lst_join_u(t_var *p);
 void				lst_join_u1(t_var *p);
 void				join_norm(t_var *p);

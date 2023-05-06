@@ -36,7 +36,7 @@ void	read_line(t_var *p, t_cmd *use, t_env *env)
 			free_exp(&var.exp, ft_lstsize_exp(var.exp));
 		}
 		p->s = char_join(p->s, '\n');
-		write (p->fd, p->s, len(p->s));
+		write (p->fd, p->s, len(p->s) + 1);
 		free(p->s);
 	}
 }
@@ -49,7 +49,7 @@ int	take_in(t_var *p, t_env *env, int stat)
 		use = p->tmp->next->next;
 	else
 		use = p->tmp->next;
-	p->fd = open(p->file, O_CREAT | O_APPEND | O_RDWR, 0777);
+	p->fd = open(p->file, O_CREAT | O_RDWR | O_APPEND | O_TRUNC, 0777);
 	if (p->fd < 0)
 		return (p->fd);
 	read_line(p, use, env);

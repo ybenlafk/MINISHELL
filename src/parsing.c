@@ -61,13 +61,13 @@ t_list	*parsing(t_cmd *cmd, t_var p, t_env *env)
 	list = NULL;
 	if (lexer(&cmd, p.s, &vars))
 		return (NULL);
-	cmd = out_pipe(cmd);
 	syn = syntax_checker(cmd);
 	if (syn)
 		return (list_free(&cmd, ft_lstsize(cmd)), error(syn), NULL);
 	check_exp(cmd, env);
 	cmd = expanding(env, cmd);
 	quotes_expander(cmd, env);
+	cmd = out_pipe(cmd);
 	cmd = lst_join(cmd);
 	if (pipe_count(cmd) >= 500)
 		return (list_free(&cmd, ft_lstsize(cmd)),

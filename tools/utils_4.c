@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/06 12:47:54 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/02 21:20:30 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*generate_name(void)
 	read(fd, &nb[3], 1);
 	s = ft_itoa(*nb);
 	res = ft_strjoin(ft_strdup("/tmp/tmp-"), s);
-	return (close(fd), free(nb), free(s), ft_strdup(res));
+	return (close(fd), free(nb), free(s), res);
 }
 
 t_list	*unused_clear(t_list *list)
@@ -74,12 +74,8 @@ t_list	*unused_clear(t_list *list)
 	{
 		if (tmp->in == -2 || tmp->out == -2)
 			ft_putstr_fd("Minishell : ambiguous redirect\n", 2);
-		if (tmp->is)
-			ft_lstadd_back_list(&res, lst_new_list(ft_strdup(tmp->cmd),
-					duplicate(tmp->args), -2, -2));
-		else
-			ft_lstadd_back_list(&res, lst_new_list(ft_strdup(tmp->cmd),
-					duplicate(tmp->args), tmp->in, tmp->out));
+		ft_lstadd_back_list(&res, lst_new_list(ft_strdup(tmp->cmd),
+				duplicate(tmp->args), tmp->in, tmp->out));
 		tmp = tmp->next;
 	}
 	tmp = list;

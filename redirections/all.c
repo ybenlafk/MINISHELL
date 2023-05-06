@@ -111,6 +111,8 @@ t_cmd	*all(t_cmd *cmd, t_list **list)
 
 	if (!cmd)
 		return (NULL);
+	p.j = 0;
+	p.is = 0;
 	p.res = NULL;
 	p.tmp = cmd;
 	p.lst = *list;
@@ -119,9 +121,8 @@ t_cmd	*all(t_cmd *cmd, t_list **list)
 		fds_init(&p);
 		while (p.tmp && p.tmp->type != PIPE)
 		{
-			if (!p.lst->is)
-				if (drop(&p))
-					p.lst->is = 1;
+			if (drop(&p))
+				p.lst->is = 1;
 			if (p.tmp)
 				p.tmp = p.tmp->next;
 		}

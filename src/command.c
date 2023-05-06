@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/03 23:33:32 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/06 23:03:50 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	norm_cd_fi(t_list *lst, char *str, t_env **env)
+{
+	if (lst->args && chdir(lst->args[1]) != 0)
+		check_file(lst, str);
+	else
+	{
+		free(str);
+		change_path(env);
+	}
+}
 
 char	*env_pwd(t_env **env)
 {
