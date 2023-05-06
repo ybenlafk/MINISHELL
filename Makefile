@@ -6,7 +6,7 @@
 #    By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 10:39:36 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/05/06 11:59:36 by ybenlafk         ###   ########.fr        #
+#    Updated: 2023/05/06 16:20:21 by ybenlafk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ $(NAME): $(OBGJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBGJ) -o $(NAME)
 
 %.o: %.c $(HEADER)
-	$(CC) $(CFLAGS)  -c $< $(R_I) -o $@
+	$(CC) $(CFLAGS) -c $< $(R_I) -o $@
 
 clean:
 	$(FRM) $(OBGJ) 
