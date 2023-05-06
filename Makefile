@@ -6,7 +6,7 @@
 #    By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 10:39:36 by ybenlafk          #+#    #+#              #
-#    Updated: 2023/05/06 16:20:21 by ybenlafk         ###   ########.fr        #
+#    Updated: 2023/05/06 22:49:16 by ybenlafk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ SRCS= tools/utils.c\
 
 OBGJ= $(SRCS:.c=.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror
 R_L = "-L/Users/ybenlafk/.brew/opt/readline/lib"
 R_I = "-I/Users/ybenlafk/.brew/opt/readline/include"
 LDFLAGS = $(R_L) -lreadline

@@ -76,6 +76,8 @@ void	list_free(t_cmd **cmd, int len)
 {
 	t_cmd	*tmp;
 
+	if (!cmd || !*cmd)
+		return ;
 	while (len--)
 	{
 		tmp = (*cmd);
