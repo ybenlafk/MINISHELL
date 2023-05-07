@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/06 12:47:54 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/07 11:45:29 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*generate_name(void)
 	read(fd, &nb[3], 1);
 	s = ft_itoa(*nb);
 	res = ft_strjoin(ft_strdup("/tmp/tmp-"), s);
-	return (close(fd), free(nb), free(s), ft_strdup(res));
+	return (close(fd), free(nb), free(s), res);
 }
 
 t_list	*unused_clear(t_list *list)

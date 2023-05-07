@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/04 10:41:44 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/06 23:03:45 by nouahidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,22 @@ void	norm_cd1(t_env **env)
 	}
 }
 
-void	norm_cd_fi(t_list *lst, char *str, t_env **env)
+void	norm_cd_(t_env **env)
 {
-	if (lst->args && chdir(lst->args[1]) != 0)
-		check_file(lst, str);
+	char	*s1;
+	char	*s2;
+
+	s1 = get_home(env);
+	if (chdir(s1) == -1)
+	{
+		ft_putstr_fd("cd: HOME not set\n", 2);
+		g_var.g_exit_status = 1;
+	}
 	else
 	{
-		free(str);
-		change_path(env);
+		s2 = ft_strjoin(ft_strdup("PWD="), s1);
+		new_pwd(s2, env);
+		free(s2);
 	}
 }
 
@@ -96,12 +104,7 @@ void	cd_cmd(t_list *lst, t_env **env)
 	if (lst->args && !lst->args[1])
 	{
 		free(p.s);
-		p.s1 = get_home(env);
-		if (chdir(p.s1) == -1)
-		{
-			ft_putstr_fd("cd: HOME not set\n", lst->out);
-			g_var.g_exit_status = 1;
-		}
+		norm_cd_(env);
 		return ;
 	}
 	if (lst->args && !p.s && !ft_strcmp(".", lst->args[1]))

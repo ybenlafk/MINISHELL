@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:24:54 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/04 15:47:03 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/07 11:52:26 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,6 @@ void	execution(t_list *list, t_env **env)
 	}
 	else
 		exe_norm(&p, env);
-	if (g_var.is == 1)
+	if (g_var.is)
 		g_var.g_exit_status = 1;
 }

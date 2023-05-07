@@ -6,7 +6,7 @@
 /*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:29:23 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/02 21:19:46 by ybenlafk         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:03:34 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 void	env_parser(t_list **list)
 {
-	t_list	*tmp;
-	int		i;
+	t_var	p;
 
-	tmp = *list;
-	while (tmp)
+	p.lst = *list;
+	while (p.lst)
 	{
-		i = 0;
-		if (tmp->cmd && !tmp->is)
+		p.i = 0;
+		if (p.lst->cmd && !p.lst->is)
 		{
-			if (!ft_strcmp(tmp->cmd, "env"))
+			if (!ft_strcmp(p.lst->cmd, "env"))
 			{
-				if (tmp->args[1])
+				if (p.lst->args[1])
 				{
-					printf("Minishell: env has no options : %s\n", tmp->args[1]);
-					free(tmp->cmd);
-					tmp->cmd = NULL;
-					free_all(tmp->args);
-					tmp->args = NULL;
-					i = 1;
+					printf("env has no options : %s\n", p.lst->args[1]);
+					free(p.lst->cmd);
+					p.lst->cmd = NULL;
+					free_all(p.lst->args);
+					p.lst->args = NULL;
+					p.i = 1;
 				}
 			}
 		}
-		tmp = tmp->next;
+		p.lst = p.lst->next;
 	}
-	g_var.is = i;
+	if (p.i)
+		g_var.is = p.i;
 }
 
 t_cmd	*out_pipe(t_cmd *cmd)
