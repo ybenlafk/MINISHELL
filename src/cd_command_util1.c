@@ -103,8 +103,16 @@ void	check_file(t_list *lst, char *str)
 {
 	free(str);
 	if (lst->args && chech_directory(lst->args[1]) == 2)
-		printf("Minishell> cd: %s: Not a directory\n", lst->args[1]);
+	{
+		ft_putstr_fd("Minishell> cd: ", 2);
+		ft_putstr_fd(lst->args[1], 2);
+		ft_putstr_fd(": Not a directory\n", 2);
+	}
 	else if (lst->args)
-		printf("Minishell> cd: %s: No such file or directory\n", lst->args[1]);
+	{
+		ft_putstr_fd("Minishell> cd: ", 2);
+		ft_putstr_fd(lst->args[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
 	g_var.g_exit_status = 1;
 }

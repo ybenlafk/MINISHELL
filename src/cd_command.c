@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 14:24:06 by nouahidi          #+#    #+#             */
-/*   Updated: 2023/05/06 23:03:45 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/07 21:59:17 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	norm_cd2(t_env **env, t_list *lst)
+void	norm_cd2(t_env **env)
 {
 	char			*s1;
 	char			*s2;
 
-	ft_putstr_fd("cd: error retrieving current ", lst->out);
-	ft_putstr_fd("directory: getcwd: cannot access parent ", lst->out);
-	ft_putstr_fd("directories: No such file or directory\n", lst->out);
+	ft_putstr_fd("cd: error retrieving current ", 2);
+	ft_putstr_fd("directory: getcwd: cannot access parent ", 2);
+	ft_putstr_fd("directories: No such file or directory\n", 2);
 	s1 = get_pwd(env);
 	s2 = NULL;
 	if (s1)
@@ -41,7 +41,7 @@ int	norm_cd(t_list	*lst, t_env	**env, char *str)
 	{
 		if (i == 0)
 		{
-			norm_cd2(env, lst);
+			norm_cd2(env);
 			return (i = 1, 0);
 		}
 		else
