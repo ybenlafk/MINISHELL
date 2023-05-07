@@ -16,13 +16,8 @@ t_gvar	g_var;
 
 void	c_hanndler(int i)
 {
-	int	flag;
-
-	flag = 0;
 	(void)i;
-	if (!waitpid(-1, NULL, WNOHANG))
-		flag = 1;
-	if (!flag)
+	if (waitpid(-1, NULL, WNOHANG))
 	{
 		printf("\n");
 		rl_on_new_line();
@@ -83,7 +78,8 @@ int	main_norm(t_var *p, t_env **env, t_list **list)
 	p->s = readline("\e[1;32mMinishell>$ \e[0m");
 	if (!p->s)
 		return (fenv(env), flist(list), printf("\e[1;32mexit\e[0m\n"), 1);
-	add_history(p->s);
+	if (ft_strcmp(p->s, ""))
+		add_history(p->s);
 	return (0);
 }
 
