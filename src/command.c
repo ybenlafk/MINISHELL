@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nouahidi <nouahidi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybenlafk <ybenlafk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 00:24:02 by ybenlafk          #+#    #+#             */
-/*   Updated: 2023/05/06 23:03:50 by nouahidi         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:57:19 by ybenlafk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*env_pwd(t_env **env)
 	t = *env;
 	while (t)
 	{
-		if (!ft_strncmp("OLDPWD=", t->e, 7))
+		if (!ft_strncmp("OLDPWD=", t->e, 7) && ft_strlen(t->e) > 7)
 			return (t->e);
 		t = t->next;
 	}
