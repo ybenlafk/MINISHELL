@@ -40,6 +40,7 @@ void	fill_env(t_env **env, char **e)
 		ft_lstadd_back_env(env, lst_new_env(p.s1, 0));
 		ft_lstadd_back_env(env, lst_new_env("SHLVL=", 0));
 		ft_lstadd_back_env(env, lst_new_env("_=/usr/bin/env", 0));
+		free(p.s1);
 	}
 	else
 	{
@@ -49,7 +50,6 @@ void	fill_env(t_env **env, char **e)
 			p.i++;
 		}
 	}
-	free(p.s1);
 	free(p.s);
 }
 
