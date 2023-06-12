@@ -1,5 +1,5 @@
 # MINISHELL
-<h3>This poject is about writing a shell taking bash as reference</h3>
+This poject is about writing a shell taking bash as reference.
 </br>
 run the project :
 </br>
