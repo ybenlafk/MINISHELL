@@ -1,5 +1,5 @@
 # MINISHELL
-This poject is about writing a shell taking bash as reference.
+This poject is about writing a shell taking bash as reference using C.
 </br>
 # Installation :
 - Install brew (Package Manager for macOS (or Linux)): ```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"```
