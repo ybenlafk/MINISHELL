@@ -1,3 +1,4 @@
 # MINISHELL
-run the project :\n
+run the project :
+</br>
 ``` run make ```
