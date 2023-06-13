@@ -7,4 +7,4 @@ This poject is about writing a shell taking bash as reference using C.
 # Clone :
 Clone this link in your device ```https://github.com/ybenlafk/MINISHELL.git``` and run it.
 # Run :
-To run the project run ```make``` in the terminal.
+To run the project run ```make``` and ```./mnishell``` in the terminal.
